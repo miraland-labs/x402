@@ -1,0 +1,26 @@
+# x402 Ecosystem Hub - Ignore Sub-Projects
+# These are standalone repositories with their own history.
+pr402/
+universalsettle/
+sla-escrow/
+spl-token-balance-serverless/
+references/
+
+# OS Specific
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Local Build Junk (if any)
+target/
+dist/
+build/
+.next/
+.vercel/
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
