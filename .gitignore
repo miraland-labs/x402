@@ -5,6 +5,7 @@ universalsettle/
 sla-escrow/
 spl-token-balance-serverless/
 references/
+docs/
 
 # OS Specific
 .DS_Store
