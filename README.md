@@ -15,12 +15,12 @@ The ecosystem is composed of four specialized, independent modules that work tog
 
 ### ⚡ [UniversalSettle Protocol](https://github.com/miraland-labs/universalsettle)
 *   **Role**: The Payout (SplitVault Engine).
-*   **Platform**: Solana On-chain (Steel).
+*   **Platform**: Solana On-chain Program(Planned Open Source).
 *   **What it does**: High-velocity, fix-fee settlements with automated revenue splitting and 0-data SOL storage.
 
 ### 🛡️ [SLA-Escrow Protocol](https://github.com/miraland-labs/sla-escrow)
 *   **Role**: The enforcer (Service Level Agreement Trustee).
-*   **Platform**: Solana On-chain (Steel).
+*   **Platform**: Solana On-chain Program(Planned Open Source).
 *   **What it does**: Oracle-adjudicated escrows with verdict-neutral tipping and "Bring Your Own Gas" (BYOG) defaults.
 
 ### 💎 [Reference Resource Provider](https://github.com/miralandlabs/spl-token-balance-serverless)
