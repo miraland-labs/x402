@@ -45,6 +45,7 @@ The "Trust" engine for high-stakes work. Ideal for long-running autonomous resea
 | **Micro-Payments** | Native ($0.001+) | Blocked (High Fees) |
 | **Security** | Non-Custodial (Smart Contracts) | Custodial (Banks/Intermediaries) |
 | **Logic** | Programmatic (SLA/Oracle) | Manual (Refunds/Disputes) |
+| **Finality Model** | **Commitment-First (Reliable for 6h+ jobs)** | Fulfill-then-Settle (Risk of Failure) |
 
 ---
 

@@ -64,23 +64,26 @@ sequenceDiagram
     participant Facilitator as pr402 Facilitator
     participant OnChain as Solana (Vault/Escrow)
 
-    Agent->>Provider: Request Resource (GET /api/resource)
-    Provider-->>Agent: HTTP 402 + Payment Requirement
+    Agent->>Provider: 1. Request Resource (GET /api/resource)
+    Provider-->>Agent: 2. HTTP 402 + Payment Requirement
     
-    Agent->>Facilitator: Onboard (Discover Vault Address)
-    Facilitator-->>Agent: Vault PDAs & Verified Fee Terms
+    Agent->>Facilitator: 3. Onboard (Discover Vault Address)
+    Facilitator-->>Agent: 4. Vault PDAs & Verified Fee Terms
 
-    Agent->>Facilitator: Settle (Send Signed Payload)
-    Note over Facilitator: Validates terms and executes on-chain
-    Facilitator->>OnChain: Provision Vault + Execute Settlement
-    OnChain-->>Facilitator: Confirmation (Signature)
+    Agent->>Facilitator: 5. Build Payment Tx (Unsigned)
+    Facilitator-->>Agent: 6. Unsigned Transaction Payload
+
+    Note over Agent: 7. Agent Signs Transaction locally
+
+    Agent->>Provider: 8. Retry Request + X-PAYMENT (Signed Tx)
     
-    Facilitator-->>Agent: HTTP 200 (Settlement Confirmed)
+    Provider->>Facilitator: 9. Settle/Verify (Forward Signed Tx)
+    Note over Facilitator: 10. Validates terms and executes on-chain
+    Facilitator->>OnChain: 11. Provision Vault + Execute Settlement
+    OnChain-->>Facilitator: 12. Confirmation (Signature)
     
-    Agent->>Provider: Request Resource + Payment Evidence
-    Provider->>Facilitator: Verify Payment
-    Facilitator-->>Provider: Validated Status
-    Provider-->>Agent: Serve Resource (Success)
+    Facilitator-->>Provider: 13. Settlement Confirmed (OK)
+    Provider-->>Agent: 14. Serve Resource (Success)
 ```
 
 ---
@@ -113,8 +116,15 @@ The Oracle is responsible for bridging the off-chain data to the on-chain verdic
 
 ---
 
-### 🚀 Summary
-The x402 Ecosystem provides a **complete financial stack for AI Agents**. By combining the scalability of Vercel Serverless with the precision of Solana's high-speed settlement, we enable a world where agents don't just talk—they trade.
+## ⚡ Deterministic Finality for the Machine Economy
+
+Standard payment protocols often rely on a "Fulfill-then-Settle" model. However, on high-performance networks like **Solana**, where transaction blockhashes expire in ~60-120 seconds, this traditional approach is inherently incompatible with high-latency agentic tasks (e.g., AI video generation or autonomous research).
+
+**Our x402 implements a "Settlement-First" Philosophy:**
+*   **Immediate Finality (`UniversalSettle`)**: By verifying and settling payments *at the point of request*, we ensure that Resource Providers never perform at-risk compute for transaction signatures that might expire during fulfillment.
+*   **Commitment-First Escrows (`SLA-Escrow`)**: For long-running jobs, x402 mandates a "Lock-then-Work" flow. Funds are cryptographically secured in escrow before the agent begins the task, providing the Seller with absolute payment certainty and the Buyer with verifiable delivery metrics through the SLA Oracle.
+
+This specialized approach is the only sustainable way to avoid systemic settlement failure for complex, long-running agentic workloads on the modern blockchain.
 
 ---
 
