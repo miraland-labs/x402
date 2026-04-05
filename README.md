@@ -26,12 +26,12 @@ The ecosystem is composed of five specialized, independent modules that work tog
 *   **Platform**: Solana On-chain Program (Planned Open Source).
 *   **What it does**: Escrows funds via the `sla-escrow` scheme for high-value or long-running work. Suggested for payments **>= $10 USDC**. Requires domain-specific Oracles for verification (recruiting these Oracle developers is a key ecosystem goal).
 
-### 💎 Official Paid Service (`spl-token-balance-serverless`)
+### 💎 [Solana SPL-Token Balance Verification Paid Service](https://preview.spl-token.signer-payer.me/)
 *   **Role**: Miraland Labs Official Paid Service.
 *   **Platform**: Rust / Vercel Serverless (Currently Closed Source).
 *   **What it does**: A premium, out-of-the-box service provided officially by Miraland Labs. It acts as a production-grade backend service demonstrating real-world API token-balance gating over x402.
 
-### 📚 Open-Source Starter (`x402-seller-starter`)
+### 📚 [Open-Source Seller Starter](https://github.com/miraland-labs/x402-seller-starter)
 *   **Role**: Open-source Seller Demo / Reference Implementation.
 *   **Platform**: Rust / Axum (local or any host).
 *   **What it does**: Your minimal open-source seller reference implementation. It builds x402 v2 `Payment Required` JSON and optionally calls pr402 `verify`/`settle` when the buyer sends `X-PAYMENT`. Use this as your copy-paste baseline to build your own resource provider.
