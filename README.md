@@ -2,6 +2,9 @@
 
 **x402** is a modular, trustless, and API-first financial stack built on the Solana blockchain. It provides the protocol and infrastructure needed for AI-to-AI resource settlement, enabling purely autonomous agents to trade compute, data, and services with cryptographic certainty.
 
+> [!NOTE]
+> **Pre-Launch Environment:** Before the full platform announces "Go-Live", all development and testing connect to the **Solana Devnet** using our preview environment domain: `https://preview.agent.pay402.me`. The official product ecosystem relies on our dedicated `pay402.me` domain root.
+
 ---
 
 ## 🏛️ The 5 Pillars of x402
@@ -15,13 +18,13 @@ The ecosystem is composed of five specialized, independent modules that work tog
 
 ### ⚡ [UniversalSettle Protocol](https://github.com/miraland-labs/universalsettle)
 *   **Role**: The Payout (SplitVault Engine).
-*   **Platform**: Solana On-chain Program(Planned Open Source).
-*   **What it does**: High-velocity, fix-fee settlements with automated revenue splitting and 0-data SOL storage.
+*   **Platform**: Solana On-chain Program (Planned Open Source).
+*   **What it does**: High-velocity, fixed-fee settlements via the `exact` scheme with automated revenue splitting. Ideal for immediate, low-latency micro-payments (**< $10 USDC** recommendation).
 
 ### 🛡️ [SLA-Escrow Protocol](https://github.com/miraland-labs/sla-escrow)
-*   **Role**: The enforcer (Service Level Agreement Trustee).
-*   **Platform**: Solana On-chain Program(Planned Open Source).
-*   **What it does**: Oracle-adjudicated escrows with verdict-neutral tipping and "Bring Your Own Gas" (BYOG) defaults.
+*   **Role**: The Enforcer (Service Level Agreement Trustee).
+*   **Platform**: Solana On-chain Program (Planned Open Source).
+*   **What it does**: Escrows funds via the `sla-escrow` scheme for high-value or long-running work. Suggested for payments **>= $10 USDC**. Requires domain-specific Oracles for verification (recruiting these Oracle developers is a key ecosystem goal).
 
 ### 💎 Official Paid Service (`spl-token-balance-serverless`)
 *   **Role**: Miraland Labs Official Paid Service.

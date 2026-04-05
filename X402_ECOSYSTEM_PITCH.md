@@ -1,5 +1,8 @@
 # 🚀 x402: The Economic Layer for Autonomous Agents
 
+> [!NOTE]
+> **Pre-Launch Environment:** Before the full platform announces "Go-Live", all development and testing connect to the **Solana Devnet** using our preview environment domain: `https://preview.agent.pay402.me`. The official product ecosystem relies on our dedicated `pay402.me` domain root.
+
 ### The Problem: Agents are Rich in Data, but Broke in Utility
 AI Agents can browse the web, analyze gigabytes of data, and generate complex code. But until now, they couldn't **natively** pay for the resources they need to finish their jobs. 
 
@@ -25,14 +28,17 @@ The "Interpreter" for the machine world. It exposes a standard REST API that AI 
 - **Sustainable BYOG Model**: Implements "Bring Your Own Gas," ensuring the infrastructure is self-sustaining and decentralized.
 
 ### 2. ⚡ `UniversalSettle` (SplitVault)
-The "High-Velocity" payment engine. Designed for sub-second, low-value micro-transactions (inference-gating, API calls, data scraping).
-- **SplitVault Architecture**: Native SOL and SPL tokens (USDC, USDT) are instantly and immutably split between the provider and the platform.
-- **Non-Custodial**: Funds move directly to logic-gated PDAs, never touching a centralized middleman.
+The **Instant Micro-Payment Engine**. Operates via the exact-payment `exact` scheme. 
+- **Use Case**: Sub-second, low-value transactions (inference-gating, API calls, data scraping).
+- **Recommendation**: Best for payments **< $10 USDC**.
+- **SplitVault Architecture**: Native SOL and SPL tokens are instantly and immutably split to the provider's logic-gated PDAs, generating absolute zero friction.
 
 ### 3. 🛡️ `SLA-Escrow` (The Enforcer)
-The "Trust" engine for high-stakes work. Ideal for long-running autonomous research, custom training, or any job where payment is contingent on success.
-- **Oracle-Adjudicated**: Funds are locked until a verified Oracle confirms job delivery.
-- **Verdict-Neutral Tipping**: A breakthrough in incentive design—Oracles are tipped for their *work* of adjudication, not for the *outcome*, eliminating bias in the settlement process.
+The **Service Trust Engine**. Operates via the `sla-escrow` extension scheme.
+- **Use Case**: High-stakes work, autonomous research, custom training, or any job spanning minutes to days where payment is contingent on success.
+- **Recommendation**: Suggested for larger transactions **>= $10 USDC**.
+- **Oracle-Adjudicated**: Funds are cryptographically locked until a verified domain-specific Oracle confirms delivery. 
+- **Verdict-Neutral Tipping**: Oracles are tipped for their *work* of adjudication, eliminating bias. *(Note: Recruiting domain-specific Oracle developers is our next major marketing initiative to supercharge this layer.)*
 
 ---
 

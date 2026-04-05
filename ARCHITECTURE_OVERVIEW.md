@@ -2,6 +2,9 @@
 
 **x402** is a modular, trustless, and API-first financial stack built on the Solana blockchain. It provides the protocol and infrastructure needed for AI-to-AI resource settlement, enabling purely autonomous agents to trade compute, data, and services with cryptographic certainty.
 
+> [!NOTE]
+> **Pre-Launch Environment:** Before the platform officially announces "Go-Live", all development, testing, and system integrators operate on the **Solana Devnet**, connecting through our dedicated preview base URL: `https://preview.agent.pay402.me`.
+
 ---
 
 ## 🏗️ The 5 Pillars of the x402 Ecosystem
@@ -48,15 +51,22 @@ The ecosystem consists of five specialized components that work together to prov
 
 ---
 
-## 🤖 Autonomous Decision Logic
+## 🤖 Why Two On-Chain Programs? (Decision Logic)
 
-AI Agents using x402 V2 implement dynamic routing based on job risk and value:
+A common question for developers entering the x402 ecosystem is: **Why does the protocol use two different on-chain programs?** 
 
-1. **Discovery**: Agent hits `GET /api/v1/facilitator/supported` to learn current on-chain terms (Fees, Oracles, Program IDs).
-2. **Evaluation**:
-   - **Low Value / Low Latency**: Use `exact` (UniversalSettle) for minimal overhead.
-   - **High Value / Multi-Step**: Use `sla-escrow` for cryptographic protection of funds.
-3. **Selection**: For escrows, the agent selects a preferred Oracle from the `oracleAuthorities` provided by the facilitator.
+The answer lies in optimizing for risk versus latency in the Machine Economy. AI Agents use dynamic routing to select the appropriate scheme based on the job requirements:
+
+1. **`exact` (UniversalSettle)**: Designed for instant, sub-second micro-payments. It is the core scheme described natively in the x402 standard.
+   - **Use Case**: Low latency, immediate delivery (e.g., pay-per-inference, single API calls, data scraping).
+   - **Recommendation**: Best for payments **< $10 USDC**.
+
+2. **`sla-escrow` (SLA-Escrow)**: A standard-supported flexible extension scheme designed to securely lock funds for asynchronous delivery.
+   - **Use Case**: High-value work or long-delivery tasks spanning minutes, hours, or days (e.g., model training, autonomous research).
+   - **Recommendation**: Suggested for payments **>= $10 USDC**.
+   - **The Oracle Economy**: Escrow requires domain-specific Oracles to verify delivery before funds release. Recruiting and onboarding domain-specific Oracle developers is a core growth driver for the pr402 ecosystem.
+
+*(Note: Both the UniversalSettle and SLA-Escrow on-chain programs are **planned to be open-sourced** once the platform has accumulated a critical mass of buyer and seller agents.)*
 
 ---
 
