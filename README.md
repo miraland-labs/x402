@@ -28,6 +28,11 @@ The ecosystem is composed of four specialized, independent modules that work tog
 *   **Platform**: Rust / Vercel Serverless.
 *   **What it does**: Demonstrates how to gate a real-world API using the x402 protocol headers.
 
+### 📚 **x402-seller-starter** (this hub folder)
+*   **Role**: Minimal open-source seller reference (library + Axum example).
+*   **Platform**: Rust / Axum (local or any host).
+*   **What it does**: Builds x402 v2 `Payment Required` JSON from env and optionally calls pr402 `verify`/`settle` when the buyer sends `X-PAYMENT`. Apache-2.0, fee-free—use as a copy-paste baseline; see **`x402-seller-starter/README.md`**.
+
 ---
 
 ## 📖 Global Documentation
@@ -56,7 +61,8 @@ x402/
 ├── pr402/                  <-- Independent Repo
 ├── universalsettle/        <-- Independent Repo
 ├── sla-escrow/             <-- Independent Repo
-└── spl-token-balance-serverless/ <-- Independent Repo
+├── spl-token-balance-serverless/ <-- Independent Repo
+└── x402-seller-starter/   <-- Open seller reference (library + Axum example; optional own repo)
 ```
 
 ---
