@@ -28,7 +28,7 @@ The ecosystem is composed of five specialized, independent modules that work tog
 
 ### 💎 Official Paid Service (`spl-token-balance-serverless`)
 *   **Role**: Miraland Labs Official Paid Service.
-*   **Platform**: Rust / Vercel Serverless (may be closed source).
+*   **Platform**: Rust / Vercel Serverless (Currently Closed Source).
 *   **What it does**: A premium, out-of-the-box service provided officially by Miraland Labs. It acts as a production-grade backend service demonstrating real-world API token-balance gating over x402.
 
 ### 📚 Open-Source Starter (`x402-seller-starter`)

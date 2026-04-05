@@ -151,8 +151,8 @@ The x402 ecosystem is composed of five independent, specialized repositories. Th
 - **[pr402 Facilitator](https://github.com/miralandlabs/pr402)**: The REST-to-Solana gateway (Vercel-native, Open Source).
 - **[UniversalSettle Protocol](https://github.com/miraland-labs/universalsettle)**: The split-payment engine (On-chain, Planned Open Source).
 - **[SLA-Escrow Protocol](https://github.com/miraland-labs/sla-escrow)**: The service-level enforcer (On-chain, Planned Open Source).
-- **[Official Paid Service](https://github.com/miralandlabs/spl-token-balance-serverless)**: Production-grade HTTP 402 serverless gating integration `spl-token-balance-serverless` (May be Closed Source).
-- **[x402-seller-starter](https://github.com/miraland-labs/x402/tree/main/x402-seller-starter)**: Minimal open-source reference implementation for Resource Providers.
+- **[Official Paid Service](https://preview.spl-token.signer-payer.me/)**: Production-grade HTTP 402 serverless gating integration `spl-token-balance-serverless` (Currently Closed Source).
+- **[x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter)**: Minimal open-source reference implementation for Resource Providers.
 
 ---
 

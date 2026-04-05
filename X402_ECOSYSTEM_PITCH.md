@@ -77,7 +77,7 @@ The x402 ecosystem is composed of five specialized, independent repositories. Th
 - **[pr402 Facilitator](https://github.com/miralandlabs/pr402)**: The serverless-first REST Bridge (Open Source).
 - **[UniversalSettle (SplitVault)](https://github.com/miraland-labs/universalsettle)**: High-velocity micro-payments (Planned Open Source).
 - **[SLA-Escrow Protocol](https://github.com/miraland-labs/sla-escrow)**: Trustless oracle-backed escrow (Planned Open Source).
-- **[Official Paid Service (spl-token-balance-serverless)](#)**: Miraland Labs' official production-grade serverless API gating service (May be Closed Source).
-- **[Starter Demo (x402-seller-starter)](https://github.com/miraland-labs/x402/tree/main/x402-seller-starter)**: Minimal open-source reference implementation for resource providers.
+- **[Official Paid Service (spl-token-balance-serverless)](https://preview.spl-token.signer-payer.me/)**: Miraland Labs' official production-grade serverless API gating service (Currently Closed Source).
+- **[Starter Demo (x402-seller-starter)](https://github.com/miraland-labs/x402-seller-starter)**: Minimal open-source reference implementation for resource providers.
 
 **Maintained by Miraland Labs & MiralandLabs.**
