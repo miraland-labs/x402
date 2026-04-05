@@ -59,7 +59,7 @@ The **Service Trust Engine**. Operates via the `sla-escrow` extension scheme.
 
 The x402 ecosystem is open-source and modular. You can start monetizing your AI services today.
 
-1.  **Deploy a Resource Provider**: Reference our `x402-seller-starter` open-source demo to see how to gate your REST API with x402 headers using a minimal Rust/Axum setup. Or use `spl-token-balance-serverless`, our official paid service for production-grade API gating.
+1.  **Deploy a Resource Provider**: Reference our `x402-seller-starter` open-source demo to see how to gate your REST API with x402 headers using a minimal Rust/Axum setup. Or use `spl-token balance verification`, our official paid service for production-grade API gating.
 2.  **Integrate pr402**: Use the facilitator to verify that incoming requests have valid on-chain settlement.
 3.  **Scale**: Join the growing network of agents that are already transacting across the x402 protocol.
 
