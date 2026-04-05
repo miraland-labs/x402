@@ -4,9 +4,9 @@
 
 ---
 
-## 🏛️ The 4 Pillars of x402
+## 🏛️ The 5 Pillars of x402
 
-The ecosystem is composed of four specialized, independent modules that work together to provide a seamless "Payment-Required" (HTTP 402) experience for the serverless age.
+The ecosystem is composed of five specialized, independent modules that work together to provide a seamless "Payment-Required" (HTTP 402) experience for the serverless age.
 
 ### 🌉 [pr402 Facilitator](https://github.com/miralandlabs/pr402)
 *   **Role**: The Bridge (REST-to-Solana Gateway).
@@ -23,15 +23,15 @@ The ecosystem is composed of four specialized, independent modules that work tog
 *   **Platform**: Solana On-chain Program(Planned Open Source).
 *   **What it does**: Oracle-adjudicated escrows with verdict-neutral tipping and "Bring Your Own Gas" (BYOG) defaults.
 
-### 💎 [Reference Resource Provider](https://github.com/miralandlabs/spl-token-balance-serverless)
-*   **Role**: The Service (Gated API Example).
-*   **Platform**: Rust / Vercel Serverless.
-*   **What it does**: Demonstrates how to gate a real-world API using the x402 protocol headers.
+### 💎 Official Paid Service (`spl-token-balance-serverless`)
+*   **Role**: Miraland Labs Official Paid Service.
+*   **Platform**: Rust / Vercel Serverless (may be closed source).
+*   **What it does**: A premium, out-of-the-box service provided officially by Miraland Labs. It acts as a production-grade backend service demonstrating real-world API token-balance gating over x402.
 
-### 📚 **x402-seller-starter** (this hub folder)
-*   **Role**: Minimal open-source seller reference (library + Axum example).
+### 📚 Open-Source Starter (`x402-seller-starter`)
+*   **Role**: Open-source Seller Demo / Reference Implementation.
 *   **Platform**: Rust / Axum (local or any host).
-*   **What it does**: Builds x402 v2 `Payment Required` JSON from env and optionally calls pr402 `verify`/`settle` when the buyer sends `X-PAYMENT`. Apache-2.0, fee-free—use as a copy-paste baseline; see **`x402-seller-starter/README.md`**.
+*   **What it does**: Your minimal open-source seller reference implementation. It builds x402 v2 `Payment Required` JSON and optionally calls pr402 `verify`/`settle` when the buyer sends `X-PAYMENT`. Use this as your copy-paste baseline to build your own resource provider.
 
 ---
 
@@ -58,11 +58,11 @@ x402/
 ├── README.md               <-- You are here
 ├── ARCHITECTURE_OVERVIEW.md
 ├── X402_ECOSYSTEM_PITCH.md
-├── pr402/                  <-- Independent Repo
-├── universalsettle/        <-- Independent Repo
-├── sla-escrow/             <-- Independent Repo
-├── spl-token-balance-serverless/ <-- Independent Repo
-└── x402-seller-starter/   <-- Open seller reference (library + Axum example; optional own repo)
+├── pr402/                  <-- Independent Repo (Open Source Facilitator)
+├── universalsettle/        <-- Independent Repo (Planned Open Source)
+├── sla-escrow/             <-- Independent Repo (Planned Open Source)
+├── spl-token-balance-serverless/ <-- Paid Service (May be Closed Source)
+└── x402-seller-starter/   <-- Demo/Reference Implementation (Open Source)
 ```
 
 ---

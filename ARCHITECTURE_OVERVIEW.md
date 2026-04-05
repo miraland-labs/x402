@@ -4,9 +4,9 @@
 
 ---
 
-## 🏗️ The 4 Pillars of the x402 Ecosystem
+## 🏗️ The 5 Pillars of the x402 Ecosystem
 
-The ecosystem consists of four specialized components that work together to provide a seamless "Payment-Required" (HTTP 402) experience for the autonomous machine age.
+The ecosystem consists of five specialized components that work together to provide a seamless "Payment-Required" (HTTP 402) experience for the autonomous machine age.
 
 ### 1. 🌉 The Bridge: `pr402` (The Facilitator)
 *   **Role**: REST-to-Blockchain Gateway.
@@ -36,10 +36,15 @@ The ecosystem consists of four specialized components that work together to prov
     *   **Hardened Routing**: Immutably routes payouts and refunds to the original parties.
 *   **Enriched Discovery**: Discloses `escrowProgramId`, `bankAddress`, `feeBps`, and `oracleAuthorities`.
 
-### 4. 💎 The Service: `Resource Provider`
+### 4. 💎 The Service: `Resource Provider` (Official Paid Service)
 *   **Role**: The Monetized Resource.
-*   **Reference Implementation**: `spl-token-balance-serverless`.
-*   **What it does**: A business-layer service that gates access using x402 headers. It verifies payment via the Facilitator before serving the autonomous request.
+*   **Implementation**: `spl-token-balance-serverless` (Miraland Labs Official Paid Service, may be closed source).
+*   **What it does**: A production-grade business-layer service that securely gates access using x402 headers. It serves as our premium reference for verifying payment via the Facilitator before serving the autonomous request.
+
+### 5. 📚 The Starter: `x402-seller-starter`
+*   **Role**: Open-source Demo / Reference Implementation.
+*   **Platform**: Rust / Axum.
+*   **What it does**: A minimal, open-source template for sellers to learn how to build x402 `Payment Required` JSON challenges and verify payments seamlessly using the pr402 Facilitator. Use this to quickly bootstrap your own agentic services.
 
 ---
 
@@ -130,13 +135,14 @@ This specialized approach is the only sustainable way to avoid systemic settleme
 
 ## 📂 The x402 Ecosystem Structure
 
-The x402 ecosystem is composed of four independent, specialized repositories. This modular approach allows for rapid serverless iteration alongside hardened, security-critical on-chain programs.
+The x402 ecosystem is composed of five independent, specialized repositories. This modular approach allows for rapid serverless iteration alongside hardened, security-critical on-chain programs.
 
 ### 🌉 The Interconnects
-- **[pr402 Facilitator](https://github.com/miralandlabs/pr402)**: The REST-to-Solana gateway (Vercel-native).
-- **[UniversalSettle Protocol](https://github.com/miraland-labs/universalsettle)**: The split-payment engine (On-chain).
-- **[SLA-Escrow Protocol](https://github.com/miraland-labs/sla-escrow)**: The service-level enforcer (On-chain).
-- **[Reference Resource Provider](https://github.com/miralandlabs/spl-token-balance-serverless)**: Example HTTP 402 serverless integration.
+- **[pr402 Facilitator](https://github.com/miralandlabs/pr402)**: The REST-to-Solana gateway (Vercel-native, Open Source).
+- **[UniversalSettle Protocol](https://github.com/miraland-labs/universalsettle)**: The split-payment engine (On-chain, Planned Open Source).
+- **[SLA-Escrow Protocol](https://github.com/miraland-labs/sla-escrow)**: The service-level enforcer (On-chain, Planned Open Source).
+- **[Official Paid Service](https://github.com/miralandlabs/spl-token-balance-serverless)**: Production-grade HTTP 402 serverless gating integration `spl-token-balance-serverless` (May be Closed Source).
+- **[x402-seller-starter](https://github.com/miraland-labs/x402/tree/main/x402-seller-starter)**: Minimal open-source reference implementation for Resource Providers.
 
 ---
 

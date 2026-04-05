@@ -53,7 +53,7 @@ The "Trust" engine for high-stakes work. Ideal for long-running autonomous resea
 
 The x402 ecosystem is open-source and modular. You can start monetizing your AI services today.
 
-1.  **Deploy a Resource Provider**: Reference our `spl-token-balance-serverless` example to see how to gate your REST API with x402 headers.
+1.  **Deploy a Resource Provider**: Reference our `x402-seller-starter` open-source demo to see how to gate your REST API with x402 headers using a minimal Rust/Axum setup. Or use `spl-token-balance-serverless`, our official paid service for production-grade API gating.
 2.  **Integrate pr402**: Use the facilitator to verify that incoming requests have valid on-chain settlement.
 3.  **Scale**: Join the growing network of agents that are already transacting across the x402 protocol.
 
@@ -65,12 +65,13 @@ x402 isn't just a protocol; it's the foundation for the next stage of the intern
 ---
 
 ### 📂 Modular Architecture
-The x402 ecosystem is composed of four specialized, independent repositories. This modularity ensures we can iterate on the REST bridge rapidly while keeping our core on-chain protocols hardened and stable.
+The x402 ecosystem is composed of five specialized, independent repositories. This modularity ensures we can iterate on the REST bridge rapidly while keeping our core on-chain protocols hardened and stable.
 
 **Explore the Ecosystem:**
-- **[pr402 Facilitator](https://github.com/miralandlabs/pr402)**: The serverless-first REST Bridge.
-- **[UniversalSettle (SplitVault)](https://github.com/miraland-labs/universalsettle)**: High-velocity micro-payments.
-- **[SLA-Escrow Protocol](https://github.com/miraland-labs/sla-escrow)**: Trustless oracle-backed escrow.
-- **[Reference Resource Provider](https://github.com/miralandlabs/spl-token-balance-serverless)**: Example serverless API gating.
+- **[pr402 Facilitator](https://github.com/miralandlabs/pr402)**: The serverless-first REST Bridge (Open Source).
+- **[UniversalSettle (SplitVault)](https://github.com/miraland-labs/universalsettle)**: High-velocity micro-payments (Planned Open Source).
+- **[SLA-Escrow Protocol](https://github.com/miraland-labs/sla-escrow)**: Trustless oracle-backed escrow (Planned Open Source).
+- **[Official Paid Service (spl-token-balance-serverless)](#)**: Miraland Labs' official production-grade serverless API gating service (May be Closed Source).
+- **[Starter Demo (x402-seller-starter)](https://github.com/miraland-labs/x402/tree/main/x402-seller-starter)**: Minimal open-source reference implementation for resource providers.
 
 **Maintained by Miraland Labs & MiralandLabs.**
