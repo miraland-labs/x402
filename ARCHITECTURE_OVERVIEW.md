@@ -9,7 +9,7 @@
 
 ## 🏗️ The 5 Pillars of the x402 Ecosystem
 
-The ecosystem consists of five specialized components that work together to provide a seamless "Payment-Required" (HTTP 402) experience for the autonomous machine age.
+The ecosystem consists of specialized components that work together to provide a seamless "Payment-Required" (HTTP 402) experience for the autonomous machine age.
 
 ### 1. 🌉 The Bridge: `pr402` (The Facilitator)
 *   **Role**: REST-to-Blockchain Gateway.
@@ -39,15 +39,22 @@ The ecosystem consists of five specialized components that work together to prov
     *   **Hardened Routing**: Immutably routes payouts and refunds to the original parties.
 *   **Enriched Discovery**: Discloses `escrowProgramId`, `bankAddress`, `feeBps`, and `oracleAuthorities`.
 
-### 4. 💎 The Service: `Resource Provider` (Official Paid Service)
-*   **Role**: The Monetized Resource.
-*   **Implementation**: `spl-token-balance-serverless` (Miraland Labs Official Paid Service, may be closed source).
-*   **What it does**: A production-grade business-layer service that securely gates access using x402 headers. It serves as our premium reference for verifying payment via the Facilitator before serving the autonomous request.
+### 4. 💎 The Paid Services: `Resource Providers`
+*   **Role**: The Monetized Resource (Production Reference).
+*   **Implementations**: 
+    *   [`spl-token-balance-serverless`](https://preview.spl-token.signer-payer.me/): Production-grade SPL balance gating.
+    *   [`aethervane-serverless`](https://preview.aethervane.signer-payer.me/): High-fidelity data delivery (Agentic Metaphysics).
+*   **What they do**: These services serve as premium references for verifying x402 settlement proofs via the Facilitator before serving autonomous requests.
 
-### 5. 📚 The Starter: `x402-seller-starter`
-*   **Role**: Open-source Demo / Reference Implementation.
+### 5. 📚 The Seller Starter: `x402-seller-starter`
+*   **Role**: Open-source Seller Reference.
 *   **Platform**: Rust / Axum.
-*   **What it does**: A minimal, open-source template for sellers to learn how to build x402 `Payment Required` JSON challenges and verify payments seamlessly using the pr402 Facilitator. Use this to quickly bootstrap your own agentic services.
+*   **What it does**: A minimal baseline for resource providers to build x402 v2 challenges and verify payments.
+
+### 6. 🏹 The Buyer Starter: `x402-buyer-starter`
+*   **Role**: Open-source Buyer/Agent Reference.
+*   **Platform**: Polyglot (Bash, TypeScript, Python).
+*   **What it does**: The definitive SDK and onboarding tool for AI agents. It demonstrates the full "Discovery → Build → Sign → Settle" lifecycle, enabling agents to autonomously acquire resources.
 
 ---
 
@@ -151,8 +158,10 @@ The x402 ecosystem is composed of five independent, specialized repositories. Th
 - **[pr402 Facilitator](https://github.com/miralandlabs/pr402)**: The REST-to-Solana gateway (Vercel-native, Open Source).
 - **[UniversalSettle Protocol](https://github.com/miraland-labs/universalsettle)**: The split-payment engine (On-chain, Planned Open Source).
 - **[SLA-Escrow Protocol](https://github.com/miraland-labs/sla-escrow)**: The service-level enforcer (On-chain, Planned Open Source).
-- **[Official Paid Service](https://preview.spl-token.signer-payer.me/)**: Production-grade HTTP 402 serverless gating integration `spl-token-balance-serverless` (Currently Closed Source).
-- **[x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter)**: Minimal open-source reference implementation for Resource Providers.
+- **[AetherVane Serverless](https://preview.aethervane.signer-payer.me/)**: Paid service reference for complex data delivery (Closed Source).
+- **[SPL Token Balance](https://preview.spl-token.signer-payer.me/)**: Paid service reference for balance gating (Closed Source).
+- **[x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter)**: Open-source Seller reference implementation.
+- **[x402-buyer-starter](https://github.com/miraland-labs/x402-buyer-starter)**: Open-source Buyer/Agent SDK reference implementation.
 
 ---
 

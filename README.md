@@ -7,7 +7,7 @@
 
 ---
 
-## 🏛️ The 5 Pillars of x402
+## 🏛️ The Pillars of x402
 
 The ecosystem is composed of five specialized, independent modules that work together to provide a seamless "Payment-Required" (HTTP 402) experience for the serverless age.
 
@@ -26,15 +26,25 @@ The ecosystem is composed of five specialized, independent modules that work tog
 *   **Platform**: Solana On-chain Program (Planned Open Source).
 *   **What it does**: Escrows funds via the `sla-escrow` scheme for high-value or long-running work. Suggested for payments **>= $10 USDC**. Requires domain-specific Oracles for verification (recruiting these Oracle developers is a key ecosystem goal).
 
-### 💎 [Solana SPL-Token Balance Verification Paid Service](https://preview.spl-token.signer-payer.me/)
+### 💎 [Solana SPL-Token Balance Verification](https://preview.spl-token.signer-payer.me/)
 *   **Role**: Miraland Labs Official Paid Service.
 *   **Platform**: Rust / Vercel Serverless (Currently Closed Source).
-*   **What it does**: A premium, out-of-the-box service provided officially by Miraland Labs. It acts as a production-grade backend service demonstrating real-world API token-balance gating over x402.
+*   **What it does**: A production-grade service provided officially by Miraland Labs. It demonstrates real-world API token-balance gating over x402.
+
+### 🔮 [AetherVane Fortune Teller](https://preview.aethervane.signer-payer.me/)
+*   **Role**: Reference Paid Service (Agentic Metaphysics).
+*   **Platform**: Rust / Vercel Serverless (Closed Source).
+*   **What it does**: Provides deterministic, machine-consumable Chinese metaphysical readings (Liu Yao, Mei Hua). Serves as a high-fidelity example of complex data payloads delivered over x402.
 
 ### 📚 [Open-Source Seller Starter](https://github.com/miraland-labs/x402-seller-starter)
-*   **Role**: Open-source Seller Demo / Reference Implementation.
-*   **Platform**: Rust / Axum (local or any host).
-*   **What it does**: Your minimal open-source seller reference implementation. It builds x402 v2 `Payment Required` JSON and optionally calls pr402 `verify`/`settle` when the buyer sends `X-PAYMENT`. Use this as your copy-paste baseline to build your own resource provider.
+*   **Role**: Open-source Seller Reference.
+*   **Platform**: Rust / Axum.
+*   **What it does**: A minimal baseline for resource providers. Builds x402 v2 challenge JSON and verifies incoming settlement proofs.
+
+### 🏹 [Open-Source Buyer Starter](https://github.com/miraland-labs/x402-buyer-starter)
+*   **Role**: Open-source Buyer/Agent Reference.
+*   **Platform**: Polyglot (Bash, TypeScript, Python).
+*   **What it does**: The definitive onboarding tool for AI agents (MCP, OpenClaw). Demonstrates the full acquisition lifecycle (Challenge → Discovery → Build → Sign → Settle) with zero-dependency Bash and robust TS/Python SDKs.
 
 ---
 
@@ -64,8 +74,10 @@ x402/
 ├── pr402/                  <-- Independent Repo (Open Source Facilitator)
 ├── universalsettle/        <-- Independent Repo (Planned Open Source)
 ├── sla-escrow/             <-- Independent Repo (Planned Open Source)
-├── spl-token-balance-serverless/ <-- Paid Service (May be Closed Source)
-└── x402-seller-starter/   <-- Demo/Reference Implementation (Open Source)
+├── spl-token-balance-serverless/ <-- Paid Service (Closed Source)
+├── aethervane-serverless/   <-- Paid Service (Closed Source)
+├── x402-seller-starter/    <-- Demo Reference (Open Source)
+└── x402-buyer-starter/     <-- Agent SDK Reference (Open Source)
 ```
 
 ---
