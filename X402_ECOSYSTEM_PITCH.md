@@ -38,7 +38,13 @@ The **Service Trust Engine**. Operates via the `sla-escrow` extension scheme.
 - **Use Case**: High-stakes work, autonomous research, custom training, or any job spanning minutes to days where payment is contingent on success.
 - **Recommendation**: Suggested for larger transactions **>= $10 USDC**.
 - **Oracle-Adjudicated**: Funds are cryptographically locked until a verified domain-specific Oracle confirms delivery. 
-- **Verdict-Neutral Tipping**: Oracles are tipped for their *work* of adjudication, eliminating bias. *(Note: Recruiting domain-specific Oracle developers is our next major marketing initiative to supercharge this layer.)*
+- **Verdict-Neutral Tipping**: Oracles are tipped for their *work* of adjudication, eliminating bias.
+
+### 4. 🔮 `oracle-qa` (API Response Quality Oracle)
+The **First Official x402 Oracle** and open-source reference for the Oracle Economy.
+- **Use Case**: Evaluates paid API responses against SLA contracts — status codes, latency, JSON Schema, required fields — and submits on-chain verdicts via `ConfirmOracle`.
+- **For Oracle Developers**: [`oracle-qa`](https://github.com/miraland-labs/oracle-qa) is designed as a production-ready oracle and a **template for building domain-specific oracles** (ML model quality, uptime monitoring, content moderation, financial data accuracy, and more).
+- **Architecture**: Standalone Rust/Axum/Tokio server with Solana WebSocket subscription, off-chain evidence fetching, deterministic SLA evaluation, and automated on-chain settlement.
 
 ---
 
@@ -59,10 +65,11 @@ The **Service Trust Engine**. Operates via the `sla-escrow` extension scheme.
 
 The x402 ecosystem is open-source and modular. You can start monetizing your AI services today.
 
-1.  **Deploy a Resource Provider**: Reference our [`x402-seller-starter`](https://github.com/miraland-labs/x402-seller-starter) open-source demo to see how to gate your REST API with x402 headers. Or used our official paid services like [`spl-token balance verification`](https://preview.spl-token.signer-payer.me/) and [`aethervane-serverless`](https://preview.aethervane.signer-payer.me/) for production-grade API gating.
+1.  **Deploy a Resource Provider**: Reference our [`x402-seller-starter`](https://github.com/miraland-labs/x402-seller-starter) open-source demo to see how to gate your REST API with x402 headers. Or use our official paid services like [`spl-token balance verification`](https://preview.spl-token.signer-payer.me/) and [`aethervane-serverless`](https://preview.aethervane.signer-payer.me/) for production-grade API gating.
 2.  **Onboard Your AI Agents**: Start with the [`x402-buyer-starter`](https://github.com/miraland-labs/x402-buyer-starter) to integrate the agentic payment lifecycle into your AI (supporting Bash, TypeScript, and Python).
-3.  **Integrate pr402**: Use the facilitator to verify that incoming requests have valid on-chain settlement proofs.
-4.  **Scale**: Join the growing network of agents transacting autonomously across the x402 protocol.
+3.  **Build a Domain-Specific Oracle**: Fork [`oracle-qa`](https://github.com/miraland-labs/oracle-qa) as your starting point. It provides the complete chain-monitor → evaluate → settle pipeline; swap in your own evaluation logic for any domain (ML quality, uptime, content moderation, etc.).
+4.  **Integrate pr402**: Use the facilitator to verify that incoming requests have valid on-chain settlement proofs.
+5.  **Scale**: Join the growing network of agents and oracles transacting autonomously across the x402 protocol.
 
 ---
 
@@ -78,6 +85,7 @@ The x402 ecosystem is composed of specialized, independent repositories. This mo
 - **[pr402 Facilitator](https://github.com/miralandlabs/pr402)**: The serverless-first REST Bridge (Open Source).
 - **[UniversalSettle (SplitVault)](https://github.com/miraland-labs/universalsettle)**: High-velocity micro-payments (Planned Open Source).
 - **[SLA-Escrow Protocol](https://github.com/miraland-labs/sla-escrow)**: Trustless oracle-backed escrow (Planned Open Source).
+- **[oracle-qa](https://github.com/miraland-labs/oracle-qa)**: API Response Quality Oracle — first official oracle and reference implementation for oracle developers (Open Source).
 - **[AetherVane Serverless](https://preview.aethervane.signer-payer.me/)**: Paid service for metaphysical data delivery (Closed Source).
 - **[SPL-Token Balance Verification](https://preview.spl-token.signer-payer.me/)**: Paid service for API balance gating (Closed Source).
 - **[x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter)**: Open-source reference for resource providers.

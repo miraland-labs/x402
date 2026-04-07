@@ -9,7 +9,7 @@
 
 ## 🏛️ The Pillars of x402
 
-The ecosystem is composed of five specialized, independent modules that work together to provide a seamless "Payment-Required" (HTTP 402) experience for the serverless age.
+The ecosystem is composed of specialized, independent modules that work together to provide a seamless "Payment-Required" (HTTP 402) experience for the serverless age.
 
 ### 🌉 [pr402 Facilitator](https://github.com/miralandlabs/pr402)
 *   **Role**: The Bridge (REST-to-Solana Gateway).
@@ -35,6 +35,11 @@ The ecosystem is composed of five specialized, independent modules that work tog
 *   **Role**: Reference Paid Service (Agentic Metaphysics).
 *   **Platform**: Rust / Vercel Serverless (Closed Source).
 *   **What it does**: Provides deterministic, machine-consumable Chinese metaphysical readings (Liu Yao, Mei Hua). Serves as a high-fidelity example of complex data payloads delivered over x402.
+
+### ⚖️ [Oracle-QA: API Response Quality Oracle](https://github.com/miraland-labs/oracle-qa)
+*   **Role**: First Official x402 Oracle & Reference Implementation for Oracle Developers.
+*   **Platform**: Rust / Axum / Tokio (Standalone Server).
+*   **What it does**: Monitors SLA-Escrow delivery events via Solana WebSocket, evaluates API response quality against SLA contracts (status codes, latency, JSON Schema, required fields), and submits on-chain verdicts. Designed as both a production-ready oracle and an open-source reference for developers building domain-specific oracles across any vertical.
 
 ### 📚 [Open-Source Seller Starter](https://github.com/miraland-labs/x402-seller-starter)
 *   **Role**: Open-source Seller Reference.
@@ -74,6 +79,7 @@ x402/
 ├── pr402/                  <-- Independent Repo (Open Source Facilitator)
 ├── universalsettle/        <-- Independent Repo (Planned Open Source)
 ├── sla-escrow/             <-- Independent Repo (Planned Open Source)
+├── oracle-qa/              <-- Independent Repo (Open Source Oracle Reference)
 ├── spl-token-balance-serverless/ <-- Paid Service (Closed Source)
 ├── aethervane-serverless/   <-- Paid Service (Closed Source)
 ├── x402-seller-starter/    <-- Demo Reference (Open Source)
