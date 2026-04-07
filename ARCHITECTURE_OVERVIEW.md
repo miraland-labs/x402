@@ -84,7 +84,7 @@ The answer lies in optimizing for risk versus latency in the Machine Economy. AI
 2. `**sla-escrow` (SLA-Escrow)**: A standard-supported flexible extension scheme designed to securely lock funds for asynchronous delivery.
   - **Use Case**: High-value work or long-delivery tasks spanning minutes, hours, or days (e.g., model training, autonomous research).
   - **Recommendation**: Suggested for payments **>= $10 USDC**.
-   - **The Oracle Economy**: Escrow requires domain-specific Oracles to verify delivery before funds release. The open-source [`oracle-qa`](https://github.com/miraland-labs/oracle-qa) serves as both the first official oracle and a reference implementation, lowering the barrier for domain-specific Oracle developers to join the ecosystem.
+  - **The Oracle Economy**: Escrow requires domain-specific Oracles to verify delivery before funds release. The open-source `[oracle-qa](https://github.com/miraland-labs/oracle-qa)` serves as both the first official oracle and a reference implementation, lowering the barrier for domain-specific Oracle developers to join the ecosystem.
 
 *(Note: Both the UniversalSettle and SLA-Escrow on-chain programs are **planned to be open-sourced** once the platform has accumulated a critical mass of buyer and seller agents.)*
 
@@ -100,8 +100,8 @@ sequenceDiagram
     participant OnChain as Solana (Vault/Escrow)
 
     Agent->>Provider: 1. Request Resource (GET /api/resource)
-    Provider-->>Agent: 2. HTTP 402 + Payment Requirement
-    
+    Provider-->>Agent: 2. HTTP 402 + PAYMENT-REQUIRED header
+
     Agent->>Facilitator: 3. Onboard (Discover Vault Address)
     Facilitator-->>Agent: 4. Vault PDAs & Verified Fee Terms
 
@@ -110,15 +110,15 @@ sequenceDiagram
 
     Note over Agent: 7. Agent Signs Transaction locally
 
-    Agent->>Provider: 8. Retry Request + X-PAYMENT (Signed Tx)
-    
+    Agent->>Provider: 8. Retry Request + PAYMENT-SIGNATURE header
+
     Provider->>Facilitator: 9. Settle/Verify (Forward Signed Tx)
     Note over Facilitator: 10. Validates terms and executes on-chain
     Facilitator->>OnChain: 11. Provision Vault + Execute Settlement
     OnChain-->>Facilitator: 12. Confirmation (Signature)
-    
+
     Facilitator-->>Provider: 13. Settlement Confirmed (OK)
-    Provider-->>Agent: 14. Serve Resource (Success)
+    Provider-->>Agent: 14. Serve Resource + PAYMENT-RESPONSE header
 ```
 
 
