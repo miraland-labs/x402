@@ -31,10 +31,10 @@ The ecosystem is composed of specialized, independent modules that work together
 *   **Platform**: Rust / Vercel Serverless (Currently Closed Source).
 *   **What it does**: A production-grade service provided officially by Miraland Labs. It demonstrates real-world API token-balance gating over x402.
 
-### 🔮 [AetherVane Fortune Teller](https://preview.aethervane.signer-payer.me/)
+### 🔮 [AetherVane Fortune Teller](https://preview.aethervane.hashspace.me/)
 *   **Role**: Reference Paid Service (Agentic Metaphysics).
-*   **Platform**: Rust / Vercel Serverless (Closed Source).
-*   **What it does**: Provides deterministic, machine-consumable Chinese metaphysical readings (Liu Yao, Mei Hua). Serves as a high-fidelity example of complex data payloads delivered over x402.
+*   **Platform**: Rust workspace on Vercel — `aethervane-srv` (x402-gated HTTP API), `aethervane-app` (web client), `aethervane-shared` (Closed Source).
+*   **What it does**: Deterministic, machine-consumable readings across multiple engines — Bazi (Four Pillars), Western tropical natal (Swiss Ephemeris–based), Liu Yao, Mei Hua, onomancy (81-number), and daily almanac — with optional LLM-backed interpretation and PostgreSQL-backed quotas. Succeeds the slimmer `aethervane-serverless` preview; same x402 payment pattern, richer surface area for agents.
 
 ### ⚖️ [Oracle-QA: API Response Quality Oracle](https://github.com/miraland-labs/oracle-qa)
 *   **Role**: First Official x402 Oracle & Reference Implementation for Oracle Developers.
@@ -81,7 +81,7 @@ x402/
 ├── sla-escrow/             <-- Independent Repo (Planned Open Source)
 ├── oracle-qa/              <-- Independent Repo (Open Source Oracle Reference)
 ├── spl-token-balance-serverless/ <-- Paid Service (Closed Source)
-├── aethervane-serverless/   <-- Paid Service (Closed Source)
+├── aethervane/               <-- Paid Service: AetherVane API + app (Closed Source; replaces aethervane-serverless)
 ├── x402-seller-starter/    <-- Demo Reference (Open Source)
 └── x402-buyer-starter/     <-- Agent SDK Reference (Open Source)
 ```

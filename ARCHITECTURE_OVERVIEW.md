@@ -47,7 +47,7 @@ The ecosystem consists of specialized components that work together to provide a
 - **Role**: The Monetized Resource (Production Reference).
 - **Implementations**: 
   - `[spl-token-balance-serverless](https://preview.spl-token.signer-payer.me/)`: Production-grade SPL balance gating.
-  - `[aethervane-serverless](https://preview.aethervane.signer-payer.me/)`: High-fidelity data delivery (Agentic Metaphysics).
+  - `[aethervane](https://preview.aethervane.hashspace.me/)`: **AetherVane** — multi-engine, machine-consumable metaphysical readings over x402 (Bazi, Western tropical natal, Liu Yao, Mei Hua, onomancy, daily almanac; optional LLM interpretation; Postgres-backed quotas). Delivered from the `aethervane` Rust workspace (`aethervane-srv`, `aethervane-app`, `aethervane-shared`).
 - **What they do**: These services serve as premium references for verifying x402 settlement proofs via the Facilitator before serving autonomous requests.
 
 ### 5. ⚖️ The Oracle: `oracle-qa` (API Response Quality Oracle)
@@ -181,7 +181,7 @@ The x402 ecosystem is composed of independent, specialized repositories. This mo
 - **[UniversalSettle Protocol](https://github.com/miraland-labs/universalsettle)**: The split-payment engine (On-chain, Planned Open Source).
 - **[SLA-Escrow Protocol](https://github.com/miraland-labs/sla-escrow)**: The service-level enforcer (On-chain, Planned Open Source).
 - **[oracle-qa](https://github.com/miraland-labs/oracle-qa)**: API Response Quality Oracle — first official oracle and reference implementation for oracle developers (Open Source).
-- **[AetherVane Serverless](https://preview.aethervane.signer-payer.me/)**: Paid service reference for complex data delivery (Closed Source).
+- **[AetherVane](https://preview.aethervane.hashspace.me/)**: Paid service reference — multi-engine fortune stack and web client in the `aethervane` workspace (`aethervane-srv` / `aethervane-app` / `aethervane-shared`; Closed Source).
 - **[SPL Token Balance](https://preview.spl-token.signer-payer.me/)**: Paid service reference for balance gating (Closed Source).
 - **[x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter)**: Open-source Seller reference implementation.
 - **[x402-buyer-starter](https://github.com/miraland-labs/x402-buyer-starter)**: Open-source Buyer/Agent SDK reference implementation.
