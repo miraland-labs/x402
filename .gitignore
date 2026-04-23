@@ -7,10 +7,13 @@ spl-token-balance-serverless/
 x402-seller-starter/
 x402-buyer-starter/
 aethervane-serverless/
+aethervane-serverless-deprecated/
 oracle-qa/
 aethervane/
 references/
 docs/
+demo-wallets/
+integration-tests/
 
 # OS Specific
 .DS_Store

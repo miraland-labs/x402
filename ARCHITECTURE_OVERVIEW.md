@@ -134,7 +134,8 @@ To ensure interoperability between independent **Sellers**, **Buyers**, and **Or
 The `sla_hash` stored on-chain should be the **SHA-256 hash** of a **Canonical JSON** representation of the service terms. This allows the Oracle to verify that the Seller's delivery matches the Buyer's original expectations.
 
 - **Recommended Schema**: A JSON object containing `service_id`, `task_details`, `deadline_unix`, and `verification_criteria`.
-- **Logic**: `hash = sha256(canonical_json(sla_terms))`
+- **Logic**: `hash = sha256(canonical_json(sla_terms))` — in practice, **hash the exact octets** you persist (e.g. UTF-8 JSON) so fetch-and-verify matches without serializer ambiguity.
+- **Reference profile (HTTP / JSON API quality):** [`oracle-qa/spec/README.md`](oracle-qa/spec/README.md) publishes **`x402/oracle-qa/api-quality/v1`** — JSON Schemas, normative evaluation semantics, and examples aligned with the `oracle-qa` reference oracle.
 
 ### 2. The `delivery_hash` (The Proof)
 
