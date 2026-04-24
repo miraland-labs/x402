@@ -16,6 +16,7 @@ The ecosystem is composed of specialized, independent modules that work together
 - **Role**: The Bridge (REST-to-Solana Gateway).
 - **Platform**: Rust / Vercel Serverless.
 - **What it does**: Handles vault discovery, transaction building, and payment verification for off-chain agents.
+- **Integrators (agents)**: facilitator **`GET /capabilities`** → **`agentManifest.payToSemantics`**; hub note [`docs/facilitator-onboard-supported-and-tx-building.md`](docs/facilitator-onboard-supported-and-tx-building.md).
 
 ### ⚡ [UniversalSettle Protocol](https://github.com/miraland-labs/universalsettle)
 

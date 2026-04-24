@@ -20,6 +20,7 @@ The ecosystem consists of specialized components that work together to provide a
   - **Zero-Signature Onboarding**: Agents discover their vault PDAs with zero initial friction.
   - **BYOG (Bring Your Own Gas)**: Default economic model where the Buyer Agent pays network fees, ensuring facilitator sustainability while allowing optional sponsorship for premium tiers.
   - **Math-as-Trust**: Every address is re-derivable via PDA seeds (`wallet + facilitator_id`), allowing agents to verify terms locally.
+- **Agent reference**: **`GET /capabilities`** on the deployed facilitator → **`agentManifest.payToSemantics`** (JSON). Hub pointer: [`docs/facilitator-onboard-supported-and-tx-building.md`](docs/facilitator-onboard-supported-and-tx-building.md).
 
 ### 2. ⚡ The Payout: `UniversalSettle` (SplitVault)
 
