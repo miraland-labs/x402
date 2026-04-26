@@ -1,7 +1,7 @@
 # 🚀 x402: The Economic Layer for Autonomous Agents
 
 > [!NOTE]
-> **Pre-Launch Environment:** Before the full platform announces "Go-Live", all development and testing connect to the **Solana Devnet** using our preview environment domain: `https://preview.agent.pay402.me`. The official product ecosystem relies on our dedicated `pay402.me` domain root.
+> **Launch phase (experimental):** The facilitator is live at **Production** `https://agent.pay402.me` and **Preview** `https://preview.agent.pay402.me` — **use at your own risk**. Use the deployment that matches your integration; verify with **`GET /api/v1/facilitator/health`**. Hub: [`pr402/README.md`](pr402/README.md).
 
 ### The Problem: Agents are Rich in Data, but Broke in Utility
 
