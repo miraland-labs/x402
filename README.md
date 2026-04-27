@@ -30,17 +30,19 @@ The ecosystem is composed of specialized, independent modules that work together
 - **Platform**: Solana On-chain Program (Planned Open Source).
 - **What it does**: Escrows funds via the `sla-escrow` scheme for high-value or long-running work. Suggested for payments **>= $10 USDC**. Requires domain-specific Oracles for verification (recruiting these Oracle developers is a key ecosystem goal).
 
-### 💎 [Solana SPL-Token Balance Verification](https://preview.spl-token.signer-payer.me/)
+### 💎 [Solana SPL-Token Balance Verification](https://spl-token.signer-payer.me/)
 
 - **Role**: Miraland Labs Official Paid Service.
 - **Platform**: Rust / Vercel Serverless (Currently Closed Source).
 - **What it does**: A production-grade service provided officially by Miraland Labs. It demonstrates real-world API token-balance gating over x402.
+- **Preview**: [preview.spl-token.signer-payer.me](https://preview.spl-token.signer-payer.me/)
 
-### 🔮 [AetherVane Fortune Teller](https://preview.aethervane.hashspace.me/)
+### 🔮 [AetherVane Fortune Teller](https://aethervane.hashspace.me/)
 
 - **Role**: Reference Paid Service (Agentic Metaphysics).
 - **Platform**: Rust workspace on Vercel — `aethervane-srv` (x402-gated HTTP API), `aethervane-app` (web client), `aethervane-shared` (Closed Source).
 - **What it does**: Deterministic, machine-consumable readings across multiple engines — Bazi (Four Pillars), Western tropical natal (Swiss Ephemeris–based), Liu Yao, Mei Hua, onomancy (81-number), and daily almanac — with optional LLM-backed interpretation and PostgreSQL-backed quotas. Succeeds the slimmer `aethervane-serverless` preview; same x402 payment pattern, richer surface area for agents.
+- **Preview**: [preview.aethervane.hashspace.me](https://preview.aethervane.hashspace.me/)
 
 ### ⚖️ [Oracle-QA: API Response Quality Oracle](https://github.com/miraland-labs/oracle-qa)
 
