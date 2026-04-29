@@ -68,6 +68,7 @@ The ecosystem is composed of specialized, independent modules that work together
 
 - **[Architecture Overview](ARCHITECTURE_OVERVIEW.md)**: Deep dive into the technical pillars, transaction lifecycles, and security invariants.
 - **[Ecosystem Pitch](X402_ECOSYSTEM_PITCH.md)**: The marketing perspective on why x402 is the foundation for the next stage of the internet.
+- **[Facilitator onboard + tx building](docs/facilitator-onboard-supported-and-tx-building.md)**: Agent semantics; includes **scheme layers** (`402` / builder vs verify-settle wire form).
 
 ---
 
