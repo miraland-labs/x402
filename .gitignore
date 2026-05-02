@@ -36,5 +36,4 @@ build/
 .env.test.local
 .env.production.local
 
-test_authority_transfer.sh-bak
-
+test_authority_transfer.sh
