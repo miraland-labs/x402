@@ -1,7 +1,7 @@
 # 🚀 x402: The Economic Layer for Autonomous Agents
 
 > [!NOTE]
-> **Launch phase (experimental):** The facilitator is live at **Production** `https://agent.pay402.me` and **Preview** `https://preview.agent.pay402.me` — **use at your own risk**. Use the deployment that matches your integration; verify with **`GET /api/v1/facilitator/health`**. Hub: [`pr402/README.md`](pr402/README.md).
+> **Launch phase (experimental):** The facilitator is live on **recommended** origins **Production** `https://ipay.sh` and **Preview** `https://preview.ipay.sh`, and on **Production** `https://agent.pay402.me` and **Preview** `https://preview.agent.pay402.me` (same service; **not** deprecated) — **use at your own risk**. Use the origin that matches your integration or seller docs; verify with **`GET /api/v1/facilitator/health`**. Hub: [`pr402/README.md`](pr402/README.md).
 
 ### The Problem: Agents are Rich in Data, but Broke in Utility
 

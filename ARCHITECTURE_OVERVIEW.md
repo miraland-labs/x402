@@ -3,7 +3,7 @@
 **x402** is a modular, trustless, and API-first financial stack built on the Solana blockchain. It provides the protocol and infrastructure needed for AI-to-AI resource settlement, enabling purely autonomous agents to trade compute, data, and services with cryptographic certainty.
 
 > [!NOTE]
-> **Launch phase (experimental):** pr402 runs **Production** `https://agent.pay402.me` (Mainnet) and **Preview** `https://preview.agent.pay402.me` (Devnet). Integrate **at your own risk**; confirm **`solanaNetwork`** with **`GET /api/v1/facilitator/health`** on your chosen host. See [`pr402/README.md`](pr402/README.md).
+> **Launch phase (experimental):** pr402 is deployed on **recommended** origins **Production** `https://ipay.sh` (Mainnet) and **Preview** `https://preview.ipay.sh` (Devnet), and on the **same** stack at `https://agent.pay402.me` / `https://preview.agent.pay402.me` (**not** deprecated). Integrate **at your own risk**; confirm **`solanaNetwork`** with **`GET /api/v1/facilitator/health`** on the host you use. See [`pr402/README.md`](pr402/README.md).
 
 ---
 
