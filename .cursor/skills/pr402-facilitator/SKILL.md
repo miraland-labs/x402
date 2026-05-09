@@ -1,0 +1,38 @@
+---
+name: pr402-facilitator
+description: >-
+  Develops or integrates the Rust pr402 facilitator: x402 REST gateway for
+  Solana, Vercel entrypoint `facilitator`, optional `facilitator-http` client
+  SDK. Use when changing verify/settle/onboard flows, facilitator env config, or
+  OpenAPI-aligned HTTP handlers under pr402/.
+disable-model-invocation: true
+---
+
+# pr402 facilitator
+
+## Purpose
+
+Rust **x402 facilitator** dedicated to Solana: discovery, TX building (`build-exact-payment-tx`, `build-sla-escrow-payment-tx`), `verify`, `settle`, seller onboarding endpoints. Deployed serverlessly (see `pr402/vercel.json` and local `README.md`).
+
+## Repo location
+
+[`pr402/`](../../../pr402/) inside this hub mirror; authoritative open-source history may live at `miralandlabs/pr402` — match release process to whichever remote you push.
+
+## Build & test hints
+
+See skill [`x402-rust-solana-workflow`](../x402-rust-solana-workflow/SKILL.md).
+
+Common variants:
+
+```bash
+cd pr402
+cargo test
+cargo build --release
+cargo build --features facilitator-http # SDK / HTTP client feature
+```
+
+## Integration pointers
+
+- Machine-readable surface: `public/openapi.json`, `/api/v1/facilitator/capabilities`, health on `/api/v1/facilitator/health`.
+- Buyer/seller narratives: `public/agent-integration.md`, `public/quickstart-*.md`, `/supported` semantics in README.
+- On-chain coupling: consumes published `universalsettle-api` and `sla-escrow-api` crates (see root `Cargo.toml`).

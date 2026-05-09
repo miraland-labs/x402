@@ -77,7 +77,7 @@ The **First Official x402 Oracle** and open-source reference for the Oracle Econ
 
 The x402 ecosystem is open-source and modular. You can start monetizing your AI services today.
 
-1. **Deploy a Resource Provider**: Reference our `[x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter)` open-source demo to see how to gate your REST API with x402 headers. Or use our official paid services like `[spl-token balance verification](https://preview.spl-token.signer-payer.me/)` and `[AetherVane](https://preview.aethervane.hashspace.me/)` (`aethervane` workspace: multi-engine metaphysical API + app, x402-gated) for production-grade API gating.
+1. **Deploy a Resource Provider**: Reference our `[x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter)` open-source demo to see how to gate your REST API with x402 headers. Or use our official paid services like `[spl-token balance verification](https://preview.spl-token.signer-payer.me/)` and `[AetherVane](https://preview.aethervane.hashspace.me/)` (`aethervane` workspace: one free daily preview, premium x402 reports, agent-readable metaphysics API) for production-grade API gating.
 2. **Onboard Your AI Agents**: Start with the `[x402-buyer-starter](https://github.com/miraland-labs/x402-buyer-starter)` to integrate the agentic payment lifecycle into your AI (supporting Bash, TypeScript, and Python).
 3. **Build a Domain-Specific Oracle**: Fork `[oracle-qa](https://github.com/miraland-labs/oracle-qa)` as your starting point. It provides the complete chain-monitor → evaluate → settle pipeline; swap in your own evaluation logic for any domain (ML quality, uptime, content moderation, etc.).
 4. **Integrate pr402**: Use the facilitator to verify that incoming requests have valid on-chain settlement proofs.
@@ -88,6 +88,14 @@ The x402 ecosystem is open-source and modular. You can start monetizing your AI 
 ### 🌐 Join the Machine Economy
 
 x402 isn't just a protocol; it's the foundation for the next stage of the internet. A world where agents don't just talk—they trade.
+
+### Rollout Motion
+
+1. **Design partners:** onboard a small set of sellers and buyer-agent teams on Preview, using `x402-seller-starter`, `x402-buyer-starter`, and the paid SPL-token balance service as the first reproducible path.
+2. **Devnet campaign:** publish copy-paste buyer/seller quickstarts, run public demos against `https://preview.ipay.sh`, and measure first build, first verify, first settle, and first seller onboarding.
+3. **Mainnet seller launch:** promote `exact` for low-value instant API calls, and enable `sla-escrow` only for sellers using an advertised production oracle authority such as the hardened `oracle-qa` deployment.
+4. **Oracle ecosystem:** treat `oracle-qa` as the default API-quality oracle and a reference for domain oracle developers; publish profile ids, evidence rules, and trust tiers so buyers can choose authorities intentionally.
+5. **Paid-service proof points:** market SPL-token balance verification as the utilitarian API reference and AetherVane as the experience/reference service: both show how humans and autonomous agents discover a seller, receive HTTP 402, pay through pr402, and parse a structured premium response.
 
 ---
 
@@ -101,7 +109,7 @@ The x402 ecosystem is composed of specialized, independent repositories. This mo
 - **[UniversalSettle (SplitVault)](https://github.com/miraland-labs/universalsettle)**: High-velocity micro-payments (Planned Open Source).
 - **[SLA-Escrow Protocol](https://github.com/miraland-labs/sla-escrow)**: Trustless oracle-backed escrow (Planned Open Source).
 - **[oracle-qa](https://github.com/miraland-labs/oracle-qa)**: API Response Quality Oracle — first official oracle and reference implementation for oracle developers (Open Source).
-- **[AetherVane](https://preview.aethervane.hashspace.me/)**: Paid service — `aethervane` workspace (API, web app, shared crates): multi-engine readings, optional LLM interpretation, Postgres quotas (Closed Source).
+- **[AetherVane](https://preview.aethervane.hashspace.me/)**: Paid service — `aethervane` workspace (API, web app, shared crates): one free daily preview, premium x402 reports, multi-engine readings, optional LLM interpretation, agent summaries, and Postgres quotas (Closed Source).
 - **[SPL-Token Balance Verification](https://preview.spl-token.signer-payer.me/)**: Paid service for API balance gating (Closed Source).
 - **[x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter)**: Open-source reference for resource providers.
 - **[x402-buyer-starter](https://github.com/miraland-labs/x402-buyer-starter)**: Open-source reference for buyer agents and SDKs.

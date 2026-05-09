@@ -80,7 +80,7 @@ AI Agents are rich in data but broke in utility. Traditional payment rails are b
 
 ## 🛠️ Contribution and Local Development
 
-We recommend a **"Hub-and-Spoke"** development model. You can clone this hub and then clone the standalone projects into their respective folders:
+This repository is a **virtual hub**, not a monorepo. The folders below are standalone projects with their own Git histories; clone them beside the hub when you want source code locally. A fresh hub clone intentionally contains only ecosystem-level documentation.
 
 ```bash
 # Recommended Local Structure
