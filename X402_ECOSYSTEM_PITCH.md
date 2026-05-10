@@ -1,6 +1,6 @@
 # 🚀 x402: The Economic Layer for Autonomous Agents
 
-> **Deployment status.** The facilitator is live on **Solana Mainnet** (`https://ipay.sh`) and **Solana Devnet** (`https://preview.ipay.sh`); the same service is also served on `https://agent.pay402.me` / `https://preview.agent.pay402.me` (not deprecated). Use the origin that matches your integration; verify at runtime with **`GET /api/v1/facilitator/health`**. Hub: [`pr402/README.md`](pr402/README.md).
+> **Deployment status.** The facilitator is live on **Solana Mainnet** (`https://ipay.sh`) and **Solana Devnet** (`https://preview.ipay.sh`); the same service is also served on `https://agent.pay402.me` / `https://preview.agent.pay402.me` (not deprecated). Use the origin that matches your integration; verify at runtime with **`GET /api/v1/facilitator/health`**. Hub: [pr402 on GitHub](https://github.com/miralandlabs/pr402).
 >
 > The `exact` (UniversalSettle) rail is production-ready today. The `sla-escrow` rail is deployed on-chain; general availability for sellers/buyers is gated on a production-advertised default oracle (work in flight on [`oracle-qa`](https://github.com/miraland-labs/oracle-qa)).
 
@@ -105,9 +105,9 @@ The x402 ecosystem is composed of specialized, independent repositories. This mo
 
 **Explore the ecosystem:**
 
-- **[pr402 Facilitator](https://github.com/miraland-labs/pr402)** — the serverless-first REST bridge (Open Source).
-- **[UniversalSettle (SplitVault)](https://github.com/miraland-labs/universalsettle)** — high-velocity micro-payments (Planned Open Source).
-- **[SLA-Escrow Protocol](https://github.com/miraland-labs/sla-escrow)** — trustless oracle-backed escrow (Planned Open Source).
+- **[pr402 Facilitator](https://github.com/miralandlabs/pr402)** — the serverless-first REST bridge (Open Source).
+- **UniversalSettle (SplitVault)** — high-velocity micro-payments. Planned Open Source; deployed on Mainnet and Devnet.
+- **SLA-Escrow Protocol** — trustless oracle-backed escrow. Planned Open Source; deployed on Mainnet and Devnet.
 - **[oracle-qa](https://github.com/miraland-labs/oracle-qa)** — API response quality oracle; first official oracle and reference for domain-oracle developers (Open Source).
 - **[AetherVane](https://aethervane.hashspace.me/)** — reference paid service (closed source).
 - **[SPL-Token Balance Verification](https://spl-token.signer-payer.me/)** — reference paid service (closed source).

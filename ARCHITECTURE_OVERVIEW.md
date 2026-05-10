@@ -25,7 +25,7 @@ The ecosystem consists of specialized components that work together to provide a
   - **BYOG (Bring Your Own Gas)**: Default economic model where the Buyer Agent pays network fees, ensuring facilitator sustainability while allowing optional sponsorship for premium tiers.
   - **Math-as-Trust**: Every address is re-derivable via PDA seeds (`wallet + facilitator_id`), allowing agents to verify terms locally.
   - **Scheme normalization**: HTTP `402 accepts[]` may use `v2:solana:exact` / `v2:solana:sla-escrow`; the returned **`verifyBodyTemplate`** and **`/verify`/`/settle`** use x402 wire **`exact`** / **`sla-escrow`** (`openapi.json`, **`/agent-integration.md`**).
-- **Agent reference**: **`GET /capabilities`** on the deployed facilitator → **`agentManifest.payToSemantics`** (JSON). Hub pointer: [`docs/facilitator-onboard-supported-and-tx-building.md`](docs/facilitator-onboard-supported-and-tx-building.md).
+- **Agent reference**: **`GET /capabilities`** on the deployed facilitator → **`agentManifest.payToSemantics`** (JSON).
 
 ### 2. ⚡ The Payout: `UniversalSettle` (SplitVault)
 
@@ -139,7 +139,7 @@ To ensure interoperability between independent **sellers**, **buyers**, and **or
 `sla_hash` stored on-chain is the **SHA-256** hash of the **exact UTF-8 octets** of the SLA JSON the registry serves. This lets the oracle verify that the seller's delivery matches the buyer's original expectations without serializer ambiguity.
 
 - **Recommended schema**: a JSON object containing `service_id`, `task_details`, `deadline_unix`, and `verification_criteria`.
-- **Reference profile (HTTP / JSON API quality)**: [`oracle-qa/spec/README.md`](oracle-qa/spec/README.md) publishes **`x402/oracle-qa/api-quality/v1`** — JSON Schemas, normative evaluation semantics, and examples aligned with the `oracle-qa` reference oracle.
+- **Reference profile (HTTP / JSON API quality)**: the [`oracle-qa`](https://github.com/miraland-labs/oracle-qa) repository publishes profile **`x402/oracle-qa/api-quality/v1`** under `spec/api-quality-v1/` — JSON Schemas, normative evaluation semantics, and examples aligned with the `oracle-qa` reference oracle.
 
 ### 2. The `delivery_hash` (The Proof)
 
@@ -177,9 +177,9 @@ Standard payment protocols often rely on a "Fulfill-then-Settle" model. On high-
 
 ## 📂 The x402 Ecosystem Structure
 
-- **[pr402 Facilitator](https://github.com/miraland-labs/pr402)** — The REST-to-Solana gateway (Vercel-native, Open Source).
-- **[UniversalSettle Protocol](https://github.com/miraland-labs/universalsettle)** — The split-payment engine (on-chain, Planned Open Source).
-- **[SLA-Escrow Protocol](https://github.com/miraland-labs/sla-escrow)** — The service-level enforcer (on-chain, Planned Open Source).
+- **[pr402 Facilitator](https://github.com/miralandlabs/pr402)** — The REST-to-Solana gateway (Vercel-native, Open Source).
+- **UniversalSettle Protocol** — The split-payment engine. Planned Open Source; deployed on Mainnet and Devnet.
+- **SLA-Escrow Protocol** — The service-level enforcer. Planned Open Source; deployed on Mainnet and Devnet.
 - **[oracle-qa](https://github.com/miraland-labs/oracle-qa)** — API response quality oracle; first official oracle and reference for domain-oracle developers (Open Source).
 - **[x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter)** — Open-source seller reference.
 - **[x402-buyer-starter](https://github.com/miraland-labs/x402-buyer-starter)** — Open-source buyer/agent SDK reference.

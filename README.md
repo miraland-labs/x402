@@ -7,7 +7,7 @@
 > **Recommended host:** `https://ipay.sh` (Mainnet) · `https://preview.ipay.sh` (Devnet).
 > **Also served — same service, not deprecated:** `https://agent.pay402.me` (Mainnet) · `https://preview.agent.pay402.me` (Devnet). Use whichever origin your integration or seller documentation specifies, and keep one origin per environment.
 >
-> Confirm cluster and feature flags at runtime via **`GET /api/v1/facilitator/health`** on the host you call; see [`pr402/README.md`](pr402/README.md) and **`GET /openapi.json`**.
+> Confirm cluster and feature flags at runtime via **`GET /api/v1/facilitator/health`** on the host you call; see the [pr402 repository](https://github.com/miralandlabs/pr402) and **`GET /openapi.json`**.
 >
 > **`sla-escrow` readiness.** The SLA-Escrow on-chain program is deployed, but general-availability for sellers/buyers depends on a production-advertised default oracle. The reference oracle [`oracle-qa`](https://github.com/miraland-labs/oracle-qa) is being hardened for that role; until then, treat `sla-escrow` as available to integrators who operate their own `oracle_authority`.
 
@@ -17,25 +17,27 @@
 
 The ecosystem is composed of specialized, independent modules that work together to provide a seamless "Payment Required" (HTTP 402) experience for the serverless age.
 
-### 🌉 [pr402 Facilitator](https://github.com/miraland-labs/pr402)
+### 🌉 [pr402 Facilitator](https://github.com/miralandlabs/pr402)
 
 - **Role**: The Bridge (REST-to-Solana Gateway).
 - **Platform**: Rust / Vercel Serverless.
 - **What it does**: Handles vault discovery, transaction building, and payment verification for off-chain agents.
-- **Integrators (agents)**: facilitator **`GET /capabilities`** → **`agentManifest.payToSemantics`**; hub note [`docs/facilitator-onboard-supported-and-tx-building.md`](docs/facilitator-onboard-supported-and-tx-building.md).
+- **Integrators (agents)**: facilitator **`GET /capabilities`** → **`agentManifest.payToSemantics`** (JSON).
 - **Source**: Open Source.
 
-### ⚡ [UniversalSettle Protocol](https://github.com/miraland-labs/universalsettle)
+### ⚡ UniversalSettle Protocol
 
 - **Role**: The Payout (SplitVault Engine).
-- **Platform**: Solana On-chain Program (Planned Open Source).
+- **Platform**: Solana On-chain Program.
 - **What it does**: High-velocity, fixed-fee settlements via the `exact` scheme with automated revenue splitting. Ideal for immediate, low-latency micro-payments (**< $10 USDC** recommendation).
+- **Source**: **Planned Open Source** — repository not yet public. Deployed on Mainnet and Devnet.
 
-### 🛡️ [SLA-Escrow Protocol](https://github.com/miraland-labs/sla-escrow)
+### 🛡️ SLA-Escrow Protocol
 
 - **Role**: The Enforcer (Service Level Agreement Trustee).
-- **Platform**: Solana On-chain Program (Planned Open Source).
+- **Platform**: Solana On-chain Program.
 - **What it does**: Escrows funds via the `sla-escrow` scheme for high-value or long-running work. Suggested for payments **>= $10 USDC**. Requires a domain-specific Oracle authority to adjudicate delivery.
+- **Source**: **Planned Open Source** — repository not yet public. Deployed on Mainnet and Devnet.
 
 ### ⚖️ [oracle-qa: API Response Quality Oracle](https://github.com/miraland-labs/oracle-qa)
 
@@ -69,9 +71,6 @@ Miraland Labs operates two production paid services that act as third-party-styl
 
 - **[Architecture Overview](ARCHITECTURE_OVERVIEW.md)** — technical pillars, transaction lifecycle, security invariants.
 - **[Ecosystem Pitch](X402_ECOSYSTEM_PITCH.md)** — why x402 is the payment layer for autonomous agents.
-- **[Facilitator onboard + tx building](docs/facilitator-onboard-supported-and-tx-building.md)** — agent semantics, scheme layers (`v2:solana:*` vs wire `exact` / `sla-escrow`).
-- **[Cost analysis](docs/cost-analysis.md)** — fee model and worked examples.
-- **[Devnet instruction coverage evidence](docs/devnet-full-instruction-coverage-evidence.md)** — pre-mainnet test-matrix receipts.
 
 ---
 
