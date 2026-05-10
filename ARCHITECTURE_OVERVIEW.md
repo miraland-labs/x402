@@ -1,15 +1,19 @@
 # 🌐 x402 Architecture Overview: The Solana Agentic Economy
 
-**x402** is a modular, trustless, and API-first financial stack built on the Solana blockchain. It provides the protocol and infrastructure needed for AI-to-AI resource settlement, enabling purely autonomous agents to trade compute, data, and services with cryptographic certainty.
+**x402** is a modular, trustless, API-first financial stack built on the Solana blockchain. It provides the protocol and infrastructure needed for AI-to-AI resource settlement, enabling autonomous agents to trade compute, data, and services with cryptographic certainty.
 
-> [!NOTE]
-> **Launch phase (experimental):** pr402 is deployed on **recommended** origins **Production** `https://ipay.sh` (Mainnet) and **Preview** `https://preview.ipay.sh` (Devnet), and on the **same** stack at `https://agent.pay402.me` / `https://preview.agent.pay402.me` (**not** deprecated). Integrate **at your own risk**; confirm **`solanaNetwork`** with **`GET /api/v1/facilitator/health`** on the host you use. See [`pr402/README.md`](pr402/README.md).
+> **Deployment status.** The **pr402 facilitator** and both on-chain programs (`universalsettle`, `sla-escrow`) are deployed on **Solana Mainnet** and **Solana Devnet**.
+>
+> **Recommended host:** `https://ipay.sh` (Mainnet) / `https://preview.ipay.sh` (Devnet).
+> **Also served — same service, not deprecated:** `https://agent.pay402.me` / `https://preview.agent.pay402.me`.
+>
+> Confirm **`solanaNetwork`** with **`GET /api/v1/facilitator/health`** on the host you call. General availability of the `sla-escrow` scheme for sellers/buyers depends on a production-advertised default oracle — see [§ 5](#5--the-oracle-oracle-qa-api-response-quality-oracle).
 
 ---
 
 ## 🏗️ The Pillars of the x402 Ecosystem
 
-The ecosystem consists of specialized components that work together to provide a seamless "Payment-Required" (HTTP 402) experience for the autonomous machine age.
+The ecosystem consists of specialized components that work together to provide a seamless "Payment Required" (HTTP 402) experience for the autonomous machine age.
 
 ### 1. 🌉 The Bridge: `pr402` (The Facilitator)
 
@@ -20,75 +24,76 @@ The ecosystem consists of specialized components that work together to provide a
   - **Zero-Signature Onboarding**: Agents discover their vault PDAs with zero initial friction.
   - **BYOG (Bring Your Own Gas)**: Default economic model where the Buyer Agent pays network fees, ensuring facilitator sustainability while allowing optional sponsorship for premium tiers.
   - **Math-as-Trust**: Every address is re-derivable via PDA seeds (`wallet + facilitator_id`), allowing agents to verify terms locally.
-  - **Scheme normalization**: HTTP `402 accepts[]` may use `v2:solana:exact` / `v2:solana:sla-escrow`; **`verifyBodyTemplate`** and **`/verify`/`/settle`** use x402 wire **`exact`** / **`sla-escrow`** (`openapi.json`, **`/agent-integration.md`**).
+  - **Scheme normalization**: HTTP `402 accepts[]` may use `v2:solana:exact` / `v2:solana:sla-escrow`; the returned **`verifyBodyTemplate`** and **`/verify`/`/settle`** use x402 wire **`exact`** / **`sla-escrow`** (`openapi.json`, **`/agent-integration.md`**).
 - **Agent reference**: **`GET /capabilities`** on the deployed facilitator → **`agentManifest.payToSemantics`** (JSON). Hub pointer: [`docs/facilitator-onboard-supported-and-tx-building.md`](docs/facilitator-onboard-supported-and-tx-building.md).
 
 ### 2. ⚡ The Payout: `UniversalSettle` (SplitVault)
 
 - **Role**: High-Velocity Direct Payment.
-- **Scheme ID**: `exact` (x402 V2).
+- **Scheme ID**: `exact` (x402 v2).
 - **What it does**: Handles immediate, fixed-fee settlements for low-latency tasks (e.g., pay-per-inference, API-call gating).
-- **The SplitVault Architecture**: 
+- **SplitVault architecture**:
   - Uses a specialized **Triple-Vault** (Logic PDA + 0-Data SOL Storage + SPL ATA).
   - Revenue is instantly and immutably split between the **Resource Provider** and the **Facilitator** upon receipt.
-- **Enriched Discovery**: Discloses `programId`, `configAddress`, and `feeBps` extracted directly from on-chain state.
+- **Enriched discovery**: Discloses `programId`, `configAddress`, and `feeBps` extracted directly from on-chain state.
 
 ### 3. 🛡️ The Enforcer: `SLA-Escrow` (Escrow Scheme)
 
 - **Role**: Service-Level Agreement (SLA) Trustee.
-- **Scheme ID**: `sla-escrow` (x402 V2).
+- **Scheme ID**: `sla-escrow` (x402 v2 extension).
 - **What it does**: Holds funds in escrow for high-stakes or long-running services (e.g., autonomous research, GPU training).
-- **Security & Agentic Hardening**:
-  - **Oracle-Confirmed Release**: Payments are only released (or refunded) when an authorized Oracle provides a verdict.
-  - **Verdict-Neutral Tipping**: Oracles receive a programmable tip (`oracle_fee_bps`) regardless of whether they approve or reject a claim, incentivizing honest adjudication rather than "payout bias".
-  - **Hardened Routing**: Immutably routes payouts and refunds to the original parties.
-- **Enriched Discovery**: Discloses `escrowProgramId`, `bankAddress`, `feeBps`, and `oracleAuthorities`.
+- **Security & agentic hardening**:
+  - **Oracle-confirmed release**: Payments are only released (or refunded) when the authorized Oracle provides a verdict *after* delivery has been submitted on-chain (`delivery_timestamp > 0`).
+  - **Verdict-neutral tipping**: Oracles receive a programmable tip (`oracle_fee_bps`) regardless of whether they approve or reject, incentivizing honest adjudication rather than "payout bias". The tip is actually transferred on-chain during release/refund.
+  - **Hardened routing**: Immutably routes payouts and refunds to the parties recorded on `Payment` at funding time.
+  - **Refund safety**: Buyers cannot refund after the seller submits delivery unless the oracle explicitly rejects it; the on-chain program encodes this as `CannotRefundDeliveredPayment`.
+- **Enriched discovery**: Discloses `escrowProgramId`, `bankAddress`, `feeBps`, and `oracleAuthorities`.
 
-### 4. 💎 The Paid Services: `Resource Providers`
+### 4. 💎 The Paid Services: Reference Resource Providers
 
-- **Role**: The Monetized Resource (Production Reference).
-- **Implementations**: 
-  - `[spl-token-balance-serverless](https://preview.spl-token.signer-payer.me/)`: Production-grade SPL balance gating.
-  - `[aethervane](https://preview.aethervane.hashspace.me/)`: **AetherVane** — multi-engine, machine-consumable metaphysical readings over x402 (Bazi, Western tropical natal, Liu Yao, Mei Hua, onomancy, daily almanac; optional LLM interpretation; Postgres-backed quotas). Delivered from the `aethervane` Rust workspace (`aethervane-srv`, `aethervane-app`, `aethervane-shared`).
-- **What they do**: These services serve as premium references for verifying x402 settlement proofs via the Facilitator before serving autonomous requests.
+- **Role**: Production reference sellers operated by Miraland Labs (closed source; treat them as third-party-style ecosystem proof-points that bootstrap supply).
+- **Implementations**:
+  - **[spl-token balance verification](https://spl-token.signer-payer.me/)** — production-grade SPL balance gating over x402.
+  - **[AetherVane](https://aethervane.hashspace.me/)** — multi-engine machine-consumable metaphysical readings; optional LLM interpretation; Postgres-backed quotas.
+- **What they do**: Demonstrate premium APIs that verify x402 settlement proofs via the facilitator before serving requests.
 
 ### 5. ⚖️ The Oracle: `oracle-qa` (API Response Quality Oracle)
 
-- **Role**: Reference Oracle Implementation & First Official x402 Oracle.
-- **Platform**: Rust / Axum / Tokio (Standalone Server).
+- **Role**: Reference oracle implementation & first official x402 oracle.
+- **Platform**: Rust / Axum / Tokio (standalone server).
 - **Repository**: [oracle-qa](https://github.com/miraland-labs/oracle-qa) (Open Source).
-- **What it does**: Monitors `SLA-Escrow` delivery events via Solana WebSocket, fetches off-chain SLA documents and delivery evidence, evaluates API response quality (status codes, latency, JSON Schema, required fields), and submits `ConfirmOracle` verdicts on-chain.
-- **Why it matters**: As the ecosystem's first official oracle, `oracle-qa` serves as both a production-ready quality arbiter for paid API calls and a **reference implementation for oracle developers** building domain-specific oracles across any vertical (ML model quality, uptime monitoring, content moderation, etc.).
+- **What it does**: Monitors `SLA-Escrow` delivery events via Solana WebSocket, fetches off-chain SLA documents and delivery evidence, evaluates API response quality (status codes, latency, JSON Schema, required fields), and submits `ConfirmOracle` verdicts on-chain with a deterministic `resolution_hash`.
+- **Why it matters**: `oracle-qa` is the ecosystem's template for domain-specific oracles (ML model quality, uptime monitoring, content moderation, etc.) *and* the pending default oracle authority for the `sla-escrow` rail.
 
 ### 6. 📚 The Seller Starter: `x402-seller-starter`
 
-- **Role**: Open-source Seller Reference.
+- **Role**: Open-source seller reference.
 - **Platform**: Rust / Axum.
 - **What it does**: A minimal baseline for resource providers to build x402 v2 challenges and verify payments.
 
 ### 7. 🏹 The Buyer Starter: `x402-buyer-starter`
 
-- **Role**: Open-source Buyer/Agent Reference.
+- **Role**: Open-source buyer/agent reference.
 - **Platform**: Polyglot (Bash, TypeScript, Python).
-- **What it does**: The definitive SDK and onboarding tool for AI agents. It demonstrates the full "Discovery → Build → Sign → Settle" lifecycle, enabling agents to autonomously acquire resources.
+- **What it does**: The definitive SDK and onboarding tool for AI agents. Demonstrates the full "Discovery → Build → Sign → Settle" lifecycle.
 
 ---
 
 ## 🤖 Why Two On-Chain Programs? (Decision Logic)
 
-A common question for developers entering the x402 ecosystem is: **Why does the protocol use two different on-chain programs?** 
+A common question for developers entering the x402 ecosystem is: **Why does the protocol use two different on-chain programs?**
 
-The answer lies in optimizing for risk versus latency in the Machine Economy. AI Agents use dynamic routing to select the appropriate scheme based on the job requirements:
+The answer is about optimizing for risk versus latency in the machine economy. AI agents use dynamic routing to select the appropriate scheme based on job requirements:
 
-1. `**exact` (UniversalSettle)**: Designed for instant, sub-second micro-payments. It is the core scheme described natively in the x402 standard.
-  - **Use Case**: Low latency, immediate delivery (e.g., pay-per-inference, single API calls, data scraping).
-  - **Recommendation**: Best for payments **< $10 USDC**.
-2. `**sla-escrow` (SLA-Escrow)**: A standard-supported flexible extension scheme designed to securely lock funds for asynchronous delivery.
-  - **Use Case**: High-value work or long-delivery tasks spanning minutes, hours, or days (e.g., model training, autonomous research).
-  - **Recommendation**: Suggested for payments **>= $10 USDC**.
-  - **The Oracle Economy**: Escrow requires domain-specific Oracles to verify delivery before funds release. The open-source `[oracle-qa](https://github.com/miraland-labs/oracle-qa)` serves as both the first official oracle and a reference implementation, lowering the barrier for domain-specific Oracle developers to join the ecosystem.
+1. **`exact` (UniversalSettle)** — Instant, sub-second micro-payments; the core scheme described natively in the x402 standard.
+   - Use case: low latency, immediate delivery (pay-per-inference, single API calls, data scraping).
+   - Recommendation: best for payments **< $10 USDC**.
+2. **`sla-escrow` (SLA-Escrow)** — Flexible standard-supported extension scheme for asynchronous delivery.
+   - Use case: high-value or long-delivery tasks spanning minutes, hours, or days (model training, autonomous research).
+   - Recommendation: suggested for payments **>= $10 USDC**.
+   - **Oracle economy**: Escrow requires domain-specific oracles to verify delivery before funds release. The open-source [`oracle-qa`](https://github.com/miraland-labs/oracle-qa) project serves as both the reference implementation and the first candidate official oracle, lowering the barrier for domain-specific oracle developers.
 
-*(Note: Both the UniversalSettle and SLA-Escrow on-chain programs are **planned to be open-sourced** once the platform has accumulated a critical mass of buyer and seller agents.)*
+*(Both on-chain programs are **Planned Open Source**.)*
 
 ---
 
@@ -123,73 +128,65 @@ sequenceDiagram
     Provider-->>Agent: 14. Serve Resource + PAYMENT-RESPONSE header
 ```
 
-
-
 ---
 
 ## 📜 Standardizing the SLA Hash & Delivery Hash
 
-To ensure interoperability between independent **Sellers**, **Buyers**, and **Oracles**, the x402 ecosystem recommends the following standards for data integrity:
+To ensure interoperability between independent **sellers**, **buyers**, and **oracles**, the x402 ecosystem recommends the following standards for data integrity:
 
 ### 1. The `sla_hash` (The Agreement)
 
-The `sla_hash` stored on-chain should be the **SHA-256 hash** of a **Canonical JSON** representation of the service terms. This allows the Oracle to verify that the Seller's delivery matches the Buyer's original expectations.
+`sla_hash` stored on-chain is the **SHA-256** hash of the **exact UTF-8 octets** of the SLA JSON the registry serves. This lets the oracle verify that the seller's delivery matches the buyer's original expectations without serializer ambiguity.
 
-- **Recommended Schema**: A JSON object containing `service_id`, `task_details`, `deadline_unix`, and `verification_criteria`.
-- **Logic**: `hash = sha256(canonical_json(sla_terms))` — in practice, **hash the exact octets** you persist (e.g. UTF-8 JSON) so fetch-and-verify matches without serializer ambiguity.
-- **Reference profile (HTTP / JSON API quality):** [`oracle-qa/spec/README.md`](oracle-qa/spec/README.md) publishes **`x402/oracle-qa/api-quality/v1`** — JSON Schemas, normative evaluation semantics, and examples aligned with the `oracle-qa` reference oracle.
+- **Recommended schema**: a JSON object containing `service_id`, `task_details`, `deadline_unix`, and `verification_criteria`.
+- **Reference profile (HTTP / JSON API quality)**: [`oracle-qa/spec/README.md`](oracle-qa/spec/README.md) publishes **`x402/oracle-qa/api-quality/v1`** — JSON Schemas, normative evaluation semantics, and examples aligned with the `oracle-qa` reference oracle.
 
 ### 2. The `delivery_hash` (The Proof)
 
-The `delivery_hash` submitted by the Seller represents the completed work. 
+The `delivery_hash` submitted by the seller represents the completed work.
 
-- **Small Assets**: If the output is a single file (e.g., a report or image), the `delivery_hash` is the SHA-256 of the raw file.
-- **Large/Complex Assets**: Hash a JSON metadata object containing a pointer to the storage location (e.g., IPFS CID/S3 URL) and a checksum of the contents.
+- **Small assets**: if the output is a single file (report, image), `delivery_hash = SHA256(raw_file_bytes)`.
+- **Large / complex assets**: hash a JSON metadata object containing a pointer to the storage location (IPFS CID, S3 URL) plus a checksum of the contents.
 
 ### 3. The Oracle's Handshake
 
-The Oracle is responsible for bridging the off-chain data to the on-chain verdict. It fetches the raw data (the SLA terms and the Delivery artifact), verifies they match the hashes on-chain, and executes the `ConfirmOracle` instruction to release or refund payment.
+The oracle bridges off-chain evidence to the on-chain verdict. It fetches the raw bytes for the SLA terms and the delivery artifact, verifies they hash to the values committed on-chain, and executes `ConfirmOracle` with a deterministic `resolution_hash` that fingerprints the evaluation.
 
 ---
 
 ## 🛡️ Trust and Security Invariants
 
-1. **Non-Custodial Design**: Neither the Facilitator nor the Provider has custodial access to the buyer's funds. All logic is governed by on-chain state and PDA restrictions.
+1. **Non-Custodial Design**: Neither the facilitator nor the provider has custodial access to the buyer's funds. All logic is governed by on-chain state and PDA restrictions.
 2. **Deterministic Derivation**: Every vault, escrow, and storage account is seed-derived from the Resource Owner's wallet.
 3. **Revenue Immutability**: The `sweep` (payout) logic follows immutable split rules hardcoded on-chain, ensuring the Resource Owner maintains direct ownership over their earnings.
-4. **Verdict Integrity**: `SLA-Escrow` protects against malicious Oracles through its neutral tipping model, ensuring Oracles are paid for their service of adjudication, not for the outcome.
+4. **Verdict Integrity**: `SLA-Escrow` protects against malicious oracles through its neutral tipping model and by requiring `delivery_timestamp > 0` before any oracle confirmation is accepted.
+5. **Refund Safety**: Once delivery has been submitted, buyers cannot unilaterally refund until an oracle explicitly rejects the work (or the payment expires).
 
 ---
 
 ## ⚡ Deterministic Finality for the Machine Economy
 
-Standard payment protocols often rely on a "Fulfill-then-Settle" model. However, on high-performance networks like **Solana**, where transaction blockhashes expire in ~60-120 seconds, this traditional approach is inherently incompatible with high-latency agentic tasks (e.g., AI video generation or autonomous research).
+Standard payment protocols often rely on a "Fulfill-then-Settle" model. On high-performance networks like **Solana**, where transaction blockhashes expire in ~60-120 seconds, this traditional approach is inherently incompatible with high-latency agentic tasks (AI video generation, autonomous research).
 
-**Our x402 implements a "Settlement-First" Philosophy:**
+**Our x402 implements a "Settlement-First" philosophy:**
 
-- **Immediate Finality (`UniversalSettle`)**: By verifying and settling payments *at the point of request*, we ensure that Resource Providers never perform at-risk compute for transaction signatures that might expire during fulfillment.
-- **Commitment-First Escrows (`SLA-Escrow`)**: For long-running jobs, x402 mandates a "Lock-then-Work" flow. Funds are cryptographically secured in escrow before the agent begins the task, providing the Seller with absolute payment certainty and the Buyer with verifiable delivery metrics through the SLA Oracle.
-
-This specialized approach is the only sustainable way to avoid systemic settlement failure for complex, long-running agentic workloads on the modern blockchain.
+- **Immediate finality (`UniversalSettle`)** — By verifying and settling payments *at the point of request*, resource providers never perform at-risk compute for transaction signatures that might expire during fulfillment.
+- **Commitment-first escrows (`SLA-Escrow`)** — For long-running jobs, x402 mandates a "Lock-then-Work" flow. Funds are cryptographically secured in escrow before the agent begins the task, providing the seller with absolute payment certainty and the buyer with verifiable delivery metrics through the oracle.
 
 ---
 
 ## 📂 The x402 Ecosystem Structure
 
-The x402 ecosystem is composed of independent, specialized repositories. This modular approach allows for rapid serverless iteration alongside hardened, security-critical on-chain programs.
-
-### 🌉 The Interconnects
-
-- **[pr402 Facilitator](https://github.com/miralandlabs/pr402)**: The REST-to-Solana gateway (Vercel-native, Open Source).
-- **[UniversalSettle Protocol](https://github.com/miraland-labs/universalsettle)**: The split-payment engine (On-chain, Planned Open Source).
-- **[SLA-Escrow Protocol](https://github.com/miraland-labs/sla-escrow)**: The service-level enforcer (On-chain, Planned Open Source).
-- **[oracle-qa](https://github.com/miraland-labs/oracle-qa)**: API Response Quality Oracle — first official oracle and reference implementation for oracle developers (Open Source).
-- **[AetherVane](https://preview.aethervane.hashspace.me/)**: Paid service reference — multi-engine fortune stack and web client in the `aethervane` workspace (`aethervane-srv` / `aethervane-app` / `aethervane-shared`; Closed Source).
-- **[SPL Token Balance](https://preview.spl-token.signer-payer.me/)**: Paid service reference for balance gating (Closed Source).
-- **[x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter)**: Open-source Seller reference implementation.
-- **[x402-buyer-starter](https://github.com/miraland-labs/x402-buyer-starter)**: Open-source Buyer/Agent SDK reference implementation.
+- **[pr402 Facilitator](https://github.com/miraland-labs/pr402)** — The REST-to-Solana gateway (Vercel-native, Open Source).
+- **[UniversalSettle Protocol](https://github.com/miraland-labs/universalsettle)** — The split-payment engine (on-chain, Planned Open Source).
+- **[SLA-Escrow Protocol](https://github.com/miraland-labs/sla-escrow)** — The service-level enforcer (on-chain, Planned Open Source).
+- **[oracle-qa](https://github.com/miraland-labs/oracle-qa)** — API response quality oracle; first official oracle and reference for domain-oracle developers (Open Source).
+- **[x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter)** — Open-source seller reference.
+- **[x402-buyer-starter](https://github.com/miraland-labs/x402-buyer-starter)** — Open-source buyer/agent SDK reference.
+- **[SPL Token Balance](https://spl-token.signer-payer.me/)** — Reference paid service; SPL balance gating (closed source).
+- **[AetherVane](https://aethervane.hashspace.me/)** — Reference paid service; multi-engine metaphysical readings (closed source).
 
 ---
 
-**Maintained by**: Miraland Labs & MiralandLabs
+**Maintained by**: Miraland Labs
 **Ecosystem Meta**: [The x402 Protocol](https://github.com/miraland-labs/x402)

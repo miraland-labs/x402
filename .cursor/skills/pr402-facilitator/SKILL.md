@@ -16,7 +16,7 @@ Rust **x402 facilitator** dedicated to Solana: discovery, TX building (`build-ex
 
 ## Repo location
 
-[`pr402/`](../../../pr402/) inside this hub mirror; authoritative open-source history may live at `miralandlabs/pr402` — match release process to whichever remote you push.
+[`pr402/`](../../../pr402/) inside this hub mirror; authoritative open-source history lives at `miraland-labs/pr402` — match release process to whichever remote you push.
 
 ## Build & test hints
 

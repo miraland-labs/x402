@@ -15,8 +15,8 @@ disable-model-invocation: true
 x402 (see `x402/` folder—the repository root holding this `.cursor/skills/` tree) itself is a virtual hub project (NOT mono-workspace) which introduces several key projects under its x402 ecosystem:
 
 1. pr402 Facilitator: which is x402 Facilitator implementation dedicated to Solana blockchain. (see `pr402/` folder), the project has its own github repo. Open Source.
-2. universalsettle on-chain program: settlement rail for x402 `exact` scheme, usually for instant and small amount payment. (Temporarily Closed Source)
-3. sla-escrow on-chain program: settlement rail for x402 custom/extension schema `sla-escrow`, usually for relatively large amount with more delivery time payment.(Temporarily Close Source)
+2. universalsettle on-chain program: settlement rail for x402 `exact` scheme, usually for instant and small amount payment. (Planned Open Source)
+3. sla-escrow on-chain program: settlement rail for x402 custom/extension schema `sla-escrow`, usually for relatively large amount with more delivery time payment. (Planned Open Source)
 4. oracle-qa project, which is paired with sla-escrow program and tries to provide a default oracle implementation when no other oracle service is available, meanwhile, it was designed to also play a role as oracle implementation reference for other oracle developers with his/her own domain expertise. Open Source.
 5. x402-seller-starter, an open source example project for any interested seller(Resource Provider)
 6. x402-buyer-starter, an open source example project for any interested buyer agent(or human)
