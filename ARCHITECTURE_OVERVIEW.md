@@ -76,6 +76,7 @@ The ecosystem consists of specialized components that work together to provide a
 - **Role**: Open-source buyer/agent reference.
 - **Platform**: Polyglot (Bash, TypeScript, Python).
 - **What it does**: The definitive SDK and onboarding tool for AI agents. Demonstrates the full "Discovery → Build → Sign → Settle" lifecycle.
+- **Installable packages**: `@pr402/client` (npm) and `pr402-client` (crates.io); both ship a `pr402-buy` CLI.
 
 ---
 

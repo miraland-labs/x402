@@ -78,7 +78,7 @@ The **first official x402 oracle** and open-source reference for the oracle econ
 The x402 ecosystem is open-source and modular. You can start monetizing your AI services today.
 
 1. **Deploy a resource provider** — reference [`x402-seller-starter`](https://github.com/miraland-labs/x402-seller-starter) to see how to gate your REST API with x402 headers. Live references operated by Miraland Labs: [spl-token balance verification](https://spl-token.signer-payer.me/) and [AetherVane](https://aethervane.hashspace.me/).
-2. **Onboard your AI agents** — start with [`x402-buyer-starter`](https://github.com/miraland-labs/x402-buyer-starter) to integrate the agentic payment lifecycle into your AI (Bash, TypeScript, Python).
+2. **Onboard your AI agents** — install the buyer SDK (`npm i @pr402/client` or `cargo install pr402-client`, both ship `pr402-buy`). Reference: [`x402-buyer-starter`](https://github.com/miraland-labs/x402-buyer-starter).
 3. **Build a domain-specific oracle** — fork [`oracle-qa`](https://github.com/miraland-labs/oracle-qa) as your starting point. It provides the complete chain-monitor → evaluate → settle pipeline; swap in your own evaluation logic.
 4. **Integrate pr402** — use the facilitator to verify that incoming requests have valid on-chain settlement proofs.
 5. **Scale** — join the growing network of agents and oracles transacting autonomously across the x402 protocol.
