@@ -24,6 +24,7 @@ The ecosystem consists of specialized components that work together to provide a
   - **Zero-Signature Onboarding**: Agents discover their vault PDAs with zero initial friction.
   - **BYOG (Bring Your Own Gas)**: Default economic model where the Buyer Agent pays network fees, ensuring facilitator sustainability while allowing optional sponsorship for premium tiers.
   - **Math-as-Trust**: Every address is re-derivable via PDA seeds (`wallet + facilitator_id`), allowing agents to verify terms locally.
+  - **Buyer-side tx assembly**: `/build-exact-payment-tx` and `/build-sla-escrow-payment-tx` return a ready-to-sign `VersionedTransaction` + pre-filled `verifyBodyTemplate`. Buyers sign once and settle; compute-budget policy, token-program branches, and vault PDAs are encoded by the facilitator, so buyer code stays forward-compatible across policy changes.
   - **Scheme normalization**: HTTP `402 accepts[]` may use `v2:solana:exact` / `v2:solana:sla-escrow`; the returned **`verifyBodyTemplate`** and **`/verify`/`/settle`** use x402 wire **`exact`** / **`sla-escrow`** (`openapi.json`, **`/agent-integration.md`**).
 - **Agent reference**: **`GET /capabilities`** on the deployed facilitator → **`agentManifest.payToSemantics`** (JSON).
 
