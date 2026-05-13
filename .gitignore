@@ -1,6 +1,7 @@
 # x402 Ecosystem Hub - Ignore Sub-Projects
 # These are standalone repositories with their own history.
 pr402/
+pr402-link/
 universalsettle/
 sla-escrow/
 spl-token-balance-serverless/
