@@ -9,7 +9,7 @@
 >
 > Confirm cluster and feature flags at runtime via **`GET /api/v1/facilitator/health`** on the host you call; see the [pr402 repository](https://github.com/miralandlabs/pr402) and **`GET /openapi.json`**.
 >
-> **`sla-escrow` readiness.** The SLA-Escrow on-chain program is deployed, but general-availability for sellers/buyers depends on a production-advertised default oracle. The reference oracle [`oracle-qa`](https://github.com/miraland-labs/oracle-qa) is being hardened for that role; until then, treat `sla-escrow` as available to integrators who operate their own `oracle_authority`.
+> **`sla-escrow` readiness.** The SLA-Escrow on-chain program is deployed, but general-availability for sellers/buyers depends on a production-advertised default oracle. Reference oracles ship in the [`oracles/`](oracles/) workspace — three sibling profiles (api-quality, onchain-transfer, file-delivery) being hardened for that role; until then, treat `sla-escrow` as available to integrators who operate their own `oracle_authority`.
 
 ---
 
@@ -39,12 +39,16 @@ The ecosystem is composed of specialized, independent modules that work together
 - **What it does**: Escrows funds via the `sla-escrow` scheme for high-value or long-running work. Suggested for payments **>= $10 USDC**. Requires a domain-specific Oracle authority to adjudicate delivery.
 - **Source**: **Planned Open Source** — repository not yet public. Deployed on Mainnet and Devnet.
 
-### ⚖️ [oracle-qa: API Response Quality Oracle](https://github.com/miraland-labs/oracle-qa)
+### ⚖️ [Oracles Workspace](oracles/)
 
-- **Role**: First official x402 Oracle & reference implementation for oracle developers.
-- **Platform**: Rust / Axum / Tokio (standalone server).
-- **What it does**: Monitors SLA-Escrow delivery events via Solana WebSocket, evaluates API response quality against SLA contracts (status codes, latency, JSON Schema, required fields), and submits on-chain verdicts. Designed as both a production-candidate oracle and an open-source **template** for domain-specific oracles across any vertical.
-- **Source**: Open Source.
+- **Role**: Reference oracles for the `sla-escrow` rail and a template for domain-oracle developers.
+- **Platform**: Rust / Axum / Tokio / Postgres (standalone services on Ubuntu 24.04 + systemd).
+- **What it ships**: a shared library (`oracle-common`) plus three sibling binaries:
+  - **`oracle-api-quality`** — `x402/oracles/api-quality/v1` (HTTP / JSON delivery quality).
+  - **`oracle-onchain-transfer`** — `x402/oracles/onchain-transfer/v1` (SPL transfer / swap delivery).
+  - **`oracle-file-delivery`** — `x402/oracles/file-delivery/attestation/v1` (large-file streaming attestation).
+- Each binary monitors SLA-Escrow delivery events via Solana WebSocket, fetches hash-bound SLA + delivery artifacts from a built-in registration HTTP API, evaluates against the profile's normative rules, and submits `ConfirmOracle` verdicts on-chain. See [`oracles/docs/SELLER_GUIDE.md`](oracles/docs/SELLER_GUIDE.md), [`oracles/docs/BUYER_GUIDE.md`](oracles/docs/BUYER_GUIDE.md), [`oracles/docs/DEPLOYMENT.md`](oracles/docs/DEPLOYMENT.md), [`oracles/docs/OPERATIONS.md`](oracles/docs/OPERATIONS.md).
+- **Source**: Open Source (standalone repo at [`miraland-labs/oracles`](https://github.com/miraland-labs/oracles); clone it beside this hub).
 
 ### 📚 [Open-Source Seller Starter](https://github.com/miraland-labs/x402-seller-starter)
 
@@ -94,7 +98,7 @@ x402/
 ├── pr402/                        <-- standalone repo (open source facilitator)
 ├── universalsettle/              <-- standalone repo (on-chain, planned open source)
 ├── sla-escrow/                   <-- standalone repo (on-chain, planned open source)
-├── oracle-qa/                    <-- standalone repo (open-source oracle reference)
+├── oracles/                      <-- standalone repo (open-source multi-oracle workspace)
 ├── x402-seller-starter/          <-- standalone repo (open source)
 ├── x402-buyer-starter/           <-- standalone repo (open source)
 ├── spl-token-balance-serverless/ <-- reference paid service (closed source)

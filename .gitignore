@@ -12,12 +12,13 @@ langchain-pr402/
 aethervane-serverless/
 aethervane-serverless-deprecated/
 oracle-qa/
+oracles/
 aethervane/
 references/
 docs/
 demo-wallets/
 integration-tests/
-
+gi
 # OS Specific
 .DS_Store
 .AppleDouble

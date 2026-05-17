@@ -12,7 +12,7 @@ disable-model-invocation: true
 
 ## Scope
 
-Execute from the directory that contains the **workspace** or **crate** root `Cargo.toml` (examples: `pr402/`, `oracle-qa/`, `universalsettle/`, `sla-escrow/`, `spl-token-balance-serverless/`, `aethervane/`, `x402-seller-starter/`).
+Execute from the directory that contains the **workspace** or **crate** root `Cargo.toml` (examples: `pr402/`, `oracles/`, `universalsettle/`, `sla-escrow/`, `spl-token-balance-serverless/`, `aethervane/`, `x402-seller-starter/`).
 
 ## Standard quality loop
 

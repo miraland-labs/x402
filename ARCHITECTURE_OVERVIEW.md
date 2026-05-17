@@ -7,7 +7,7 @@
 > **Recommended host:** `https://ipay.sh` (Mainnet) / `https://preview.ipay.sh` (Devnet).
 > **Also served — same service, not deprecated:** `https://agent.pay402.me` / `https://preview.agent.pay402.me`.
 >
-> Confirm **`solanaNetwork`** with **`GET /api/v1/facilitator/health`** on the host you call. General availability of the `sla-escrow` scheme for sellers/buyers depends on a production-advertised default oracle — see [§ 5](#5--the-oracle-oracle-qa-api-response-quality-oracle).
+> Confirm **`solanaNetwork`** with **`GET /api/v1/facilitator/health`** on the host you call. General availability of the `sla-escrow` scheme for sellers/buyers depends on a production-advertised default oracle — see [§ 5](#5--the-oracle-family-oracle-common--three-sibling-oracles).
 
 ---
 
@@ -58,13 +58,24 @@ The ecosystem consists of specialized components that work together to provide a
   - **[AetherVane](https://aethervane.hashspace.me/)** — multi-engine machine-consumable metaphysical readings; optional LLM interpretation; Postgres-backed quotas.
 - **What they do**: Demonstrate premium APIs that verify x402 settlement proofs via the facilitator before serving requests.
 
-### 5. ⚖️ The Oracle: `oracle-qa` (API Response Quality Oracle)
+### 5. ⚖️ The Oracle Family: `oracle-common` + Three Sibling Oracles
 
-- **Role**: Reference oracle implementation & first official x402 oracle.
-- **Platform**: Rust / Axum / Tokio (standalone server).
-- **Repository**: [oracle-qa](https://github.com/miraland-labs/oracle-qa) (Open Source).
-- **What it does**: Monitors `SLA-Escrow` delivery events via Solana WebSocket, fetches off-chain SLA documents and delivery evidence, evaluates API response quality (status codes, latency, JSON Schema, required fields), and submits `ConfirmOracle` verdicts on-chain with a deterministic `resolution_hash`.
-- **Why it matters**: `oracle-qa` is the ecosystem's template for domain-specific oracles (ML model quality, uptime monitoring, content moderation, etc.) *and* the pending default oracle authority for the `sla-escrow` rail.
+- **Role**: Reference oracle implementations for the `sla-escrow` rail, organized as a single Cargo workspace (`oracles/`) with one shared library and three independently-deployable binaries — one per delivery category.
+- **Platform**: Rust / Axum / Tokio / Postgres (standalone services, designed for Ubuntu 24.04 + systemd).
+- **Repository**: standalone repo at [`miraland-labs/oracles`](https://github.com/miraland-labs/oracles) — Open Source. Sits beside this hub locally; clone it next to `x402/` for in-tree development. Replaces the earlier single-binary deployment.
+- **Architecture**: an off-chain `profile_id`-dispatched system. The on-chain `sla-escrow` program stays minimal and category-agnostic; complexity (delivery taxonomy, evidence shapes, evaluator logic) lives in the off-chain oracles. Each binary registers exactly one profile and serves one family.
+
+| Crate                       | Profile                                  | Delivery shape                                                       | Default port |
+| --------------------------- | ---------------------------------------- | -------------------------------------------------------------------- | ------------ |
+| `oracle-common`             | _(library; no profile)_                  | Chain monitor, registry, ledger, settler, profile registry shared by all binaries | _(library)_  |
+| `oracle-api-quality`        | `x402/oracles/api-quality/v1`                    | JSON response — status code, latency, schema, required-fields, body length | 4020         |
+| `oracle-onchain-transfer`   | `x402/oracles/onchain-transfer/v1`               | On-chain SPL transfer / swap re-derived from `getTransaction(jsonParsed)` | 4021         |
+| `oracle-file-delivery`      | `x402/oracles/file-delivery/attestation/v1`      | Streaming SHA-256 + MIME sniff over a registry-hosted blob (MinIO / S3-compatible) | 4022         |
+
+- **Why three siblings**: a malformed evaluator in one family cannot regress another binary; each runs with its own oracle keypair and Postgres database (per-family blast-radius isolation); each can be upgraded independently. Buyers pick the right oracle by reading the seller's `accepts[].extra.oracleProfiles[]` advertisement at HTTP-402 time; pr402 enforces that the buyer-chosen `oracle_authority` matches the seller's advertised authority for the chosen profile (the [`oracle-common/docs/PR402_CONTRACT.md`](oracles/oracle-common/docs/PR402_CONTRACT.md) document is the normative spec for this discovery contract).
+- **Sellers integrating with the oracles**: start at [`oracles/docs/SELLER_GUIDE.md`](oracles/docs/SELLER_GUIDE.md) — three copy-paste recipes plus a one-line seller-register helper. **Buyers** funding an SLA-escrow payment: [`oracles/docs/BUYER_GUIDE.md`](oracles/docs/BUYER_GUIDE.md). Operators deploying their own oracle: [`oracles/docs/DEPLOYMENT.md`](oracles/docs/DEPLOYMENT.md) and [`oracles/docs/OPERATIONS.md`](oracles/docs/OPERATIONS.md).
+- **Resolution-reason codes**: standard codes 0..=255 are reserved for cross-family use; per-family `Custom(N)` codes live in disjoint ranges — `[256..=319]` for onchain-transfer, `[320..=383]` for file-delivery. `oracle-common::resolution_codes` is the canonical registry.
+- **Operational story**: `oracles/scripts/install.sh <family> <binary-url> <env-file>` deploys any of the three binaries on Ubuntu 24.04 via the templated `oracle@.service` unit; `oracle.target` aggregates the three for single-command start/stop. `oracles/scripts/bootstrap-minio.sh` provisions the recommended self-hosted blob backend.
 
 ### 6. 📚 The Seller Starter: `x402-seller-starter`
 
@@ -93,7 +104,7 @@ The answer is about optimizing for risk versus latency in the machine economy. A
 2. **`sla-escrow` (SLA-Escrow)** — Flexible standard-supported extension scheme for asynchronous delivery.
    - Use case: high-value or long-delivery tasks spanning minutes, hours, or days (model training, autonomous research).
    - Recommendation: suggested for payments **>= $10 USDC**.
-   - **Oracle economy**: Escrow requires domain-specific oracles to verify delivery before funds release. The open-source [`oracle-qa`](https://github.com/miraland-labs/oracle-qa) project serves as both the reference implementation and the first candidate official oracle, lowering the barrier for domain-specific oracle developers.
+   - **Oracle economy**: Escrow requires domain-specific oracles to verify delivery before funds release. The open-source [`oracles/`](oracles/) workspace ships three reference oracles — `oracle-api-quality`, `oracle-onchain-transfer`, `oracle-file-delivery` — built on a shared `oracle-common` library. Each registers a single canonical profile, lowering the barrier for domain-specific oracle developers (clone the closest sibling, swap evaluator logic, deploy).
 
 *(Both on-chain programs are **Planned Open Source**.)*
 
@@ -141,7 +152,9 @@ To ensure interoperability between independent **sellers**, **buyers**, and **or
 `sla_hash` stored on-chain is the **SHA-256** hash of the **exact UTF-8 octets** of the SLA JSON the registry serves. This lets the oracle verify that the seller's delivery matches the buyer's original expectations without serializer ambiguity.
 
 - **Recommended schema**: a JSON object containing `service_id`, `task_details`, `deadline_unix`, and `verification_criteria`.
-- **Reference profile (HTTP / JSON API quality)**: the [`oracle-qa`](https://github.com/miraland-labs/oracle-qa) repository publishes profile **`x402/oracle-qa/api-quality/v1`** under `spec/api-quality-v1/` — JSON Schemas, normative evaluation semantics, and examples aligned with the `oracle-qa` reference oracle.
+- **Reference profile (HTTP / JSON API quality)**: the [`oracles/oracle-api-quality`](oracles/oracle-api-quality/) crate publishes profile **`x402/oracles/api-quality/v1`** under `spec/api-quality-v1/` — JSON Schemas, normative evaluation semantics, and examples aligned with the `oracle-api-quality` reference oracle.
+- **Reference profile (on-chain transfer)**: [`oracles/oracle-onchain-transfer`](oracles/oracle-onchain-transfer/) publishes profile **`x402/oracles/onchain-transfer/v1`** for SPL token transfer / swap delivery flows.
+- **Reference profile (large file delivery)**: [`oracles/oracle-file-delivery`](oracles/oracle-file-delivery/) publishes profile **`x402/oracles/file-delivery/attestation/v1`** for streaming SHA-256 + MIME-sniff attestation against any S3-compatible (MinIO / R2 / B2 / Wasabi) blob backend.
 
 ### 2. The `delivery_hash` (The Proof)
 
@@ -182,7 +195,7 @@ Standard payment protocols often rely on a "Fulfill-then-Settle" model. On high-
 - **[pr402 Facilitator](https://github.com/miralandlabs/pr402)** — The REST-to-Solana gateway (Vercel-native, Open Source).
 - **UniversalSettle Protocol** — The split-payment engine. Planned Open Source; deployed on Mainnet and Devnet.
 - **SLA-Escrow Protocol** — The service-level enforcer. Planned Open Source; deployed on Mainnet and Devnet.
-- **[oracle-qa](https://github.com/miraland-labs/oracle-qa)** — API response quality oracle; first official oracle and reference for domain-oracle developers (Open Source).
+- **[oracles/](oracles/)** — Multi-category oracle workspace. Shared library (`oracle-common`) plus three sibling binaries (`oracle-api-quality`, `oracle-onchain-transfer`, `oracle-file-delivery`). Open Source.
 - **[x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter)** — Open-source seller reference.
 - **[x402-buyer-starter](https://github.com/miraland-labs/x402-buyer-starter)** — Open-source buyer/agent SDK reference.
 - **[SPL Token Balance](https://spl-token.signer-payer.me/)** — Reference paid service; SPL balance gating (closed source).

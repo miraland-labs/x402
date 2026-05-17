@@ -2,7 +2,7 @@
 
 > **Deployment status.** The facilitator is live on **Solana Mainnet** (`https://ipay.sh`) and **Solana Devnet** (`https://preview.ipay.sh`); the same service is also served on `https://agent.pay402.me` / `https://preview.agent.pay402.me` (not deprecated). Use the origin that matches your integration; verify at runtime with **`GET /api/v1/facilitator/health`**. Hub: [pr402 on GitHub](https://github.com/miralandlabs/pr402).
 >
-> The `exact` (UniversalSettle) rail is production-ready today. The `sla-escrow` rail is deployed on-chain; general availability for sellers/buyers is gated on a production-advertised default oracle (work in flight on [`oracle-qa`](https://github.com/miraland-labs/oracle-qa)).
+> The `exact` (UniversalSettle) rail is production-ready today. The `sla-escrow` rail is deployed on-chain; general availability for sellers/buyers is gated on a production-advertised default oracle (work in flight in the [`oracles/`](oracles/) workspace — three sibling profiles: api-quality, onchain-transfer, file-delivery).
 
 ### The problem: Agents are rich in data, but broke in utility
 
@@ -49,13 +49,13 @@ The **service trust engine** — operates via the `sla-escrow` extension scheme.
 - Oracle-adjudicated: funds are cryptographically locked until a verified oracle authority confirms delivery (the on-chain program requires `delivery_timestamp > 0` before any verdict is accepted).
 - Verdict-neutral tipping: oracles receive a programmable tip on both release and refund paths — paid for adjudication, not outcome.
 
-### 4. 🔮 `oracle-qa` (API Response Quality Oracle)
+### 4. 🔮 Oracle Workspace (multi-category reference oracles)
 
-The **first official x402 oracle** and open-source reference for the oracle economy.
+The **first official x402 oracles** and open-source references for the oracle economy.
 
-- Use case: Evaluates paid API responses against SLA contracts — status codes, latency, JSON Schema, required fields — and submits on-chain verdicts via `ConfirmOracle`.
-- For oracle developers: [`oracle-qa`](https://github.com/miraland-labs/oracle-qa) is designed as a production candidate oracle *and* a **template for building domain-specific oracles** (ML model quality, uptime monitoring, content moderation, financial data accuracy, and more).
-- Architecture: standalone Rust/Axum/Tokio server with Solana WebSocket subscription, off-chain evidence fetching, deterministic SLA evaluation, and automated on-chain settlement.
+- Three sibling binaries built on a shared library: `oracle-api-quality` (JSON delivery quality), `oracle-onchain-transfer` (SPL transfer / swap delivery), `oracle-file-delivery` (large-file streaming attestation).
+- For oracle developers: the [`oracles/`](oracles/) workspace ships a **template** for domain-specific oracles. Clone the closest sibling, swap in your evaluation logic, register your own profile id (ML model quality, uptime monitoring, content moderation, financial data accuracy, and more).
+- Architecture: standalone Rust/Axum/Tokio servers with Solana WebSocket subscription, built-in registration HTTP API for hash-bound SLA + delivery upload (Postgres / S3-compatible / MinIO), deterministic evaluation, and automated on-chain settlement via `ConfirmOracle`.
 
 ---
 
@@ -79,7 +79,7 @@ The x402 ecosystem is open-source and modular. You can start monetizing your AI 
 
 1. **Deploy a resource provider** — reference [`x402-seller-starter`](https://github.com/miraland-labs/x402-seller-starter) to see how to gate your REST API with x402 headers. Live references operated by Miraland Labs: [spl-token balance verification](https://spl-token.signer-payer.me/) and [AetherVane](https://aethervane.hashspace.me/).
 2. **Onboard your AI agents** — install the buyer SDK (`npm i @pr402/client` or `cargo install pr402-client`, both ship `pr402-buy`). Reference: [`x402-buyer-starter`](https://github.com/miraland-labs/x402-buyer-starter).
-3. **Build a domain-specific oracle** — fork [`oracle-qa`](https://github.com/miraland-labs/oracle-qa) as your starting point. It provides the complete chain-monitor → evaluate → settle pipeline; swap in your own evaluation logic.
+3. **Build a domain-specific oracle** — fork the closest sibling in the [`oracles/`](oracles/) workspace as your starting point. It provides the complete chain-monitor → evaluate → settle pipeline; swap in your own evaluation logic and register your own profile id.
 4. **Integrate pr402** — use the facilitator to verify that incoming requests have valid on-chain settlement proofs.
 5. **Scale** — join the growing network of agents and oracles transacting autonomously across the x402 protocol.
 
@@ -93,8 +93,8 @@ x402 isn't just a protocol; it's the foundation for the next stage of the intern
 
 1. **Design partners** — onboard a small set of sellers and buyer-agent teams on preview, using `x402-seller-starter`, `x402-buyer-starter`, and the paid SPL-token balance service as the first reproducible path.
 2. **Devnet campaign** — publish copy-paste buyer/seller quickstarts, run public demos against `https://preview.ipay.sh`, and measure first build, first verify, first settle, and first seller onboarding.
-3. **Mainnet seller launch** — promote `exact` for low-value instant API calls; enable `sla-escrow` for sellers advertising a production oracle authority (starting with the hardened `oracle-qa` deployment).
-4. **Oracle ecosystem** — treat `oracle-qa` as the default API-quality oracle and a reference for domain-oracle developers; publish profile ids, evidence rules, and trust tiers so buyers can choose authorities intentionally.
+3. **Mainnet seller launch** — promote `exact` for low-value instant API calls; enable `sla-escrow` for sellers advertising a production oracle authority (starting with one of the hardened reference oracles in the [`oracles/`](oracles/) workspace).
+4. **Oracle ecosystem** — treat the [`oracles/`](oracles/) workspace as the reference for domain-oracle developers; publish profile ids, evidence rules, and trust tiers so buyers can choose authorities intentionally.
 5. **Paid-service proof points** — market SPL-token balance verification as the utilitarian API reference and AetherVane as the experience reference: both show how humans and autonomous agents discover a seller, receive HTTP 402, pay through pr402, and parse a structured premium response.
 
 ---
@@ -108,7 +108,7 @@ The x402 ecosystem is composed of specialized, independent repositories. This mo
 - **[pr402 Facilitator](https://github.com/miralandlabs/pr402)** — the serverless-first REST bridge (Open Source).
 - **UniversalSettle (SplitVault)** — high-velocity micro-payments. Planned Open Source; deployed on Mainnet and Devnet.
 - **SLA-Escrow Protocol** — trustless oracle-backed escrow. Planned Open Source; deployed on Mainnet and Devnet.
-- **[oracle-qa](https://github.com/miraland-labs/oracle-qa)** — API response quality oracle; first official oracle and reference for domain-oracle developers (Open Source).
+- **[oracles/](oracles/)** — multi-category oracle workspace; three reference oracles (`oracle-api-quality`, `oracle-onchain-transfer`, `oracle-file-delivery`) sharing one `oracle-common` library. Open Source.
 - **[AetherVane](https://aethervane.hashspace.me/)** — reference paid service (closed source).
 - **[SPL-Token Balance Verification](https://spl-token.signer-payer.me/)** — reference paid service (closed source).
 - **[x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter)** — open-source reference for resource providers.
