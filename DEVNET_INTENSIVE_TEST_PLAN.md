@@ -62,3 +62,45 @@ Wallets: `demo-wallets/{buyer,seller,oracle}-keypair.json`. Admin defaults: `~/.
 ## Mainnet readiness (Apr 2026 devnet run)
 
 After this round: **both programs behaved consistently** on devnet for exercised paths (dual mint, fee destination, sharding off restore, WithdrawFees, two-step authority with 180 s delay). **Recommend** external audit, multisig / hardware authority, and runbooks for timelock + cancel semantics before mainnet cutover.
+
+
+## Buy SPL Token endpoint — devnet paid happy path (follow-up)
+
+The `spl-token-balance` Vercel service exposes `GET /api/v1/buy-spl-token`
+(see `.kiro/specs/buy-spl-token-endpoint/`). Its **paid happy path** —
+`verify_and_settle` → SPL `TransferChecked` → evidence upload →
+`SubmitDelivery` → 200 with three signatures plus a `completed`
+`purchase_orders` row — is too large to drive in-process; the integration
+suite at `spl-token-balance-serverless/tests/buy_endpoint_integration.rs`
+covers the unpaid 402 path, the `completed`/`failed`-row replay paths, and
+the SLA-hash-mismatch failure mode, but leaves the on-chain chain to a
+devnet scenario.
+
+Devnet scenario for the paid happy path:
+
+1. Configure `BUY_SPL_TOKEN_CATALOG_JSON` for the Merry Xmas devnet token
+   (`5bpyckh5YBVG5fB63PSm4BGPjD5sw1TwBtU5GGd9VRRP`) and
+   `SELLER_KEYPAIR_BASE58` from the demo seller wallet.
+2. Buyer issues an unpaid `GET` and signs a `FundPayment` against the
+   returned `slaHash`.
+3. Buyer issues the paid `GET` with the `PAYMENT-SIGNATURE` header. The
+   service must:
+   - run `verify_and_settle` against the configured pr402 facilitator,
+   - submit the SPL `TransferChecked` from the seller treasury ATA to the
+     buyer's `recipient_owner` ATA on devnet,
+   - upload the evidence document to the registry,
+   - submit `SubmitDelivery` against the deployed SLA-Escrow program
+     (`s5zkKiy8FD9nFdAhQZoHHV3G8s4QCPzE4cR9U4Hr4ZH`),
+   - return HTTP 200 with `transferSignature` / `evidenceUrl` /
+     `deliverySignature` / `slaHash`,
+   - persist a `completed` row in `purchase_orders` keyed on
+     `payment_uid`.
+4. A second paid `GET` for the same `payment_uid` returns the stored
+   signatures verbatim (idempotency replay, Requirement 5.4).
+
+Failure-mode follow-ups deferred to the same scenario:
+
+- `verify_and_settle` non-success → 402 with `error.code =
+  settlement_failed`, no SPL transfer attempted.
+- `TransferChecked` RPC exhausts retries → 502 with `error.code =
+  transfer_failed`, ledger row marked `failed (step = transfer)`.
