@@ -6,8 +6,9 @@ universalsettle/
 sla-escrow/
 spl-token-balance-serverless/
 solrisk/
-x402-seller-starter/
+x402-buy-spl-token/
 x402-buyer-starter/
+x402-seller-starter/
 langchain-pr402/
 aethervane-serverless/
 aethervane-serverless-deprecated/
