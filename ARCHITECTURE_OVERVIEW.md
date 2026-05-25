@@ -139,6 +139,9 @@ sequenceDiagram
 
     Facilitator-->>Provider: 13. Settlement Confirmed (OK)
     Provider-->>Agent: 14. Serve Resource + PAYMENT-RESPONSE header
+
+    Note over Facilitator,OnChain: 15. Settlement Keeper (optional) — vault Sweep / escrow Release·Refund / ClosePayment; buyers and sellers may also settle manually
+    Facilitator->>OnChain: 15a. Backstop payout & rent reclamation (cron or standalone worker)
 ```
 
 ---
