@@ -9,7 +9,9 @@
 >
 > Confirm cluster and feature flags at runtime via **`GET /api/v1/facilitator/health`** on the host you call; see the [pr402 repository](https://github.com/miralandlabs/pr402) and **`GET /openapi.json`**.
 >
-> **`sla-escrow` readiness.** The SLA-Escrow on-chain program is deployed, but general-availability for sellers/buyers depends on a production-advertised default oracle. Reference oracles ship in the [`oracles/`](oracles/) workspace — three sibling profiles (api-quality, onchain-transfer, file-delivery) being hardened for that role; until then, treat `sla-escrow` as available to integrators who operate their own `oracle_authority`.
+> **Seller docs (human):** [docs.ipay.sh](https://docs.ipay.sh) — [Start here](https://docs.ipay.sh/start-here.html) · [Choosing x402 on Solana](https://docs.ipay.sh/pr402-vs-alternatives.html) (facilitators vs buyer tools).
+>
+> **`sla-escrow` readiness.** The SLA-Escrow on-chain program is deployed on Mainnet and Devnet. Production sellers choose a trusted `oracle_authority`; reference oracles ship in [`miraland-labs/oracles`](https://github.com/miralandlabs/oracles) (api-quality, onchain-transfer, file-delivery). The open-source **[x402-buy-spl-token](https://github.com/miralandlabs/x402-buy-spl-token)** reference seller demonstrates the full escrow path on live preview/production hosts.
 
 ---
 
@@ -21,7 +23,7 @@ The ecosystem is composed of specialized, independent modules that work together
 
 - **Role**: The Bridge (REST-to-Solana Gateway).
 - **Platform**: Rust / Vercel Serverless.
-- **What it does**: Handles vault discovery, transaction building, and payment verification for off-chain agents.
+- **What it does**: Handles vault discovery, transaction building, payment verification, and settlement for off-chain agents. Supports **`exact`** (UniversalSettle) and **`sla-escrow`** (SLA-Escrow).
 - **Integrators (agents)**: facilitator **`GET /capabilities`** → **`agentManifest.payToSemantics`** (JSON).
 - **Source**: Open Source.
 
@@ -29,46 +31,51 @@ The ecosystem is composed of specialized, independent modules that work together
 
 - **Role**: The Payout (SplitVault Engine).
 - **Platform**: Solana On-chain Program.
-- **What it does**: High-velocity, fixed-fee settlements via the `exact` scheme with automated revenue splitting. Ideal for immediate, low-latency micro-payments (**< $10 USDC** recommendation).
+- **What it does**: High-velocity settlements via the `exact` scheme with automated revenue splitting. Ideal for immediate, low-latency pay-per-call APIs.
 - **Source**: **Planned Open Source** — repository not yet public. Deployed on Mainnet and Devnet.
 
 ### 🛡️ SLA-Escrow Protocol
 
 - **Role**: The Enforcer (Service Level Agreement Trustee).
 - **Platform**: Solana On-chain Program.
-- **What it does**: Escrows funds via the `sla-escrow` scheme for high-value or long-running work. Suggested for payments **>= $10 USDC**. Requires a domain-specific Oracle authority to adjudicate delivery.
+- **What it does**: Escrows funds via the `sla-escrow` scheme for conditional delivery. Funds release (or refund) only after seller delivery and oracle verdict.
 - **Source**: **Planned Open Source** — repository not yet public. Deployed on Mainnet and Devnet.
 
-### ⚖️ [Oracles Workspace](oracles/)
+### ⚖️ [Oracles Workspace](https://github.com/miralandlabs/oracles)
 
 - **Role**: Reference oracles for the `sla-escrow` rail and a template for domain-oracle developers.
 - **Platform**: Rust / Axum / Tokio / Postgres (standalone services on Ubuntu 24.04 + systemd).
-- **What it ships**: a shared library (`oracle-common`) plus three sibling binaries:
-  - **`oracle-api-quality`** — `x402/oracles/api-quality/v1` (HTTP / JSON delivery quality).
-  - **`oracle-onchain-transfer`** — `x402/oracles/onchain-transfer/v1` (SPL transfer / swap delivery).
-  - **`oracle-file-delivery`** — `x402/oracles/file-delivery/attestation/v1` (large-file streaming attestation).
-- Each binary monitors SLA-Escrow delivery events via Solana WebSocket, fetches hash-bound SLA + delivery artifacts from a built-in registration HTTP API, evaluates against the profile's normative rules, and submits `ConfirmOracle` verdicts on-chain. See [`oracles/docs/SELLER_GUIDE.md`](oracles/docs/SELLER_GUIDE.md), [`oracles/docs/BUYER_GUIDE.md`](oracles/docs/BUYER_GUIDE.md), [`oracles/docs/DEPLOYMENT.md`](oracles/docs/DEPLOYMENT.md), [`oracles/docs/OPERATIONS.md`](oracles/docs/OPERATIONS.md).
-- **Source**: Open Source (standalone repo at [`miraland-labs/oracles`](https://github.com/miraland-labs/oracles); clone it beside this hub).
+- **What it ships**: shared `oracle-common` plus three sibling binaries — **api-quality**, **onchain-transfer**, **file-delivery**.
+- **Source**: Open Source.
 
 ### 📚 [Open-Source Seller Starter](https://github.com/miraland-labs/x402-seller-starter)
 
-- **Role**: Open-source seller reference.
-- **Platform**: Rust / Axum.
-- **What it does**: A minimal baseline for resource providers. Builds x402 v2 challenge JSON and verifies incoming settlement proofs.
+- **Role**: Minimal seller baseline (Rust / Axum) — 402 + forward proof to pr402.
 
 ### 🏹 [Open-Source Buyer Starter](https://github.com/miraland-labs/x402-buyer-starter)
 
-- **Role**: Open-source buyer/agent reference.
-- **Platform**: Polyglot (Bash, TypeScript, Python).
-- **What it does**: The definitive onboarding tool for AI agents. Demonstrates the full acquisition lifecycle (Challenge → Discovery → Build → Sign → Settle) with zero-dependency Bash and robust TS/Python SDKs.
-- **Installable packages**: [`@pr402/client`](https://www.npmjs.com/package/@pr402/client) on npm and [`pr402-client`](https://crates.io/crates/pr402-client) on crates.io — both ship a `pr402-buy` CLI.
+- **Role**: Buyer/agent onboarding (Bash, TypeScript, Python).
+- **Installable packages**: [`@pr402/client`](https://www.npmjs.com/package/@pr402/client) and [`pr402-client`](https://crates.io/crates/pr402-client) — both ship `pr402-buy`.
 
-### 💎 Reference paid services (bootstrap sellers)
+---
 
-Miraland Labs operates two production paid services that act as third-party-style seller references on top of pr402. They are closed source but useful as live integration proof-points:
+## 💎 Reference paid services (live proof points)
 
-- **[SPL-Token Balance Verification](https://spl-token.signer-payer.me/)** — production-grade SPL balance gating over x402 (preview: [preview.spl-token.signer-payer.me](https://preview.spl-token.signer-payer.me/)).
-- **[AetherVane](https://aethervane.hashspace.me/)** — deterministic, machine-consumable metaphysical readings (Bazi, Western tropical natal, Liu Yao, Mei Hua, onomancy, daily almanac), optional LLM interpretation, Postgres quotas (preview: [preview.aethervane.hashspace.me](https://preview.aethervane.hashspace.me/)).
+Miraland Labs operates production services on pr402. **Open-source references** are meant to be forked; **closed-source** services remain operated examples only.
+
+### Open source — clone and ship
+
+| Project | Rail | What it proves | Live hosts |
+|--------|------|----------------|------------|
+| **[x402-buy-spl-token](https://github.com/miralandlabs/x402-buy-spl-token)** | **`sla-escrow`** | USDC into escrow → SPL delivery → `SubmitDelivery` → **oracle-onchain-transfer** → release. Seller-quoted session totals (`quantity`), human storefront + agent API. Binding: `x402/informative/bindings/buy-spl-token/v1`. | [spl-token.hashspace.me](https://spl-token.hashspace.me) · [preview.spl-token.hashspace.me](https://preview.spl-token.hashspace.me) |
+| **[solrisk](https://github.com/miralandlabs/solrisk)** | **`exact`** | Pay-per-call wallet risk scoring ($0.05 USDC) — chain signals, allow/deny labels, versioned formula. | [solrisk.signer-payer.me](https://solrisk.signer-payer.me/) |
+
+**Start with x402-buy-spl-token** if you sell **conditional delivery** (tokens, credits, files, jobs). **Start with solrisk** if you sell **instant JSON** behind a fixed per-call price on **`exact`**.
+
+### Operated only (closed source)
+
+- **[SPL-Token Balance Verification](https://spl-token.signer-payer.me/)** — **`exact`** rail; SPL balance gating (preview: [preview.spl-token.signer-payer.me](https://preview.spl-token.signer-payer.me/)).
+- **[AetherVane](https://aethervane.hashspace.me/)** — **`exact`** rail; machine-consumable metaphysical readings + optional LLM layer (preview: [preview.aethervane.hashspace.me](https://preview.aethervane.hashspace.me/)).
 
 ---
 
@@ -76,6 +83,7 @@ Miraland Labs operates two production paid services that act as third-party-styl
 
 - **[Architecture Overview](ARCHITECTURE_OVERVIEW.md)** — technical pillars, transaction lifecycle, security invariants.
 - **[Ecosystem Pitch](X402_ECOSYSTEM_PITCH.md)** — why x402 is the payment layer for autonomous agents.
+- **pr402 human docs:** [docs.ipay.sh](https://docs.ipay.sh) — seller checklist, buyer quickstart, facilitator comparison.
 
 ---
 
@@ -87,7 +95,7 @@ AI agents are rich in data but broke in utility. Traditional payment rails are b
 
 ## 🛠️ Repository layout
 
-This repository is a **virtual hub**, not a monorepo. Each sub-project listed below is a standalone repository with its own Git history; clone them beside the hub when you want source code locally. A fresh hub clone intentionally contains only ecosystem-level documentation (the sub-project folders are ignored at the hub level — see `.gitignore`).
+This repository is a **virtual hub**, not a monorepo. Each sub-project is a standalone repository with its own Git history; clone them beside the hub when you want source locally. Sub-project folders are listed in `.gitignore` at the hub level.
 
 ```bash
 # Recommended local structure
@@ -95,14 +103,16 @@ x402/
 ├── README.md                     <-- you are here
 ├── ARCHITECTURE_OVERVIEW.md
 ├── X402_ECOSYSTEM_PITCH.md
-├── pr402/                        <-- standalone repo (open source facilitator)
-├── universalsettle/              <-- standalone repo (on-chain, planned open source)
-├── sla-escrow/                   <-- standalone repo (on-chain, planned open source)
-├── oracles/                      <-- standalone repo (open-source multi-oracle workspace)
-├── x402-seller-starter/          <-- standalone repo (open source)
-├── x402-buyer-starter/           <-- standalone repo (open source)
-├── spl-token-balance-serverless/ <-- reference paid service (closed source)
-└── aethervane/                   <-- reference paid service (closed source)
+├── pr402/                        <-- facilitator (open source)
+├── universalsettle/              <-- on-chain exact rail (planned OSS)
+├── sla-escrow/                   <-- on-chain escrow rail (planned OSS)
+├── oracles/                      <-- oracle workspace (open source)
+├── x402-seller-starter/          <-- minimal seller example (open source)
+├── x402-buyer-starter/           <-- buyer example (open source)
+├── x402-buy-spl-token/           <-- sla-escrow reference seller (open source) ★
+├── solrisk/                      <-- exact-rail reference seller (open source) ★
+├── spl-token-balance-serverless/ <-- operated balance API (closed source)
+└── aethervane/                   <-- operated readings API (closed source)
 ```
 
 ---
