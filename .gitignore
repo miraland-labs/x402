@@ -22,7 +22,7 @@ articles/
 docs/
 demo-wallets/
 integration-tests/
-integrations-bak/
+integrations/
 gi
 # OS Specific
 .DS_Store
