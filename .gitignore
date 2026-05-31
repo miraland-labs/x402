@@ -4,9 +4,12 @@ pr402/
 pr402-link/
 universalsettle/
 sla-escrow/
+rwa-kyc-hook/
+rwa-issuer-portal/
 spl-token-balance-serverless/
 solrisk/
 x402-buy-spl-token/
+x402-buy-rwa-token/
 x402-buyer-starter/
 x402-seller-starter/
 langchain-pr402/
@@ -15,9 +18,11 @@ aethervane-serverless-deprecated/
 oracles/
 aethervane/
 references/
+articles/
 docs/
 demo-wallets/
 integration-tests/
+integrations-bak/
 gi
 # OS Specific
 .DS_Store

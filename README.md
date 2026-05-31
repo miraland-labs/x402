@@ -55,7 +55,7 @@ The ecosystem is composed of specialized, independent modules that work together
 ### 🏹 [Open-Source Buyer Starter](https://github.com/miraland-labs/x402-buyer-starter)
 
 - **Role**: Buyer/agent onboarding (Bash, TypeScript, Python).
-- **Installable packages**: [`@pr402/client`](https://www.npmjs.com/package/@pr402/client) and [`pr402-client`](https://crates.io/crates/pr402-client) — both ship `pr402-buy`.
+- **Installable packages**: [`@pr402/client`](https://www.npmjs.com/package/@pr402/client), [`@pr402/mcp-server`](https://www.npmjs.com/package/@pr402/mcp-server) (MCP / Cursor), [`langchain-pr402`](https://pypi.org/project/langchain-pr402/) (Python LangChain), and [`pr402-client`](https://crates.io/crates/pr402-client) — npm/rust ship `pr402-buy`.
 
 ---
 
