@@ -6,6 +6,7 @@ universalsettle/
 sla-escrow/
 rwa-kyc-hook/
 rwa-issuer-portal/
+rwa-kyc-sync/
 spl-token-balance-serverless/
 solrisk/
 x402-buy-spl-token/

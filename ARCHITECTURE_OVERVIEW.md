@@ -95,7 +95,21 @@ Open-source references demonstrate **both rails** end-to-end. Closed-source serv
 
 - Minimal open-source seller — 402 + forward proof (any language pattern documented in pr402 docs).
 
-### 7. 🏹 The Buyer Starter: `x402-buyer-starter`
+### 7. 🏦 RWA primary issuance vertical
+
+Decoupled stack for regulated token subscription (primary issuance only):
+
+| Component | Repo | Role |
+| --------- | ---- | ---- |
+| KYC portal | `rwa-issuer-portal` | Postgres system of record; **no signing** (Vercel) |
+| Ops sync | `rwa-kyc-sync` | Drains `/sync/feed`, runs hook CLI, marks synced (VPS) |
+| Compliance hook | `rwa-kyc-hook` | Multi-issuer Token-2022 Transfer Hook (on-chain) |
+| Seller | `x402-buy-rwa-token` | `sla-escrow` primary issuance API (Vercel) |
+| Delivery oracle | `oracle-rwa-transfer` | Verifies Token-2022 delivery + hook pin |
+
+Binding: portal `issuers.id` (UUID) ↔ on-chain `issuer_id` (32-char hex). Ops runbook: [`RWA_OPS_RUNBOOK.md`](RWA_OPS_RUNBOOK.md).
+
+### 8. 🏹 The Buyer Starter: `x402-buyer-starter`
 
 - Open-source buyer lifecycle demos; production path via `@pr402/client` / `pr402-client`.
 

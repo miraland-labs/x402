@@ -24,6 +24,11 @@ x402 (see `x402/` folder—the repository root holding this `.cursor/skills/` tr
 8. solrisk, open source **exact** reference seller (wallet risk scoring API; [solrisk.signer-payer.me](https://solrisk.signer-payer.me/); github.com/miralandlabs/solrisk)
 9. spl-token-balance-serverless project, operated paid service — SPL balance verification (closed source)
 10. aethervane project, operated paid service — fortune teller readings (closed source)
+11. rwa-issuer-portal — RWA KYC system of record (open source, Vercel)
+12. rwa-kyc-sync — RWA ops sync worker: portal feed → on-chain KycRecord (open source, VPS)
+13. rwa-kyc-hook — multi-issuer Token-2022 Transfer Hook (open source, on-chain)
+14. x402-buy-rwa-token — RWA primary issuance seller (open source, sla-escrow)
+15. oracle-rwa-transfer — RWA delivery oracle (in oracles workspace)
 
 ## Repo folder map
 
@@ -39,9 +44,13 @@ x402 (see `x402/` folder—the repository root holding this `.cursor/skills/` tr
 | `solrisk/` | **exact** reference seller — wallet risk API (open source) |
 | `spl-token-balance-serverless/` | Operated SPL balance check (closed source) |
 | `aethervane/` | Operated readings API (closed source) |
+| `rwa-issuer-portal/` | RWA KYC portal — records only (open source, Vercel) |
+| `rwa-kyc-sync/` | RWA ops sync worker — portal → hook CLI (open source, VPS) |
+| `rwa-kyc-hook/` | RWA Transfer Hook on-chain program (open source) |
+| `x402-buy-rwa-token/` | RWA primary issuance seller (open source) |
 
 ## Documentation entrypoints
 
-- Hub: [`README.md`](../../../README.md), [`ARCHITECTURE_OVERVIEW.md`](../../../ARCHITECTURE_OVERVIEW.md)
+- Hub: [`README.md`](../../../README.md), [`ARCHITECTURE_OVERVIEW.md`](../../../ARCHITECTURE_OVERVIEW.md), [`RWA_OPS_RUNBOOK.md`](../../../RWA_OPS_RUNBOOK.md)
 - Cross-program Devnet work: [`DEVNET_INTENSIVE_TEST_PLAN.md`](../../../DEVNET_INTENSIVE_TEST_PLAN.md), [`integration-tests/`](../../../integration-tests/)
 - Follow project-local `README.md` for authoritative build and env instructions

@@ -79,9 +79,26 @@ Miraland Labs operates production services on pr402. **Open-source references** 
 
 ---
 
+## 🏦 RWA primary issuance vertical
+
+Modular stack for regulated token subscription — payment, compliance, and delivery stay decoupled. **Each row is its own GitHub repository** (clone independently; the x402 hub is not a monorepo).
+
+| Project | Role | Deploy |
+| ------- | ---- | ------ |
+| **[rwa-issuer-portal](https://github.com/miralandlabs/rwa-issuer-portal)** | KYC system of record (Postgres) | Vercel |
+| **[rwa-kyc-sync](https://github.com/miralandlabs/rwa-kyc-sync)** | Portal feed → on-chain KycRecord | VPS / GH cron |
+| **[rwa-kyc-hook](https://github.com/miralandlabs/rwa-kyc-hook)** | Multi-issuer Token-2022 Transfer Hook | On-chain |
+| **[x402-buy-rwa-token](https://github.com/miralandlabs/x402-buy-rwa-token)** | Primary issuance seller (`sla-escrow`) | Vercel |
+| **[oracle-rwa-transfer](https://github.com/miralandlabs/oracles)** | Delivery verification oracle | VPS + systemd |
+
+**Ops runbook:** [RWA_OPS_RUNBOOK.md](RWA_OPS_RUNBOOK.md)
+
+---
+
 ## 📖 Global Documentation
 
 - **[Architecture Overview](ARCHITECTURE_OVERVIEW.md)** — technical pillars, transaction lifecycle, security invariants.
+- **[RWA Ops Runbook](RWA_OPS_RUNBOOK.md)** — portal → sync → hook → buy-rwa-token → oracle.
 - **[Ecosystem Pitch](X402_ECOSYSTEM_PITCH.md)** — why x402 is the payment layer for autonomous agents.
 - **pr402 human docs:** [docs.ipay.sh](https://docs.ipay.sh) — seller checklist, buyer quickstart, facilitator comparison.
 
@@ -110,6 +127,10 @@ x402/
 ├── x402-seller-starter/          <-- minimal seller example (open source)
 ├── x402-buyer-starter/           <-- buyer example (open source)
 ├── x402-buy-spl-token/           <-- sla-escrow reference seller (open source) ★
+├── x402-buy-rwa-token/           <-- RWA primary issuance seller (open source)
+├── rwa-issuer-portal/            <-- RWA KYC portal (open source, Vercel)
+├── rwa-kyc-sync/                 <-- RWA ops sync worker (open source, VPS)
+├── rwa-kyc-hook/                 <-- RWA Transfer Hook program (open source)
 ├── solrisk/                      <-- exact-rail reference seller (open source) ★
 ├── spl-token-balance-serverless/ <-- operated balance API (closed source)
 └── aethervane/                   <-- operated readings API (closed source)
