@@ -132,8 +132,8 @@ x402/
 ├── rwa-kyc-sync/                 <-- RWA ops sync worker (open source, VPS)
 ├── rwa-kyc-hook/                 <-- RWA Transfer Hook program (planned OSS)
 ├── solrisk/                      <-- exact-rail reference seller (open source) ★
-├── spl-token-balance-serverless/ <-- operated balance API (open source) ★
-└── aethervane/                   <-- operated readings API (open source)
+├── spl-token-balance-serverless/ <-- operated balance API (closed source)
+└── aethervane/                   <-- operated readings API (closed source)
 ```
 
 ---
