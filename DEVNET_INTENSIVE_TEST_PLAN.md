@@ -66,41 +66,34 @@ After this round: **both programs behaved consistently** on devnet for exercised
 
 ## Buy SPL Token endpoint — devnet paid happy path (follow-up)
 
-The `spl-token-balance` Vercel service exposes `GET /api/v1/buy-spl-token`
-(see `.kiro/specs/buy-spl-token-endpoint/`). Its **paid happy path** —
-`verify_and_settle` → SPL `TransferChecked` → evidence upload →
-`SubmitDelivery` → 200 with three signatures plus a `completed`
-`purchase_orders` row — is too large to drive in-process; the integration
-suite at `spl-token-balance-serverless/tests/buy_endpoint_integration.rs`
-covers the unpaid 402 path, the `completed`/`failed`-row replay paths, and
-the SLA-hash-mismatch failure mode, but leaves the on-chain chain to a
-devnet scenario.
+**Seller:** standalone repo **[miralandlabs/x402-buy-spl-token](https://github.com/miralandlabs/x402-buy-spl-token)** — `GET /api/v1/buy-spl-token` on the **sla-escrow** rail (binding v0.3 **buyer-commit**). It is **not** part of `spl-token-balance-serverless` (that repo is check-balance / `exact` only).
 
-Devnet scenario for the paid happy path:
+**Devnet preview host:** `https://preview.spl-token.hashspace.me`  
+**Production host:** `https://spl-token.hashspace.me`
 
-1. Configure `BUY_SPL_TOKEN_CATALOG_JSON` for the Merry Xmas devnet token
-   (`5bpyckh5YBVG5fB63PSm4BGPjD5sw1TwBtU5GGd9VRRP`) and
-   `SELLER_KEYPAIR_BASE58` from the demo seller wallet.
-2. Buyer issues an unpaid `GET` and signs a `FundPayment` against the
-   returned `slaHash`.
-3. Buyer issues the paid `GET` with the `PAYMENT-SIGNATURE` header. The
-   service must:
-   - run `verify_and_settle` against the configured pr402 facilitator,
-   - submit the SPL `TransferChecked` from the seller treasury ATA to the
-     buyer's `recipient_owner` ATA on devnet,
-   - upload the evidence document to the registry,
-   - submit `SubmitDelivery` against the deployed SLA-Escrow program
-     (`s5zkKiy8FD9nFdAhQZoHHV3G8s4QCPzE4cR9U4Hr4ZH`),
-   - return HTTP 200 with `transferSignature` / `evidenceUrl` /
-     `deliverySignature` / `slaHash`,
-   - persist a `completed` row in `purchase_orders` keyed on
-     `payment_uid`.
-4. A second paid `GET` for the same `payment_uid` returns the stored
-   signatures verbatim (idempotency replay, Requirement 5.4).
+**Automated runbook:** [`x402-buy-spl-token/docs/BUY-SPL-TOKEN-DEVNET-TEST.md`](https://github.com/miralandlabs/x402-buy-spl-token/blob/main/docs/BUY-SPL-TOKEN-DEVNET-TEST.md)  
+**Orchestrator:** [`x402-buy-spl-token/scripts/test-buy-spl-token-devnet.sh`](https://github.com/miralandlabs/x402-buy-spl-token/blob/main/scripts/test-buy-spl-token-devnet.sh)
 
-Failure-mode follow-ups deferred to the same scenario:
+The **paid happy path** — registry SLA upload → `verify_and_settle` → SPL `TransferChecked` → evidence upload → `SubmitDelivery` → HTTP 200 with `transferSignature` / `evidenceUrl` / `deliverySignature` / `slaHash`, plus a `completed` `purchase_orders` row when Postgres is enabled — is exercised on devnet via the script above, not in the spl-token-balance crate.
 
-- `verify_and_settle` non-success → 402 with `error.code =
-  settlement_failed`, no SPL transfer attempted.
-- `TransferChecked` RPC exhausts retries → 502 with `error.code =
-  transfer_failed`, ledger row marked `failed (step = transfer)`.
+Devnet scenario (manual outline; script implements the same chain):
+
+1. On the **x402-buy-spl-token** Vercel preview deployment, set env from [`env.example`](https://github.com/miralandlabs/x402-buy-spl-token/blob/main/env.example): `BUY_SPL_TOKEN_CATALOG_JSON` (Merry Xmas devnet mint `5bpyckh5YBVG5fB63PSm4BGPjD5sw1TwBtU5GGd9VRRP`), `SELLER_KEYPAIR_BASE58`, `MERCHANT_SIGNER_KEYPAIR_BASE58`, `X402_MERCHANT_WALLET`, `X402_PAY_TO` (escrow PDA), `REGISTRY_BASE_URL` / `REGISTRY_BEARER_TOKEN`, `ORACLE_AUTHORITIES`, `X402_FACILITATOR_URL` → pr402 preview (`https://preview.ipay.sh/api/v1/facilitator` or `https://preview.agent.pay402.me/api/v1/facilitator`).
+2. Buyer: unpaid `GET …/api/v1/buy-spl-token?token=…&quantity=1&recipient_owner=…&buyer_nonce=…` → **402** with `commitMaterial` (session totals; buyer authors the SLA locally — no `slaHash` in the unpaid body).
+3. Buyer: build/sign `FundPayment` via pr402 against that SLA; paid `GET` with **`PAYMENT-SIGNATURE`**. Seller must:
+   - upload SLA to the evidence registry (valid `REGISTRY_BEARER_TOKEN`),
+   - run `verify_and_settle` on the configured facilitator,
+   - submit SPL `TransferChecked` (delivery hot key),
+   - upload delivery evidence,
+   - submit `SubmitDelivery` (merchant signer) on SLA-Escrow devnet program `s5zkKiy8FD9nFdAhQZoHHV3G8s4QCPzE4cR9U4Hr4ZH`,
+   - return HTTP 200 `status: completed` with the three on-chain/registry artifacts,
+   - persist idempotency in `purchase_orders` when `DATABASE_URL` is set.
+4. Repeat the same paid `GET` with the same `payment_uid` → stored signatures verbatim (replay).
+
+Failure-mode follow-ups (same script / runbook):
+
+- Registry bearer missing/invalid → `502 registry_unavailable` before settle.
+- `verify_and_settle` non-success → 402 `settlement_failed`, no SPL transfer.
+- `TransferChecked` exhausts RPC retries → 502 `transfer_failed`, ledger `failed` (step `transfer`) when DB enabled.
+
+**Legacy note:** `https://preview.spl-token.signer-payer.me` previously hosted buy-spl-token inside `spl-token-balance-serverless`; do not use it for this scenario.
