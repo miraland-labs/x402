@@ -24,7 +24,7 @@ The ecosystem is composed of specialized, independent modules that work together
 - **Role**: The Bridge (REST-to-Solana Gateway).
 - **Platform**: Rust / Vercel Serverless.
 - **What it does**: Handles vault discovery, transaction building, payment verification, and settlement for off-chain agents. Supports **`exact`** (UniversalSettle) and **`sla-escrow`** (SLA-Escrow).
-- **Integrators (agents)**: facilitator **`GET /capabilities`** → **`agentManifest.payToSemantics`** (JSON).
+- **Integrators (agents)**: facilitator **`GET /capabilities`** → **`agentManifest`** (`resourceSearch`, `resourceIndex`, `merchantOrigins`) · **`GET /resources`** for payable API search (not `GET /providers`).
 - **Source**: Open Source.
 
 ### ⚡ UniversalSettle Protocol
@@ -130,7 +130,7 @@ x402/
 ├── x402-buy-rwa-token/           <-- RWA primary issuance seller (open source)
 ├── rwa-issuer-portal/            <-- RWA KYC portal (open source, Vercel)
 ├── rwa-kyc-sync/                 <-- RWA ops sync worker (open source, VPS)
-├── rwa-kyc-hook/                 <-- RWA Transfer Hook program (open source)
+├── rwa-kyc-hook/                 <-- RWA Transfer Hook program (planned OSS)
 ├── solrisk/                      <-- exact-rail reference seller (open source) ★
 ├── spl-token-balance-serverless/ <-- operated balance API (closed source)
 └── aethervane/                   <-- operated readings API (closed source)

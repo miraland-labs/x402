@@ -28,7 +28,7 @@ The ecosystem consists of specialized components that work together to provide a
   - **Blockhash-safe `/settle`**: Verification runs inside `/settle` before broadcast (Solana blockhash lifetime ~60s).
   - **Scheme normalization**: HTTP `402 accepts[]` may use `v2:solana:exact` / `v2:solana:sla-escrow`; **`verifyBodyTemplate`** and **`/verify`/`/settle`** normalize to wire **`exact`** / **`sla-escrow`**.
   - **Settlement keeper** (optional): background vault sweep and sla-escrow release/refund/close candidates — see pr402 `settlement_keeper` and cron ops docs.
-- **Agent reference**: **`GET /capabilities`** → **`agentManifest.payToSemantics`** (JSON).
+- **Agent reference**: **`GET /capabilities`** → **`agentManifest`** (resource search, SRM, payTo semantics). **`GET /providers`** = merchant origins; **`GET /resources`** = payable API endpoints.
 
 ### 2. ⚡ The Payout: `UniversalSettle` (SplitVault)
 

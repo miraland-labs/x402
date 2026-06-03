@@ -35,6 +35,10 @@ The "interpreter" for the machine world. It exposes a standard REST API that AI 
 - **Preview mirror**: `preview.ipay.sh` matches production feature-for-feature for safe rehearsal.
 - **Sustainable BYOG model**: Buyers typically pay network fees; optional sponsorship paths on supported builds.
 
+### Agent discovery (Layer 3)
+
+Sellers publish payable APIs via **Seller Resource Manifest** (`/.well-known/x402-resources.json`) and/or wallet-signed registration at **`/resources`**. Buyer agents search **`GET /api/v1/facilitator/resources`** (not `GET /providers`). See [pr402 DISCOVERY.md](https://github.com/miralandlabs/pr402/blob/main/docs/DISCOVERY.md) and **`@pr402/discovery`**.
+
 ### 2. ⚡ `UniversalSettle` (SplitVault)
 
 The **instant payment engine** — operates via the **`exact`** scheme.
