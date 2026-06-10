@@ -24,8 +24,8 @@ docs/
 demo-wallets/
 integration-tests/
 integrations/
-fifa-worldcup-client-ts-bak/
-fifa-worldcup-scraper-bak/
+fifa-worldcup-client-ts/
+fifa-worldcup-scraper/
 x402-subscription-client/
 x402-subscription-starter/
 gi
