@@ -68,9 +68,10 @@ Miraland Labs operates production services on pr402. **Open-source references** 
 | Project | Rail | What it proves | Live hosts |
 |--------|------|----------------|------------|
 | **[x402-buy-spl-token](https://github.com/miralandlabs/x402-buy-spl-token)** | **`sla-escrow`** | USDC into escrow → SPL delivery → `SubmitDelivery` → **oracle-onchain-transfer** → release. Seller-quoted session totals (`quantity`), human storefront + agent API. Binding: `x402/informative/bindings/buy-spl-token/v1`. | [spl-token.hashspace.me](https://spl-token.hashspace.me) · [preview.spl-token.hashspace.me](https://preview.spl-token.hashspace.me) |
-| **[solrisk](https://github.com/miralandlabs/solrisk)** | **`exact`** | Pay-per-call wallet risk scoring ($0.05 USDC) — chain signals, allow/deny labels, versioned formula. | [solrisk.signer-payer.me](https://solrisk.signer-payer.me/) |
+| **[solrisk](https://github.com/miralandlabs/solrisk)** | **`exact`** per-call | Pay-per-call wallet risk scoring ($0.05 USDC) — chain signals, allow/deny labels, versioned formula. | [solrisk.signer-payer.me](https://solrisk.signer-payer.me/) |
+| **[x402-subscription-starter](x402-subscription-starter/)** + **[x402-subscription-client](x402-subscription-client/)** | **`exact`** subscription | Pay once → JWT window → Bearer on data routes. Hourly/daily/monthly tiers. Forkable seller + buyer SDK. | Local dev · API `https://fifa.polystrike.io/devnet` (no web UI — `GET /health`) |
 
-**Start with x402-buy-spl-token** if you sell **conditional delivery** (tokens, credits, files, jobs). **Start with solrisk** if you sell **instant JSON** behind a fixed per-call price on **`exact`**.
+**Start with x402-buy-spl-token** if you sell **conditional delivery** (tokens, credits, files, jobs). **Start with solrisk** if you sell **instant JSON** behind a fixed per-call price on **`exact`**. **Start with [x402-subscription-starter](x402-subscription-starter/)** + [SUBSCRIPTION_PATTERN.md](SUBSCRIPTION_PATTERN.md) if you sell **subscription APIs** (hourly/daily/monthly billing on x402 instead of Stripe + API keys).
 
 ### Operated only (closed source)
 
@@ -97,6 +98,8 @@ Modular stack for regulated token subscription — payment, compliance, and deli
 
 ## 📖 Global Documentation
 
+- **[Subscription Pattern](SUBSCRIPTION_PATTERN.md)** — pay once via x402, JWT window, rate limits; hourly/daily/monthly tiers (third seller model on `exact`).
+- **[Article 1 (EN)](articles/subscription-pattern-01-en.md)** · **[第 1 篇（中文）](articles/subscription-pattern-01-zh.md)** — *Your API Key Is a JWT* / 订阅模式专栏开篇.
 - **[Architecture Overview](ARCHITECTURE_OVERVIEW.md)** — technical pillars, transaction lifecycle, security invariants.
 - **[RWA Ops Runbook](RWA_OPS_RUNBOOK.md)** — portal → sync → hook → buy-rwa-token → oracle.
 - **[Ecosystem Pitch](X402_ECOSYSTEM_PITCH.md)** — why x402 is the payment layer for autonomous agents.
@@ -131,7 +134,11 @@ x402/
 ├── rwa-issuer-portal/            <-- RWA KYC portal (open source, Vercel)
 ├── rwa-kyc-sync/                 <-- RWA ops sync worker (open source, VPS)
 ├── rwa-kyc-hook/                 <-- RWA Transfer Hook program (planned OSS)
-├── solrisk/                      <-- exact-rail reference seller (open source) ★
+├── solrisk/                      <-- exact-rail per-call reference seller (open source) ★
+├── x402-subscription-starter/    <-- exact-rail subscription seller (open source) ★
+├── x402-subscription-client/     <-- exact-rail subscription buyer SDK (open source) ★
+├── fifa-worldcup-scraper/        <-- example subscription deployment (sports data)
+├── fifa-worldcup-client-ts/      <-- FIFA-specific client (legacy; use x402-subscription-client)
 ├── spl-token-balance-serverless/ <-- operated balance API (closed source)
 └── aethervane/                   <-- operated readings API (closed source)
 ```

@@ -59,9 +59,10 @@ Open-source references demonstrate **both rails** end-to-end. Closed-source serv
 | Project | Rail | Endpoint / UX | Hosts |
 |--------|------|---------------|-------|
 | **[x402-buy-spl-token](https://github.com/miralandlabs/x402-buy-spl-token)** | **`sla-escrow`** | `GET /api/v1/buy-spl-token` (+ human storefront `/`) | [spl-token.hashspace.me](https://spl-token.hashspace.me) · [preview.spl-token.hashspace.me](https://preview.spl-token.hashspace.me) |
-| **[solrisk](https://github.com/miralandlabs/solrisk)** | **`exact`** | `GET /api/v1/wallet-risk?wallet=` | [solrisk.signer-payer.me](https://solrisk.signer-payer.me/) |
-| **spl-token balance** (closed) | **`exact`** | SPL balance verification | [spl-token.signer-payer.me](https://spl-token.signer-payer.me/) |
-| **AetherVane** (closed) | **`exact`** | Multi-engine readings API | [aethervane.hashspace.me](https://aethervane.hashspace.me/) |
+| **[solrisk](https://github.com/miralandlabs/solrisk)** | **`exact`** per-call | `GET /api/v1/wallet-risk?wallet=` | [solrisk.signer-payer.me](https://solrisk.signer-payer.me/) |
+| **[x402-subscription-starter](x402-subscription-starter/)** | **`exact`** subscription | `POST /api/v1/subscribe` → JWT → Bearer on data routes | Fork locally · API `https://fifa.polystrike.io/devnet` (no web UI — `GET /health`) |
+| **spl-token balance** (closed) | **`exact`** per-call | SPL balance verification | [spl-token.signer-payer.me](https://spl-token.signer-payer.me/) |
+| **AetherVane** (closed) | **`exact`** per-call | Multi-engine readings API | [aethervane.hashspace.me](https://aethervane.hashspace.me/) |
 
 **x402-buy-spl-token design notes (v0.3):**
 
@@ -126,9 +127,27 @@ Binding: portal `issuers.id` (UUID) ↔ on-chain `issuer_id` (32-char hex). Ops 
 
 ---
 
+## 📅 Third seller model: `exact` subscription (JWT window)
+
+x402 is **not only per-request payment**. The same `exact` rail supports **traditional subscription billing**:
+
+- One x402 settlement on `POST /api/v1/subscribe?tier=hourly|daily|monthly`
+- Seller issues a JWT; buyer uses `Authorization: Bearer` on all data routes
+- Per-wallet fair-use rate limits replace per-call 402
+
+**Reference:** [x402-subscription-starter](x402-subscription-starter/) + [x402-subscription-client](x402-subscription-client/). Example host: fifa-worldcup-scraper. Pattern guide: [SUBSCRIPTION_PATTERN.md](SUBSCRIPTION_PATTERN.md).
+
+| Model | 402 on data routes? | Best for |
+|-------|---------------------|----------|
+| Per-call (`exact`) | Yes — every request | Stateless APIs (solrisk) |
+| Subscription (`exact`) | No — JWT only | High-volume feeds, scrapers, analytics |
+| Escrow (`sla-escrow`) | On purchase | Conditional delivery (buy-spl-token) |
+
+---
+
 ## 🔄 The Lifecycle of an x402 Transaction
 
-### `exact` rail (instant — e.g. solrisk)
+### `exact` rail — per-call (e.g. solrisk)
 
 ```mermaid
 sequenceDiagram
@@ -147,6 +166,32 @@ sequenceDiagram
     Facilitator->>OnChain: Execute split / sweep
     Facilitator-->>Provider: OK
     Provider-->>Agent: 200 + JSON result
+```
+
+### `exact` rail — subscription (e.g. fifa-worldcup-scraper)
+
+```mermaid
+sequenceDiagram
+    participant Agent as Buyer Agent
+    participant Provider as Seller API
+    participant Facilitator as pr402
+
+    Agent->>Provider: POST /subscribe?tier=monthly (no payment)
+    Provider-->>Agent: HTTP 402 + accepts[]
+    Agent->>Facilitator: build-exact-payment-tx
+    Facilitator-->>Agent: unsigned tx + verifyBodyTemplate
+    Note over Agent: Sign locally
+    Agent->>Provider: POST /subscribe + PAYMENT-SIGNATURE
+    Provider->>Facilitator: verify + settle
+    Facilitator-->>Provider: OK
+    Provider-->>Agent: 200 + JWT (30-day window)
+
+    loop Data fetches within window
+        Agent->>Provider: POST /api/v1/news + Bearer JWT
+        Provider-->>Agent: 200 + data
+    end
+
+    Note over Agent: On TOKEN_EXPIRED auto-renew via /subscribe
 ```
 
 ### `sla-escrow` rail (conditional — e.g. x402-buy-spl-token)
@@ -210,7 +255,8 @@ sequenceDiagram
 - **UniversalSettle** · **SLA-Escrow** — on-chain rails (Planned Open Source).
 - **[oracles/](https://github.com/miralandlabs/oracles)** — multi-category oracle workspace (Open Source).
 - **[x402-buy-spl-token](https://github.com/miralandlabs/x402-buy-spl-token)** — **`sla-escrow`** reference seller (Open Source) ★
-- **[solrisk](https://github.com/miralandlabs/solrisk)** — **`exact`** reference seller · [solrisk.signer-payer.me](https://solrisk.signer-payer.me/) (Open Source) ★
+- **[solrisk](https://github.com/miralandlabs/solrisk)** — **`exact`** per-call reference seller · [solrisk.signer-payer.me](https://solrisk.signer-payer.me/) (Open Source) ★
+- **[x402-subscription-starter](x402-subscription-starter/)** · **[x402-subscription-client](x402-subscription-client/)** — **`exact`** subscription reference (Open Source) ★ · [SUBSCRIPTION_PATTERN.md](SUBSCRIPTION_PATTERN.md)
 - **[x402-seller-starter](https://github.com/miralandlabs/x402-seller-starter)** · **[x402-buyer-starter](https://github.com/miralandlabs/x402-buyer-starter)** — minimal open examples.
 - **spl-token balance** · **AetherVane** — additional operated services (closed source).
 

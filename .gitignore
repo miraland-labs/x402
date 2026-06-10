@@ -1,5 +1,6 @@
 # x402 Ecosystem Hub - Ignore Sub-Projects
 # These are standalone repositories with their own history.
+articles/
 pr402/
 pr402-link/
 universalsettle/
@@ -23,6 +24,10 @@ docs/
 demo-wallets/
 integration-tests/
 integrations/
+fifa-worldcup-client-ts-bak/
+fifa-worldcup-scraper-bak/
+x402-subscription-client/
+x402-subscription-starter/
 gi
 # OS Specific
 .DS_Store
