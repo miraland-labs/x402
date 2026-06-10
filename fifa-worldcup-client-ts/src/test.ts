@@ -92,7 +92,8 @@ async function runTests() {
     console.log(`          Expires: ${sub.expiresAt.toISOString()}`);
     tokenAcquired = true;
   } catch (err: any) {
-    console.log('   [SKIP/FAIL] Could not purchase subscription:', err.message);
+    const details = err.response?.data ? JSON.stringify(err.response.data) : err.message;
+    console.log(`   [SKIP/FAIL] Could not purchase subscription: ${details}`);
     console.log('               Ensure your test wallet has devnet SOL and test USDC.');
     console.log(`               Wallet Address: ${buyerKeypair.publicKey.toBase58()}`);
   }
