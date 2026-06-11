@@ -13,7 +13,7 @@ x402/pr402 supports both models on the same `exact` rail:
 | Model | When to use | 402 on data routes? | Reference |
 |-------|-------------|---------------------|-----------|
 | **Per-call** | Low-latency, stateless APIs; price per inference/query | Yes — every request | [solrisk](https://github.com/miralandlabs/solrisk) |
-| **Subscription** | High-volume data feeds, scrapers, analytics; buyers poll repeatedly | No — JWT Bearer only | [x402-subscription-starter](x402-subscription-starter/) + [x402-subscription-client](x402-subscription-client/) |
+| **Subscription** | High-volume data feeds, scrapers, analytics; buyers poll repeatedly | No — JWT Bearer only | [x402-subscription-starter](https://github.com/miraland-labs/x402-subscription-starter) + [x402-subscription-client](https://github.com/miraland-labs/x402-subscription-client) |
 
 **Key insight:** pr402/x402 is not only for single-request payments. Sellers can map **hourly / daily / monthly / yearly** plans to one on-chain settlement per window — the same flow as Stripe + API key, but wallet-native.
 
@@ -138,7 +138,7 @@ Extend the union in your subscription client SDK so `subscribe('yearly')` works.
 
 ## Buyer Client Pattern
 
-Reference implementation: [x402-subscription-client/src/client.ts](x402-subscription-client/src/client.ts)
+Reference implementation: [x402-subscription-client/src/client.ts](https://github.com/miraland-labs/x402-subscription-client/blob/main/src/client.ts)
 
 1. **Probe** `POST /subscribe` → parse 402 body (not `Payment-Required` header — matches seller-starter).
 2. **Build tx** via `POST …/build-exact-payment-tx` — normalize `v2:solana:exact` → `exact`; never send `buyerPaysTransactionFees`.
@@ -150,7 +150,7 @@ Reference implementation: [x402-subscription-client/src/client.ts](x402-subscrip
 
 Sellers must return `persistenceHint` on subscribe success — the seller does not re-issue a token without a new x402 payment.
 
-Shared pr402 helpers live in [x402-buyer-starter/typescript/src/pr402-exact-flow.ts](x402-buyer-starter/typescript/src/pr402-exact-flow.ts).
+Shared pr402 helpers live in [x402-buyer-starter/typescript/src/pr402-exact-flow.ts](https://github.com/miraland-labs/x402-buyer-starter/blob/main/typescript/src/pr402-exact-flow.ts).
 
 ---
 
@@ -172,12 +172,12 @@ Shared pr402 helpers live in [x402-buyer-starter/typescript/src/pr402-exact-flow
 
 | Asset | Role |
 |-------|------|
-| [x402-subscription-starter](x402-subscription-starter/) | Forkable subscription **seller** (SQLite parameters + JWT) |
-| [x402-subscription-client](x402-subscription-client/) | Generic subscription **buyer SDK** |
-| [fifa-worldcup-scraper](fifa-worldcup-scraper/) | Operated example — API `https://fifa.polystrike.io/devnet` (endpoints only; probe `GET /health` or `GET /api/v1/subscribe/info`) |
-| [x402-seller-starter](x402-seller-starter/) | Base per-call x402 gate + verify/settle |
-| [x402-buyer-starter](x402-buyer-starter/) | Per-call buyer + pr402 exact-flow helpers |
-| [articles/subscription-pattern-01-en.md](articles/subscription-pattern-01-en.md) | Article column outline (EN + ZH) |
+| [x402-subscription-starter](https://github.com/miraland-labs/x402-subscription-starter) | Forkable subscription **seller** (SQLite parameters + JWT) |
+| [x402-subscription-client](https://github.com/miraland-labs/x402-subscription-client) | Generic subscription **buyer SDK** |
+| fifa-worldcup-scraper (private) | Operated example — API `https://fifa.polystrike.io/devnet` (endpoints only; probe `GET /health` or `GET /api/v1/subscribe/info`) |
+| [x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter) | Base per-call x402 gate + verify/settle |
+| [x402-buyer-starter](https://github.com/miraland-labs/x402-buyer-starter) | Per-call buyer + pr402 exact-flow helpers |
+| articles/subscription-pattern-01-en.md | Article column (EN + ZH) — in hub workspace; not published on this repo |
 
 ---
 
