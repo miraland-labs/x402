@@ -12,8 +12,9 @@ x402/pr402 supports both models on the same `exact` rail:
 
 | Model | When to use | 402 on data routes? | Reference |
 |-------|-------------|---------------------|-----------|
-| **Per-call** | Low-latency, stateless APIs; price per inference/query | Yes — every request | [solrisk](https://github.com/miralandlabs/solrisk) |
+| **Per-call** | Low-latency, stateless APIs; price per inference/query | Yes — every request | [solrisk](https://github.com/miralandlabs/solrisk) (per-call path) |
 | **Subscription** | High-volume data feeds, scrapers, analytics; buyers poll repeatedly | No — JWT Bearer only | [x402-subscription-starter](https://github.com/miraland-labs/x402-subscription-starter) + [x402-subscription-client](https://github.com/miraland-labs/x402-subscription-client) |
+| **Dual-mode** | Same data routes: per-call **or** subscribe once | Per-call if no Bearer; x402 gate on `/subscribe` only | **[solrisk v2](https://github.com/miralandlabs/solrisk)** — Rust/Vercel reference |
 
 **Key insight:** pr402/x402 is not only for single-request payments. Sellers can map **hourly / daily / monthly / yearly** plans to one on-chain settlement per window — the same flow as Stripe + API key, but wallet-native.
 
@@ -172,6 +173,7 @@ Shared pr402 helpers live in [x402-buyer-starter/typescript/src/pr402-exact-flow
 
 | Asset | Role |
 |-------|------|
+| [solrisk](https://github.com/miralandlabs/solrisk) | **Dual-mode** Rust seller — per-call + subscription JWT on wallet/token/tx routes |
 | [x402-subscription-starter](https://github.com/miraland-labs/x402-subscription-starter) | Forkable subscription **seller** (SQLite parameters + JWT) |
 | [x402-subscription-client](https://github.com/miraland-labs/x402-subscription-client) | Generic subscription **buyer SDK** |
 | fifa-worldcup-scraper (private) | Operated example — API `https://fifa.polystrike.io/devnet` (endpoints only; probe `GET /health` or `GET /api/v1/subscribe/info`) |

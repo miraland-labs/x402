@@ -68,10 +68,10 @@ Miraland Labs operates production services on pr402. **Open-source references** 
 | Project | Rail | What it proves | Live hosts |
 |--------|------|----------------|------------|
 | **[x402-buy-spl-token](https://github.com/miralandlabs/x402-buy-spl-token)** | **`sla-escrow`** | USDC into escrow → SPL delivery → `SubmitDelivery` → **oracle-onchain-transfer** → release. Seller-quoted session totals (`quantity`), human storefront + agent API. Binding: `x402/informative/bindings/buy-spl-token/v1`. | [spl-token.hashspace.me](https://spl-token.hashspace.me) · [preview.spl-token.hashspace.me](https://preview.spl-token.hashspace.me) |
-| **[solrisk](https://github.com/miralandlabs/solrisk)** | **`exact`** per-call | Pay-per-call wallet risk scoring ($0.05 USDC) — chain signals, allow/deny labels, versioned formula. | [solrisk.signer-payer.me](https://solrisk.signer-payer.me/) |
+| **[solrisk](https://github.com/miralandlabs/solrisk)** | **`exact`** dual-mode | **Production** wallet screening + subscription JWT; beta token-risk — canonical dual-auth Rust reference. | [solrisk.signer-payer.me](https://solrisk.signer-payer.me/) · [preview](https://preview.solrisk.signer-payer.me/) |
 | **[x402-subscription-starter](x402-subscription-starter/)** + **[x402-subscription-client](x402-subscription-client/)** | **`exact`** subscription | Pay once → JWT window → Bearer on data routes. Hourly/daily/monthly tiers. Forkable seller + buyer SDK. | Local dev · API `https://fifa.polystrike.io/devnet` (no web UI — `GET /health`) |
 
-**Start with x402-buy-spl-token** if you sell **conditional delivery** (tokens, credits, files, jobs). **Start with solrisk** if you sell **instant JSON** behind a fixed per-call price on **`exact`**. **Start with [x402-subscription-starter](x402-subscription-starter/)** + [SUBSCRIPTION_PATTERN.md](SUBSCRIPTION_PATTERN.md) if you sell **subscription APIs** (hourly/daily/monthly billing on x402 instead of Stripe + API keys).
+**Start with x402-buy-spl-token** if you sell **conditional delivery** (tokens, credits, files, jobs). **Start with solrisk** if you sell **instant JSON** on **`exact`** with **per-call and/or subscription** ([SUBSCRIPTION_PATTERN.md](SUBSCRIPTION_PATTERN.md)). **Start with [x402-subscription-starter](x402-subscription-starter/)** for a TypeScript-only subscription seller template.
 
 ### Operated only (closed source)
 
