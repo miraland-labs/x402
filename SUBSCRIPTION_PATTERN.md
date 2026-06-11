@@ -177,7 +177,6 @@ Shared pr402 helpers live in [x402-buyer-starter/typescript/src/pr402-exact-flow
 | fifa-worldcup-scraper (private) | Operated example — API `https://fifa.polystrike.io/devnet` (endpoints only; probe `GET /health` or `GET /api/v1/subscribe/info`) |
 | [x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter) | Base per-call x402 gate + verify/settle |
 | [x402-buyer-starter](https://github.com/miraland-labs/x402-buyer-starter) | Per-call buyer + pr402 exact-flow helpers |
-| articles/subscription-pattern-01-en.md | Article column (EN + ZH) — in hub workspace; not published on this repo |
 
 ---
 
