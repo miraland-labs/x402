@@ -48,6 +48,14 @@ The ecosystem is composed of specialized, independent modules that work together
 - **What it ships**: shared `oracle-common` plus three sibling binaries — **api-quality**, **onchain-transfer**, **file-delivery**.
 - **Source**: Open Source.
 
+### 📚 Seller onboarding
+
+| Resource | Role |
+|----------|------|
+| **[x402-seller-lab-express](x402-seller-lab-express/)** | **Start here** — hands-on TypeScript + Express weather API lab (Hong Kong demo); steps 1–6 on preview.ipay.sh |
+| [x402-seller-starter](https://github.com/miralandlabs/x402-seller-starter) | Minimal Rust/Axum seller — 402 + forward proof to pr402 |
+| [Hands-on lab (docs)](https://docs.ipay.sh/seller-lab.html) | Full exercise write-up for web2 API providers |
+
 ### 📚 [Open-Source Seller Starter](https://github.com/miraland-labs/x402-seller-starter)
 
 - **Role**: Minimal seller baseline (Rust / Axum) — 402 + forward proof to pr402.
@@ -87,10 +95,10 @@ Modular stack for regulated token subscription — payment, compliance, and deli
 | Project | Role | Deploy |
 | ------- | ---- | ------ |
 | **[rwa-issuer-portal](https://github.com/miralandlabs/rwa-issuer-portal)** | KYC system of record (Postgres) | Vercel |
-| **[rwa-kyc-sync](https://github.com/miralandlabs/rwa-kyc-sync)** | Portal feed → on-chain KycRecord | VPS / GH cron |
-| **[rwa-kyc-hook](https://github.com/miralandlabs/rwa-kyc-hook)** | Multi-issuer Token-2022 Transfer Hook | On-chain |
+| **[rwa-kyc-sync]** | Portal feed → on-chain KycRecord | VPS / GH cron |
+| **[rwa-kyc-hook]** | Multi-issuer Token-2022 Transfer Hook | On-chain |
 | **[x402-buy-rwa-token](https://github.com/miralandlabs/x402-buy-rwa-token)** | Primary issuance seller (`sla-escrow`) | Vercel |
-| **[oracle-rwa-transfer](https://github.com/miralandlabs/oracles)** | Delivery verification oracle | VPS + systemd |
+| **[oracle-rwa-transfer]** | Delivery verification oracle | VPS + systemd |
 
 ---
 
