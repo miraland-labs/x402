@@ -92,8 +92,6 @@ Modular stack for regulated token subscription — payment, compliance, and deli
 | **[x402-buy-rwa-token](https://github.com/miralandlabs/x402-buy-rwa-token)** | Primary issuance seller (`sla-escrow`) | Vercel |
 | **[oracle-rwa-transfer](https://github.com/miralandlabs/oracles)** | Delivery verification oracle | VPS + systemd |
 
-**Ops runbook:** [RWA_OPS_RUNBOOK.md](RWA_OPS_RUNBOOK.md)
-
 ---
 
 ## 📖 Global Documentation
