@@ -52,9 +52,9 @@ The ecosystem is composed of specialized, independent modules that work together
 
 | Resource | Role |
 |----------|------|
-| **[x402-seller-lab-express](x402-seller-lab-express/)** | **Start here** — hands-on TypeScript + Express weather API lab (Hong Kong demo); steps 1–6 on preview.ipay.sh |
-| [x402-seller-starter](https://github.com/miralandlabs/x402-seller-starter) | Minimal Rust/Axum seller — 402 + forward proof to pr402 |
-| [Hands-on lab (docs)](https://docs.ipay.sh/seller-lab.html) | Full exercise write-up for web2 API providers |
+| **[x402-seller-lab-express](x402-seller-lab-express/)** | **Start here** — hands-on lab; walks ipay.sh steps **1 → 3–6** (Activate + directory) |
+| [x402-seller-starter](https://github.com/miralandlabs/x402-seller-starter) | **Rust alternative** — same payment gate; not used by the lab |
+| [Hands-on lab (docs)](https://docs.ipay.sh/seller-lab.html) | Same checklist on docs.ipay.sh |
 
 ### 📚 [Open-Source Seller Starter](https://github.com/miraland-labs/x402-seller-starter)
 

@@ -38,6 +38,7 @@ x402 (see `x402/` folder—the repository root holding this `.cursor/skills/` tr
 | `universalsettle/` | On-chain SplitVault rail for `exact` (`api`, `program`, `cli`) |
 | `sla-escrow/` | On-chain escrow rail for `sla-escrow` (`api`, `program`, `cli`) |
 | `oracles/` | Multi-category oracle workspace (Rust/Axum); shared `oracle-common` plus three sibling binaries (`oracle-api-quality`, `oracle-onchain-transfer`, `oracle-file-delivery`) for SLA-Escrow |
+| `x402-seller-lab-express/` | **Hands-on lab** — TypeScript + Express weather API (exact pay-per-call) |
 | `x402-seller-starter/` | Seller RP example (Rust + Axum) |
 | `x402-buyer-starter/` | Buyer demos (bash, TypeScript, Python) |
 | `x402-buy-spl-token/` | **sla-escrow** reference seller — SPL shop (open source) |
