@@ -1,6 +1,7 @@
 # x402 Ecosystem Hub - Ignore Sub-Projects
 # These are standalone repositories with their own history.
 articles/
+agent-registry/
 pr402/
 pr402-link/
 universalsettle/
@@ -29,7 +30,9 @@ fifa-worldcup-client-ts/
 fifa-worldcup-scraper/
 x402-subscription-client/
 x402-subscription-starter/
+x402-subscription-seller/
 mintforge/
+subscription-auth/
 gi
 # OS Specific
 .DS_Store

@@ -135,7 +135,7 @@ x402 is **not only per-request payment**. The same `exact` rail supports **tradi
 - Seller issues a JWT; buyer uses `Authorization: Bearer` on all data routes
 - Per-wallet fair-use rate limits replace per-call 402
 
-**Reference:** [x402-subscription-starter](x402-subscription-starter/) + [x402-subscription-client](x402-subscription-client/). Example host: fifa-worldcup-scraper. Pattern guide: [SUBSCRIPTION_PATTERN.md](SUBSCRIPTION_PATTERN.md).
+**Reference:** [x402-subscription-starter](x402-subscription-starter/) + [x402-subscription-client](x402-subscription-client/). JWT auth: **Tier A** (local `JWT_SECRET`) or **Tier B** ([subscription-auth](subscription-auth/) hosted RS256) — [subscription-auth/docs/SUBSCRIPTION_AUTH_FOR_SELLERS.md](subscription-auth/docs/SUBSCRIPTION_AUTH_FOR_SELLERS.md). Wire contract: [SUBSCRIPTION_PATTERN.md](SUBSCRIPTION_PATTERN.md).
 
 | Model | 402 on data routes? | Best for |
 |-------|---------------------|----------|

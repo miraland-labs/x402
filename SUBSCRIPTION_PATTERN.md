@@ -2,7 +2,7 @@
 
 **Pay once on-chain via pr402 → receive a time-window JWT → use Bearer auth on data routes → enforce fair-use rate limits.**
 
-This document is the canonical reference for sellers who want **traditional subscription billing** (hourly, daily, monthly, yearly) on top of x402 — not per-request micropayments.
+This document is the canonical **wire contract** for subscription billing on x402 (endpoints, 402 body, JWT claims, rate limits, buyer behavior). **Choosing or configuring JWT auth (Tier A vs B)?** → [subscription-auth/docs/SUBSCRIPTION_AUTH_FOR_SELLERS.md](subscription-auth/docs/SUBSCRIPTION_AUTH_FOR_SELLERS.md)
 
 ---
 
@@ -80,13 +80,112 @@ No per-request x402. Seller validates JWT, checks revocation DB, applies per-pay
 
 ### 4. Error codes (data routes)
 
-| Code | HTTP | Meaning |
-|------|------|---------|
-| `MISSING_TOKEN` | 401 | No `Authorization` header |
-| `TOKEN_EXPIRED` | 401 | JWT `exp` passed — buyer should renew via `/subscribe` |
-| `TOKEN_REVOKED` | 401 | Token revoked in seller DB |
-| `SUBSCRIBER_RATE_LIMIT_EXCEEDED` | 429 | Per-wallet fair-use limit |
-| `RATE_LIMIT_EXCEEDED` | 429 | Global per-IP limit |
+| Code | HTTP | Meaning | Buyer auto-renew? |
+|------|------|---------|-------------------|
+| `MISSING_TOKEN` | 401 | No `Authorization` header | No |
+| `TOKEN_EXPIRED` | 401 | JWT `exp` passed — buyer should renew via `/subscribe` | **Yes** |
+| `TOKEN_REVOKED` | 401 | Token revoked (store or AuthService feed) | **Yes** |
+| `TOKEN_INVALID` | 401 | Bad signature or malformed JWT | No |
+| `TOKEN_SCOPE_MISMATCH` | 403 | JWT valid but `resources[]` does not cover this route | **No** — subscribe to correct tier |
+| `SUBSCRIBER_RATE_LIMIT_EXCEEDED` | 429 | Per-wallet fair-use limit | No |
+| `RATE_LIMIT_EXCEEDED` | 429 | Global per-IP limit | No |
+
+---
+
+## JWT Auth Infrastructure (Tier A / Tier B)
+
+Sellers may issue JWTs **locally** (Tier A) or via optional hosted **subscription-auth** (Tier B). Payment gate (`402` + pr402 settle on `/subscribe`) **always stays at the seller**.
+
+| Tier | JWT signing | Revocation | Register auth service? |
+|------|-------------|------------|------------------------|
+| **A — local** | `JWT_SECRET` (HS256) via [`@pr402/subscription-seller`](https://www.npmjs.com/package/@pr402/subscription-seller) | Seller DB or `NoopStore` | **No** |
+| **B — hosted** | [subscription-auth](subscription-auth/) RS256 + JWKS | Central feed poll (~60s, fail-open) | **Yes — once at deploy** |
+
+**→ Seller setup (Tier A vs B, env, verify):** [subscription-auth/docs/SUBSCRIPTION_AUTH_FOR_SELLERS.md](subscription-auth/docs/SUBSCRIPTION_AUTH_FOR_SELLERS.md)
+
+**What you register where:**
+
+| You sell | Register with |
+|----------|---------------|
+| Per-call `exact` only | pr402 (facilitator onboarding) |
+| Subscription + Tier A | pr402 only — set `JWT_SECRET` on seller |
+| Subscription + Tier B | pr402 + **subscription-auth** (`register-service`) |
+| `sla-escrow` delivery | pr402 + oracle (orthogonal to subscription JWT) |
+
+---
+
+## JWT Claims
+
+### Legacy tokens (existing deployments)
+
+```json
+{ "payer": "...", "tier": "hourly", "iat": 1718270000, "exp": 1718273600 }
+```
+
+Optional `sub` (solrisk). Missing `resources` → treat as `["*"]` (service-wide). Missing `jti` → revoke via `payer + iat` row where store exists.
+
+### New tokens (recommended)
+
+```json
+{
+  "sub": "fifa.polystrike.io",
+  "payer": "...",
+  "tier": "hourly",
+  "resources": ["*"],
+  "jti": "550e8400-e29b-41d4-a716-446655440000",
+  "iat": 1718270000,
+  "exp": 1718273600
+}
+```
+
+Tier B adds `iss` (AuthService URL). Scope enforcement on data routes is **opt-in** until seller advertises scoped tiers in `/subscribe/info`.
+
+---
+
+## Resource scopes (`resources[]`)
+
+| Mode | JWT `resources` | Data route check |
+|------|-----------------|------------------|
+| Service-wide (default) | `["*"]` | Any protected route |
+| Single endpoint | `["/api/v1/matches/live"]` | Normalized path must match |
+| Combination | `["/path/a", "/path/b"]` | Path must be in array |
+
+v1: exact normalized paths only (strip trailing slashes). `TOKEN_SCOPE_MISMATCH` → **403**, not 402.
+
+`/api/v1/subscribe/info` should list `resources[]` per tier when scopes are used.
+
+---
+
+## Revocation store policies (Tier A)
+
+| Policy | Missing DB row | Store error | Profile |
+|--------|----------------|-------------|---------|
+| **StrictStore** | Deny (revoked) | Fail closed | TypeScript starters, FIFA |
+| **LenientStore** | Allow if JWT valid | Fail open + warn | solrisk |
+| **NoopStore** | Allow until `exp` | N/A | Minimal — **exp-only, no early revoke** |
+
+SQLite/Postgres is **not required** for JWT sign/verify — only for revocation and optional tier pricing DB.
+
+---
+
+## Dual-mode sellers (per-call + subscription)
+
+Reference: [solrisk](https://github.com/miralandlabs/solrisk)
+
+1. Data route receives `Authorization: Bearer` → validate JWT + scope first.
+2. Scope mismatch → **403 `TOKEN_SCOPE_MISMATCH`** — do **not** fall through to per-call x402.
+3. No Bearer header → per-call x402 `PAYMENT-SIGNATURE` path unchanged.
+4. `/subscribe/info` documents which endpoints each tier grants.
+
+---
+
+## Buyer client behavior
+
+Reference: [x402-subscription-client](https://github.com/miralandlabs/x402-subscription-client)
+
+- Auto-renew on **401** `TOKEN_EXPIRED` or `TOKEN_REVOKED` only.
+- **403** `TOKEN_SCOPE_MISMATCH` — surface error; buyer must subscribe to a tier that includes the route.
+- Client is claim-opaque; optional additive `resources` in subscribe success response is for human/docs only.
 
 ---
 
@@ -142,16 +241,16 @@ Extend the union in your subscription client SDK so `subscribe('yearly')` works.
 Reference implementation: [x402-subscription-client/src/client.ts](https://github.com/miraland-labs/x402-subscription-client/blob/main/src/client.ts)
 
 1. **Probe** `POST /subscribe` → parse 402 body (not `Payment-Required` header — matches seller-starter).
-2. **Build tx** via `POST …/build-exact-payment-tx` — normalize `v2:solana:exact` → `exact`; never send `buyerPaysTransactionFees`.
-3. **Sign** `VersionedTransaction` locally.
+2. **Build tx** via `POST …/build-exact-payment-tx` — normalize `v2:solana:exact` → `exact`.
+3. **Enrich verify body** — merge facilitator `GET …/capabilities` exact-rail `extra` into `paymentPayload.accepted.extra` and `paymentRequirements.extra`; set signed tx on `paymentPayload.payload.transaction`.
 4. **Submit** with `PAYMENT-SIGNATURE` header (raw JSON string).
 5. **Persist** JWT locally (`saveSubscriptionToFile`) — survives app/machine restart until `exp`.
 6. **Data calls** with `Authorization: Bearer <jwt>`.
-7. **Auto-renew** on `TOKEN_EXPIRED` or `TOKEN_REVOKED` — one retry after fresh `subscribe()`.
+7. **Auto-renew** on `TOKEN_EXPIRED` or `TOKEN_REVOKED` only — **not** on `403 TOKEN_SCOPE_MISMATCH`.
 
 Sellers must return `persistenceHint` on subscribe success — the seller does not re-issue a token without a new x402 payment.
 
-Shared pr402 helpers live in [x402-buyer-starter/typescript/src/pr402-exact-flow.ts](https://github.com/miraland-labs/x402-buyer-starter/blob/main/typescript/src/pr402-exact-flow.ts).
+Shared pr402 helpers: [x402-subscription-client/src/pr402-exact-flow.ts](x402-subscription-client/src/pr402-exact-flow.ts) (subscription). Per-call: [x402-buyer-starter](https://github.com/miralandlabs/x402-buyer-starter).
 
 ---
 
@@ -159,13 +258,38 @@ Shared pr402 helpers live in [x402-buyer-starter/typescript/src/pr402-exact-flow
 
 - [ ] x402 gate **only** on `/api/v1/subscribe` — never on data routes
 - [ ] JWT `exp` matches tier duration; `payer` claim from settlement result
-- [ ] Revocation checked on every data request (SQLite or Redis)
+- [ ] Choose revocation policy: StrictStore / LenientStore / NoopStore (see above)
+- [ ] New tokens: include `jti`; recommend `sub` + `resources` (default `["*"]`)
+- [ ] Revocation checked on every data request (local store and/or Tier B feed)
 - [ ] Dual rate limits: global IP + per-payer
-- [ ] Tier pricing from DB parameters, not hardcoded
+- [ ] Tier pricing from DB parameters or env — DB not required for JWT alone
 - [ ] `PAYMENT-RESPONSE` header on successful subscribe
 - [ ] `persistenceHint` on subscribe success — remind buyers to save JWT locally
-- [ ] Tier pricing: SQLite `parameters` first, env vars fallback
+- [ ] Optional: scope enforcement + `resources[]` per tier in `/subscribe/info`
 - [ ] Do not cache empty/failed scrape results (if applicable)
+
+---
+
+## Auth infrastructure docs
+
+| Doc | Purpose |
+|-----|---------|
+| [subscription-auth/docs/SUBSCRIPTION_AUTH_FOR_SELLERS.md](subscription-auth/docs/SUBSCRIPTION_AUTH_FOR_SELLERS.md) | Tier A vs B setup + env |
+| [subscription-auth/README.md](subscription-auth/README.md) | Deploy auth service + API |
+| [subscription-auth/scripts/](subscription-auth/scripts/) | Smoke, register, E2E scripts |
+
+**Packages / repos:** [`@pr402/subscription-seller`](https://www.npmjs.com/package/@pr402/subscription-seller) (npm), [subscription-auth](subscription-auth/) (Tier B service, in hub).
+
+### Verify your integration
+
+```bash
+# Tier B auth Preview (no payment)
+./subscription-auth/scripts/smoke-preview.sh
+node subscription-auth/scripts/e2e-tier-b-auth.mjs --keypair demo-wallets/seller-keypair.json
+
+# Full stack: starter example run-seller.sh + client run-buyer.sh (two terminals)
+# See x402-subscription-starter/examples/tier-b-preview-e2e/README.md
+```
 
 ---
 
@@ -174,7 +298,9 @@ Shared pr402 helpers live in [x402-buyer-starter/typescript/src/pr402-exact-flow
 | Asset | Role |
 |-------|------|
 | [solrisk](https://github.com/miralandlabs/solrisk) | **Dual-mode** Rust seller — per-call + subscription JWT on wallet/token/tx routes |
-| [x402-subscription-starter](https://github.com/miraland-labs/x402-subscription-starter) | Forkable subscription **seller** (SQLite parameters + JWT) |
+| [x402-subscription-starter](https://github.com/miralandlabs/x402-subscription-starter) | Forkable subscription **seller** (Tier A default; Tier B optional) |
+| [`@pr402/subscription-seller`](https://www.npmjs.com/package/@pr402/subscription-seller) | Shared seller SDK |
+| [subscription-auth](subscription-auth/) | Tier B hosted JWT + revocation feed |
 | [x402-subscription-client](https://github.com/miraland-labs/x402-subscription-client) | Generic subscription **buyer SDK** |
 | fifa-worldcup-scraper (private) | Operated example — API `https://fifa.polystrike.io/devnet` (endpoints only; probe `GET /health` or `GET /api/v1/subscribe/info`) |
 | [x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter) | Base per-call x402 gate + verify/settle |
