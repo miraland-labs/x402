@@ -1,7 +1,8 @@
 # x402 Ecosystem Hub - Ignore Sub-Projects
 # These are standalone repositories with their own history.
 articles/
-agent-registry/
+intelligence-gateway-oss/
+intelligence-gateway-private/
 pr402/
 pr402-link/
 universalsettle/
