@@ -143,6 +143,8 @@ x402 is **not only per-request payment**. The same `exact` rail supports **tradi
 | Subscription (`exact`) | No — JWT only | High-volume feeds, scrapers, analytics |
 | Escrow (`sla-escrow`) | On purchase | Conditional delivery (buy-spl-token) |
 
+**pr402 boundary:** only **`exact`** and **`sla-escrow`** are facilitator rails (verify/settle on-chain). Subscription JWT issuance is seller policy; optional **balance-qualified** renew (hold yield asset ≥ threshold) is **not** a third rail — see [subscription-auth/docs/YIELD_QUALIFIED_SUBSCRIPTION.md](subscription-auth/docs/YIELD_QUALIFIED_SUBSCRIPTION.md).
+
 ---
 
 ## 🔄 The Lifecycle of an x402 Transaction

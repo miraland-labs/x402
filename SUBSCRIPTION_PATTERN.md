@@ -114,6 +114,23 @@ Sellers may issue JWTs **locally** (Tier A) or via optional hosted **subscriptio
 
 ---
 
+## Optional: balance-qualified tiers (not a pr402 rail)
+
+Some sellers offer **“hold ≥ $X in a yield asset → Pro access”** as marketing. That is **seller entitlement policy**, not a third pr402 scheme.
+
+| Path to access | Proof | pr402 `verify`/`settle` |
+|----------------|-------|-------------------------|
+| **Pay tier** (default) | `PAYMENT-SIGNATURE` on `/subscribe` | Yes — **`exact`** |
+| **Hold tier** (optional) | Wallet balance ≥ threshold in allowlisted mint(s) | **No** |
+
+- **402 on data routes:** still JWT Bearer only (unchanged wire contract).
+- **Auto-renew:** seller cron re-checks balance → extend JWT; below threshold → `401 TOKEN_EXPIRED`.
+- **pr402 stays two rails only:** **`exact`** + **`sla-escrow`**. No swap/hold helpers on the facilitator.
+
+**Full design (layers, economics, compliance, Solana USDY notes):** [subscription-auth/docs/YIELD_QUALIFIED_SUBSCRIPTION.md](subscription-auth/docs/YIELD_QUALIFIED_SUBSCRIPTION.md)
+
+---
+
 ## JWT Claims
 
 ### Legacy tokens (existing deployments)
@@ -275,6 +292,7 @@ Shared pr402 helpers: [x402-subscription-client/src/pr402-exact-flow.ts](x402-su
 | Doc | Purpose |
 |-----|---------|
 | [subscription-auth/docs/SUBSCRIPTION_AUTH_FOR_SELLERS.md](subscription-auth/docs/SUBSCRIPTION_AUTH_FOR_SELLERS.md) | Tier A vs B setup + env |
+| [subscription-auth/docs/YIELD_QUALIFIED_SUBSCRIPTION.md](subscription-auth/docs/YIELD_QUALIFIED_SUBSCRIPTION.md) | Hold-qualified tiers — **not** a pr402 rail |
 | [subscription-auth/README.md](subscription-auth/README.md) | Deploy auth service + API |
 | [subscription-auth/scripts/](subscription-auth/scripts/) | Smoke, register, E2E scripts |
 

@@ -106,6 +106,7 @@ Modular stack for regulated token subscription — payment, compliance, and deli
 
 - **[Subscription Pattern](SUBSCRIPTION_PATTERN.md)** — pay once via x402, JWT window, rate limits; hourly/daily/monthly tiers (third seller model on `exact`).
 - **[Subscription auth for sellers](subscription-auth/docs/SUBSCRIPTION_AUTH_FOR_SELLERS.md)** — Tier A (local JWT) vs Tier B (hosted auth); env + verify commands.
+- **[Yield-qualified subscription](subscription-auth/docs/YIELD_QUALIFIED_SUBSCRIPTION.md)** — hold/swap qualification + JWT renew; **not** a pr402 rail.
 - **[Architecture Overview](ARCHITECTURE_OVERVIEW.md)** — technical pillars, transaction lifecycle, security invariants.
 - **[Ecosystem Pitch](X402_ECOSYSTEM_PITCH.md)** — why x402 is the payment layer for autonomous agents.
 - **pr402 human docs:** [docs.ipay.sh](https://docs.ipay.sh) — seller checklist, buyer quickstart, facilitator comparison.
