@@ -5,12 +5,12 @@
 > **Human docs:** [docs.ipay.sh](https://docs.ipay.sh) — seller checklist, buyer quickstart, [Choosing x402 on Solana](https://docs.ipay.sh/pr402-vs-alternatives.html) (facilitators vs buyer tools).
 >
 > **Both rails are live.** **`exact`** (UniversalSettle) is GA for instant pay-per-call. **`sla-escrow`** is deployed on-chain with reference oracles and an open-source flagship seller — **[x402-buy-spl-token](https://github.com/miralandlabs/x402-buy-spl-token)**.
+>
+> **Community field guide (2026):** Broad introduction — three checkout modes (per-call, subscribe, escrow), live demos, discovery, MCP — [English](articles/ecosystem-field-guide-2026-en.md) · [中文](articles/ecosystem-field-guide-2026-zh.md).
 
-### The problem: Agents are rich in data, but broke in utility
+HTTP reserved **402 Payment Required** in 1997; production checkout on APIs is live again on Solana. Scripts, agents, and backends still cannot use card rails natively — and high-frequency API use breaks per-request pricing. x402 puts USDC settlement in the response layer; **pr402** is our facilitator that makes that loop REST-native.
 
-AI agents can browse the web, analyze gigabytes of data, and generate complex code. But until now, they couldn't **natively** pay for the resources they need to finish their jobs.
-
-Traditional payment rails (Stripe, Plaid, credit cards) are built for humans with KYC'd bank accounts and 2FA-enabled smartphones. They were never designed for a machine that needs to pay $0.05 for a GPU inference cycle in 200 milliseconds.
+For the full product family story (three checkout modes, PromptLean, discovery, MCP), see the **[2026 field guide](articles/ecosystem-field-guide-2026-en.md)**.
 
 ---
 
@@ -94,9 +94,9 @@ The x402 ecosystem is open-source and modular.
 
 ---
 
-### 🌐 Join the machine economy
+### Next step
 
-x402 isn't just a protocol; it's the foundation for the next stage of the internet. A world where agents don't just talk — they trade.
+Start with the **[2026 field guide](articles/ecosystem-field-guide-2026-en.md)** for three checkout modes and live URLs — or [docs.ipay.sh/start-here](https://docs.ipay.sh/start-here.html) to ship your first paid route.
 
 ### Rollout motion (updated)
 

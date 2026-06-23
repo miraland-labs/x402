@@ -1,0 +1,26 @@
+{
+  "name": "x402-cli",
+  "version": "1.0.0",
+  "description": "Unified onboarding and discovery developer tool for the x402 ecosystem.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "x402-cli": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "x402",
+    "cli",
+    "solana",
+    "payments"
+  ],
+  "author": "Miraland Labs",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

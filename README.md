@@ -104,6 +104,7 @@ Modular stack for regulated token subscription — payment, compliance, and deli
 
 ## 📖 Global Documentation
 
+- **[Ecosystem Field Guide (2026)](articles/ecosystem-field-guide-2026-en.md)** — community re-intro: three checkout modes, live demos, product family by job ([中文版](articles/ecosystem-field-guide-2026-zh.md)).
 - **[Subscription Pattern](SUBSCRIPTION_PATTERN.md)** — pay once via x402, JWT window, rate limits; hourly/daily/monthly tiers (third seller model on `exact`).
 - **[Subscription auth for sellers](subscription-auth/docs/SUBSCRIPTION_AUTH_FOR_SELLERS.md)** — Tier A (local JWT) vs Tier B (hosted auth); env + verify commands.
 - **[Yield-qualified subscription](subscription-auth/docs/YIELD_QUALIFIED_SUBSCRIPTION.md)** — hold/swap qualification + JWT renew; **not** a pr402 rail.
@@ -115,7 +116,7 @@ Modular stack for regulated token subscription — payment, compliance, and deli
 
 ## 🚀 Vision
 
-AI agents are rich in data but broke in utility. Traditional payment rails are built for humans with bank accounts; x402 is built for machines with keypairs. We enable a world where agents don't just talk — they trade.
+HTTP **402** is a live checkout path for APIs on Solana — per-call, subscribe-for-a-window, or escrow-until-delivered. See the **[2026 field guide](articles/ecosystem-field-guide-2026-en.md)** for the full product family; [ARCHITECTURE_OVERVIEW.md](ARCHITECTURE_OVERVIEW.md) for integrators.
 
 ---
 
