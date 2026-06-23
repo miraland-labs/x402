@@ -81,10 +81,10 @@ The x402 ecosystem is open-source and modular.
 
 | Goal | Start here |
 |------|------------|
-| **Sell with escrow** (tokens, deliverables) | Fork **[x402-buy-spl-token](https://github.com/miralandlabs/x402-buy-spl-token)** · live demo [preview.spl-token.hashspace.me](https://preview.spl-token.hashspace.me) |
-| **Sell instant JSON API** | Fork **[solrisk](https://github.com/miralandlabs/solrisk)** · live [solrisk.signer-payer.me](https://solrisk.signer-payer.me/) · or **[x402-seller-starter](https://github.com/miralandlabs/x402-seller-starter)** |
-| **Pay as a buyer agent** | `npm i -g @pr402/client` or **[x402-buyer-starter](https://github.com/miralandlabs/x402-buyer-starter)** |
-| **Run an oracle** | **[oracles/](https://github.com/miralandlabs/oracles)** — clone closest profile |
+| **Sell with escrow** (tokens, deliverables) | Fork **[x402-buy-spl-token](https://github.com/miraland-labs/x402-buy-spl-token)** · live demo [preview.spl-token.hashspace.me](https://preview.spl-token.hashspace.me) |
+| **Sell instant JSON API** | Fork **[solrisk](https://github.com/miralandlabs/solrisk)** · live [solrisk.signer-payer.me](https://solrisk.signer-payer.me/) · or **[x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter)** |
+| **Pay as a buyer agent** | `npm i -g @pr402/client` or **[x402-buyer-starter](https://github.com/miraland-labs/x402-buyer-starter)** |
+| **Run an oracle** | **[oracles/](https://github.com/miraland-labs/oracles)** — clone closest profile |
 | **Integrate pr402 only** | [docs.ipay.sh/start-here.html](https://docs.ipay.sh/start-here.html) |
 
 **Operated examples (not open source):** [spl-token balance check](https://spl-token.signer-payer.me/) · [AetherVane](https://aethervane.hashspace.me/).
