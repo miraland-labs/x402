@@ -14,24 +14,24 @@ If you are new to the x402 ecosystem, select your path below to get started imme
 ### 1. I am a Seller (Resource Provider)
 *You run a web API (REST, GraphQL, etc.) and want to monetize it via HTTP 402.*
 * **Pick a Rail:** Choose between **`exact`** (instant, low-latency payouts) or **`sla-escrow`** (escrow protection for conditional delivery).
-* **Get Started (`exact` rail):** Walk through the hands-on [x402-seller-lab-express](x402-seller-lab-express/) or view the minimal [x402-seller-starter](x402-seller-starter/).
-* **Get Started (`sla-escrow` rail):** Read the [Seller Oracle Integration Guide](oracles/docs/SELLER_GUIDE.md).
+* **Get Started (`exact` rail):** Walk through the hands-on [x402-seller-lab-express](https://github.com/miraland-labs/x402-seller-lab-express/) or view the minimal [x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter/).
+* **Get Started (`sla-escrow` rail):** Read the [Seller Oracle Integration Guide](https://github.com/miraland-labs/oracles/docs/SELLER_GUIDE.md).
 
 ### 2. I am a Buyer (Payer/Agent Developer)
 *You build autonomous agents, wallets, or clients that need to pay for premium resources.*
 * **Get Started (MCP/Cursor):** Run `npx -y @pr402/mcp-server` or install the SDK `npm i @pr402/client`.
-* **Exact Payments Guide:** Read the [Buyer Exact Quickstart](pr402/docs-site/quickstart-buyer.md).
-* **Escrow Payments Guide:** Read the [Buyer Escrow Integration Guide](oracles/docs/BUYER_GUIDE.md).
+* **Exact Payments Guide:** Read the [Buyer Exact Quickstart](https://github.com/miralandlabs/pr402/docs-site/quickstart-buyer.md).
+* **Escrow Payments Guide:** Read the [Buyer Escrow Integration Guide](https://github.com/miraland-labs/oracles/docs/BUYER_GUIDE.md).
 
 ### 3. I am an Oracle Developer or Operator
 *You want to build or host a verification oracle for conditional `sla-escrow` payments.*
-* **Get Started:** Follow the step-by-step [Oracle Developer Guide](oracles/docs/ORACLE_DEVELOPER_GUIDE.md).
-* **Reference Workspace:** Explore the [oracles](oracles/) folder containing the shared library and three reference oracle crates.
+* **Get Started:** Follow the step-by-step [Oracle Developer Guide](https://github.com/miraland-labs/oracles/docs/ORACLE_DEVELOPER_GUIDE.md).
+* **Reference Workspace:** Explore the [oracles](https://github.com/miraland-labs/oracles/) folder containing the shared library and three reference oracle crates.
 
 ### 4. I am a Protocol / On-chain Developer
 *You want to inspect, deploy, or extend the core settlement contracts.*
-* **Core Engines:** Read the specifications for [UniversalSettle (SplitVault)](universalsettle/) and [SLA-Escrow](sla-escrow/).
-* **Facilitator Gateway:** Inspect the [pr402 Facilitator](pr402/) REST-to-Solana gateway.
+* **Core Engines:** Read the specifications for [UniversalSettle (SplitVault)](https://github.com/miraland-labs/universalsettle/) and [SLA-Escrow](https://github.com/miraland-labs/sla-escrow/).
+* **Facilitator Gateway:** Inspect the [pr402 Facilitator](https://github.com/miralandlabs/pr402/) REST-to-Solana gateway.
 
 ---
 
@@ -39,10 +39,10 @@ If you are new to the x402 ecosystem, select your path below to get started imme
 
 | Pillar | Role | Type | Description |
 | :--- | :--- | :--- | :--- |
-| **[pr402 Facilitator](pr402/)** | REST-to-Solana Gateway | Rust/Vercel | Handles vault discovery, transaction building, and settlement verification. |
-| **[UniversalSettle](universalsettle/)** | Payout Engine (`exact` rail) | On-chain Program | Facilitates high-velocity payouts and automated revenue splitting. |
-| **[SLA-Escrow](sla-escrow/)** | Escrow Enforcer (`sla-escrow` rail) | On-chain Program | Holds funds in escrow until delivery is verified by a trusted oracle. |
-| **[Oracles Workspace](oracles/)** | Adjudication Engine | Rust Workspace | Houses reference oracles (API Quality, Transfer, File Delivery) and specs. |
+| **[pr402 Facilitator](https://github.com/miralandlabs/pr402/)** | REST-to-Solana Gateway | Rust/Vercel | Handles vault discovery, transaction building, and settlement verification. |
+| **[UniversalSettle](https://github.com/miraland-labs/universalsettle/)** | Payout Engine (`exact` rail) | On-chain Program | Facilitates high-velocity payouts and automated revenue splitting. |
+| **[SLA-Escrow](https://github.com/miraland-labs/sla-escrow/)** | Escrow Enforcer (`sla-escrow` rail) | On-chain Program | Holds funds in escrow until delivery is verified by a trusted oracle. |
+| **[Oracles Workspace](https://github.com/miraland-labs/oracles/)** | Adjudication Engine | Rust Workspace | Houses reference oracles (API Quality, Transfer, File Delivery) and specs. |
 
 ---
 
