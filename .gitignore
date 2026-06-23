@@ -20,8 +20,6 @@ x402-buyer-starter/
 x402-seller-starter/
 x402-seller-lab-express/
 langchain-pr402/
-aethervane-serverless/
-aethervane-serverless-deprecated/
 oracles/
 aethervane/
 references/
@@ -29,8 +27,6 @@ docs/
 demo-wallets/
 integration-tests/
 integrations/
-fifa-worldcup-client-ts-outdated/
-fifa-worldcup-scraper-outdated/
 x402-subscription-client/
 x402-subscription-starter/
 x402-subscription-seller/
