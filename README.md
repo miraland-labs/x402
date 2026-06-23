@@ -15,17 +15,17 @@ If you are new to the x402 ecosystem, select your path below to get started imme
 *You run a web API (REST, GraphQL, etc.) and want to monetize it via HTTP 402.*
 * **Pick a Rail:** Choose between **`exact`** (instant, low-latency payouts) or **`sla-escrow`** (escrow protection for conditional delivery).
 * **Get Started (`exact` rail):** Walk through the hands-on [x402-seller-lab-express](https://github.com/miraland-labs/x402-seller-lab-express/) or view the minimal [x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter/).
-* **Get Started (`sla-escrow` rail):** Read the [Seller Oracle Integration Guide](https://github.com/miraland-labs/oracles/docs/SELLER_GUIDE.md).
+* **Get Started (`sla-escrow` rail):** Read the [Seller Oracle Integration Guide](https://github.com/miraland-labs/oracles/blob/main/docs/SELLER_GUIDE.md).
 
 ### 2. I am a Buyer (Payer/Agent Developer)
 *You build autonomous agents, wallets, or clients that need to pay for premium resources.*
 * **Get Started (MCP/Cursor):** Run `npx -y @pr402/mcp-server` or install the SDK `npm i @pr402/client`.
-* **Exact Payments Guide:** Read the [Buyer Exact Quickstart](https://github.com/miralandlabs/pr402/docs-site/quickstart-buyer.md).
-* **Escrow Payments Guide:** Read the [Buyer Escrow Integration Guide](https://github.com/miraland-labs/oracles/docs/BUYER_GUIDE.md).
+* **Exact Payments Guide:** Read the [Buyer Exact Quickstart](https://github.com/miralandlabs/pr402/blob/main/docs-site/quickstart-buyer.md).
+* **Escrow Payments Guide:** Read the [Buyer Escrow Integration Guide](https://github.com/miraland-labs/oracles/blob/main/docs/BUYER_GUIDE.md).
 
 ### 3. I am an Oracle Developer or Operator
 *You want to build or host a verification oracle for conditional `sla-escrow` payments.*
-* **Get Started:** Follow the step-by-step [Oracle Developer Guide](https://github.com/miraland-labs/oracles/docs/ORACLE_DEVELOPER_GUIDE.md).
+* **Get Started:** Follow the step-by-step [Oracle Developer Guide](https://github.com/miraland-labs/oracles/blob/main/docs/ORACLE_DEVELOPER_GUIDE.md).
 * **Reference Workspace:** Explore the [oracles](https://github.com/miraland-labs/oracles/) folder containing the shared library and three reference oracle crates.
 
 ### 4. I am a Protocol / On-chain Developer
