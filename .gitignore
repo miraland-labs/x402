@@ -29,8 +29,8 @@ docs/
 demo-wallets/
 integration-tests/
 integrations/
-fifa-worldcup-client-ts/
-fifa-worldcup-scraper/
+fifa-worldcup-client-ts-outdated/
+fifa-worldcup-scraper-outdated/
 x402-subscription-client/
 x402-subscription-starter/
 x402-subscription-seller/

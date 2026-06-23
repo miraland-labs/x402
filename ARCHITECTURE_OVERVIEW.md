@@ -60,7 +60,7 @@ Open-source references demonstrate **both rails** end-to-end. Closed-source serv
 |--------|------|---------------|-------|
 | **[x402-buy-spl-token](https://github.com/miralandlabs/x402-buy-spl-token)** | **`sla-escrow`** | `GET /api/v1/buy-spl-token` (+ human storefront `/`) | [spl-token.hashspace.me](https://spl-token.hashspace.me) · [preview.spl-token.hashspace.me](https://preview.spl-token.hashspace.me) |
 | **[solrisk](https://github.com/miralandlabs/solrisk)** | **`exact`** per-call | `GET /api/v1/wallet-risk?wallet=` | [solrisk.signer-payer.me](https://solrisk.signer-payer.me/) |
-| **[x402-subscription-starter](x402-subscription-starter/)** | **`exact`** subscription | `POST /api/v1/subscribe` → JWT → Bearer on data routes | Fork locally · API `https://fifa.polystrike.io/devnet` (no web UI — `GET /health`) |
+| **[x402-subscription-starter](x402-subscription-starter/)** | **`exact`** subscription | `POST /api/v1/subscribe` → JWT → Bearer on data routes | Fork locally |
 | **spl-token balance** (closed) | **`exact`** per-call | SPL balance verification | [spl-token.signer-payer.me](https://spl-token.signer-payer.me/) |
 | **AetherVane** (closed) | **`exact`** per-call | Multi-engine readings API | [aethervane.hashspace.me](https://aethervane.hashspace.me/) |
 
@@ -170,7 +170,7 @@ sequenceDiagram
     Provider-->>Agent: 200 + JSON result
 ```
 
-### `exact` rail — subscription (e.g. fifa-worldcup-scraper)
+### `exact` rail — subscription (e.g. x402-subscription-starter)
 
 ```mermaid
 sequenceDiagram

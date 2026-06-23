@@ -145,7 +145,7 @@ Optional `sub` (solrisk). Missing `resources` → treat as `["*"]` (service-wide
 
 ```json
 {
-  "sub": "fifa.polystrike.io",
+  "sub": "api.example.com",
   "payer": "...",
   "tier": "hourly",
   "resources": ["*"],
@@ -177,7 +177,7 @@ v1: exact normalized paths only (strip trailing slashes). `TOKEN_SCOPE_MISMATCH`
 
 | Policy | Missing DB row | Store error | Profile |
 |--------|----------------|-------------|---------|
-| **StrictStore** | Deny (revoked) | Fail closed | TypeScript starters, FIFA |
+| **StrictStore** | Deny (revoked) | Fail closed | TypeScript starters |
 | **LenientStore** | Allow if JWT valid | Fail open + warn | solrisk |
 | **NoopStore** | Allow until `exp` | N/A | Minimal — **exp-only, no early revoke** |
 
@@ -208,7 +208,7 @@ Reference: [x402-subscription-client](https://github.com/miralandlabs/x402-subsc
 
 ## Rate-Limit Design
 
-Two layers (reference: fifa-worldcup-scraper):
+Two layers:
 
 1. **Global per-IP** — applied before auth; protects against DoS (default ~200 req/min).
 2. **Per-payer wallet** — applied after JWT validation; keyed on `payer` claim (default ~60 req/min).
@@ -320,7 +320,6 @@ node subscription-auth/scripts/e2e-tier-b-auth.mjs --keypair demo-wallets/seller
 | [`@pr402/subscription-seller`](https://www.npmjs.com/package/@pr402/subscription-seller) | Shared seller SDK |
 | [subscription-auth](subscription-auth/) | Tier B hosted JWT + revocation feed |
 | [x402-subscription-client](https://github.com/miraland-labs/x402-subscription-client) | Generic subscription **buyer SDK** |
-| fifa-worldcup-scraper (private) | Operated example — API `https://fifa.polystrike.io/devnet` (endpoints only; probe `GET /health` or `GET /api/v1/subscribe/info`) |
 | [x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter) | Base per-call x402 gate + verify/settle |
 | [x402-buyer-starter](https://github.com/miraland-labs/x402-buyer-starter) | Per-call buyer + pr402 exact-flow helpers |
 
