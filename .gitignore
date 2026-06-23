@@ -36,7 +36,9 @@ x402-subscription-starter/
 x402-subscription-seller/
 mintforge/
 subscription-auth/
-gi
+# Dependencies
+node_modules/
+
 # OS Specific
 .DS_Store
 .AppleDouble
