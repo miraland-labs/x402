@@ -51,7 +51,6 @@ If you are new to the x402 ecosystem, select your path below to get started imme
 * **[Architecture Overview](ARCHITECTURE_OVERVIEW.md)** — Core design principles, transaction lifecycles, and security invariants.
 * **[Subscription Pattern](SUBSCRIPTION_PATTERN.md)** — Blueprint for mapping recurring subscriptions (hourly/daily/monthly) to the `exact` rail.
 * **[Ecosystem Pitch](X402_ECOSYSTEM_PITCH.md)** — Detailed rationale behind the x402 protocol and agentic economy.
-* **[Yield-Qualified Subscriptions](subscription-auth/docs/YIELD_QUALIFIED_SUBSCRIPTION.md)** — Entitlement models based on token holding (outside core pr402 rails).
 
 ---
 
