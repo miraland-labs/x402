@@ -6,11 +6,8 @@
 >
 > **Both rails are live.** **`exact`** (UniversalSettle) is GA for instant pay-per-call. **`sla-escrow`** is deployed on-chain with reference oracles and an open-source flagship seller — **[x402-buy-spl-token](https://github.com/miralandlabs/x402-buy-spl-token)**.
 >
-> **Community field guide (2026):** Broad introduction — three checkout modes (per-call, subscribe, escrow), live demos, discovery, MCP — [English](articles/ecosystem-field-guide-2026-en.md) · [中文](articles/ecosystem-field-guide-2026-zh.md).
 
 HTTP reserved **402 Payment Required** in 1997; production checkout on APIs is live again on Solana. Scripts, agents, and backends still cannot use card rails natively — and high-frequency API use breaks per-request pricing. x402 puts USDC settlement in the response layer; **pr402** is our facilitator that makes that loop REST-native.
-
-For the full product family story (three checkout modes, PromptLean, discovery, MCP), see the **[2026 field guide](articles/ecosystem-field-guide-2026-en.md)**.
 
 ---
 
@@ -96,14 +93,14 @@ The x402 ecosystem is open-source and modular.
 
 ### Next step
 
-Start with the **[2026 field guide](articles/ecosystem-field-guide-2026-en.md)** for three checkout modes and live URLs — or [docs.ipay.sh/start-here](https://docs.ipay.sh/start-here.html) to ship your first paid route.
+Start with [docs.ipay.sh/start-here](https://docs.ipay.sh/start-here.html) to ship your first paid route.
 
 ### Rollout motion (updated)
 
 1. **Open-source reference sellers** — **`x402-buy-spl-token`** (`sla-escrow`) and **`solrisk`** (`exact`) as cloneable proof points; Devnet rehearsal via **`preview.ipay.sh`** + **`preview.spl-token.hashspace.me`**.
 2. **Seller docs** — [Start here · Seller checklist](https://docs.ipay.sh/start-here.html) and [Choosing x402 on Solana](https://docs.ipay.sh/pr402-vs-alternatives.html) published on docs.ipay.sh.
 3. **Mainnet sellers** — promote **`exact`** for instant APIs; promote **`sla-escrow`** where buyers need escrow (token shops, jobs, file delivery).
-4. **Oracle ecosystem** — grow vertical oracles atop [`oracles/`](https://github.com/miralandlabs/oracles); register authorities in pr402 discovery.
+4. **Oracle ecosystem** — grow vertical oracles atop [`oracles/`](https://github.com/miraland-labs/oracles); register authorities in pr402 discovery.
 5. **Operated services** — spl-token balance + AetherVane remain live **`exact`** examples; new builders should fork **solrisk** or **x402-buy-spl-token** instead.
 
 ---
@@ -116,7 +113,7 @@ The x402 ecosystem is composed of specialized, independent repositories.
 
 - **[pr402 Facilitator](https://github.com/miralandlabs/pr402)** — serverless REST bridge (Open Source).
 - **UniversalSettle** · **SLA-Escrow** — on-chain programs (Planned Open Source).
-- **[oracles/](https://github.com/miralandlabs/oracles)** — oracle workspace (Open Source).
+- **[oracles/](https://github.com/miraland-labs/oracles)** — oracle workspace (Open Source).
 
 **Reference sellers (Open Source — fork these):**
 
@@ -125,7 +122,7 @@ The x402 ecosystem is composed of specialized, independent repositories.
 
 **Starters:**
 
-- **[x402-seller-starter](https://github.com/miralandlabs/x402-seller-starter)** · **[x402-buyer-starter](https://github.com/miralandlabs/x402-buyer-starter)**.
+- **[x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter)** · **[x402-buyer-starter](https://github.com/miraland-labs/x402-buyer-starter)**.
 
 **Operated only (closed source):**
 
