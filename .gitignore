@@ -1,8 +1,12 @@
 # x402 Ecosystem Hub - Ignore Sub-Projects
 # These are standalone repositories with their own history.
 articles/
+http402-forge-api/
+http402-forge-cli/
+http402-forge-web/
 intelligence-gateway-oss/
 intelligence-gateway-private/
+mintforge/
 pr402/
 pr402-link/
 pr402-registry/
@@ -30,7 +34,6 @@ integrations/
 x402-subscription-client/
 x402-subscription-starter/
 x402-subscription-seller/
-mintforge/
 subscription-auth/
 # Dependencies
 node_modules/
