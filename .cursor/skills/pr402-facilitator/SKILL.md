@@ -16,7 +16,9 @@ Rust **x402 facilitator** dedicated to Solana: discovery, TX building (`build-ex
 
 ## Repo location
 
-[`pr402/`](../../../pr402/) inside this hub mirror; authoritative open-source history lives at `miraland-labs/pr402` — match release process to whichever remote you push.
+Authoritative open-source repo: **[miralandlabs/pr402](https://github.com/miralandlabs/pr402)** (individual GitHub account — not `miraland-labs`).
+
+When working inside a local hub checkout, sources may appear under a sibling `pr402/` folder next to the [x402 hub](https://github.com/miraland-labs/x402); that folder is a **separate clone**, not part of a monorepo.
 
 ## Build & test hints
 
@@ -25,7 +27,7 @@ See skill [`x402-rust-solana-workflow`](../x402-rust-solana-workflow/SKILL.md).
 Common variants:
 
 ```bash
-cd pr402
+git clone https://github.com/miralandlabs/pr402.git && cd pr402
 cargo test
 cargo build --release
 cargo build --features facilitator-http # SDK / HTTP client feature
@@ -33,6 +35,6 @@ cargo build --features facilitator-http # SDK / HTTP client feature
 
 ## Integration pointers
 
-- Machine-readable surface: `public/openapi.json`, `/api/v1/facilitator/capabilities`, health on `/api/v1/facilitator/health`.
-- Buyer/seller narratives: `public/agent-integration.md`, `public/quickstart-*.md`, `/supported` semantics in README.
-- On-chain coupling: consumes published `universalsettle-api` and `sla-escrow-api` crates (see root `Cargo.toml`).
+- Machine-readable surface: [ipay.sh/openapi.json](https://ipay.sh/openapi.json), `/api/v1/facilitator/capabilities`, health on `/api/v1/facilitator/health`.
+- Buyer/seller narratives: [ipay.sh/agent-integration.md](https://ipay.sh/agent-integration.md), `/quickstart-*.md` on the deployment.
+- On-chain coupling: consumes published `universalsettle-api` and `sla-escrow-api` crates ([miraland-labs/universalsettle](https://github.com/miraland-labs/universalsettle), [miraland-labs/sla-escrow](https://github.com/miraland-labs/sla-escrow)).

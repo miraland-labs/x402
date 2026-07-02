@@ -23,6 +23,17 @@ If you are new to the x402 ecosystem, select your path below to get started imme
 * **Exact Payments Guide:** Read the [Buyer Exact Quickstart](https://github.com/miralandlabs/pr402/blob/main/docs-site/quickstart-buyer.md).
 * **Escrow Payments Guide:** Read the [Buyer Escrow Integration Guide](https://github.com/miraland-labs/oracles/blob/main/docs/BUYER_GUIDE.md).
 
+### Agent Skills ([skills.sh](https://www.skills.sh/))
+Install pr402 integrator skills into Cursor, Claude Code, Copilot, and other agents:
+
+```bash
+npx skills add miraland-labs/x402-agent-skills --skill pr402 -y
+npx skills add miraland-labs/x402-agent-skills --skill pr402-seller -y
+npx skills add miraland-labs/x402-agent-skills --skill pr402-buyer -y
+```
+
+Skills source: [miraland-labs/x402-agent-skills](https://github.com/miraland-labs/x402-agent-skills) (public). Hub mirror: [`skills/pr402`](skills/pr402/), [`skills/pr402-seller`](skills/pr402-seller/), and [`skills/pr402-buyer`](skills/pr402-buyer/). See [`.cursor/skills/INTEGRATOR_SKILLS.md`](.cursor/skills/INTEGRATOR_SKILLS.md). Starter code remains in [x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter) and [x402-buyer-starter](https://github.com/miraland-labs/x402-buyer-starter).
+
 ### 3. I am an Oracle Developer or Operator
 *You want to build or host a verification oracle for conditional `sla-escrow` payments.*
 * **Get Started:** Follow the step-by-step [Oracle Developer Guide](https://github.com/miraland-labs/oracles/blob/main/docs/ORACLE_DEVELOPER_GUIDE.md).

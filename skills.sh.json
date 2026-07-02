@@ -1,0 +1,15 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Integrator",
+      "description": "Agent skills for x402 sellers and buyers on Solana via pr402 (ipay.sh).",
+      "skills": [
+        "pr402",
+        "pr402-seller",
+        "pr402-buyer"
+      ]
+    }
+  ]
+}
