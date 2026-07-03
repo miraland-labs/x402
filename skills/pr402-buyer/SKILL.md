@@ -5,11 +5,12 @@ description: >-
   build-exact-payment-tx, PAYMENT-SIGNATURE, MCP tools, createPay402Fetch, and Forge
   marketplace purchases. Use whenever the user builds a paying agent, auto-pays API
   calls, handles Payment-Required headers, mentions x402 buyer, pr402 buyer, X402Client,
-  @pr402/client, @pr402/mcp-server, x402-buyer-starter, forge-cli, agentic payments,
+  @pr402/client, @pr402/mcp-server, x402-buyer-starter, x402-subscription-client,
+  subscription JWT Bearer, forge-cli, agentic payments,
   or machine economy. If seller vs buyer is unclear, load **pr402** first.
 metadata:
   author: miraland-labs
-  version: "1.1.4"
+  version: "1.2.0"
 ---
 
 # x402 buyer (pr402)
@@ -17,6 +18,8 @@ metadata:
 Help the user build a **buyer** that discovers paid resources, settles via pr402, and retries with proof.
 
 Default rail: **`exact`** (SplitVault instant settlement via pr402). For **`sla-escrow`**, add oracle-specific fields — see [ipay.sh/agent-integration.md](https://ipay.sh/agent-integration.md) and [oracles Buyer Guide](https://github.com/miraland-labs/oracles/blob/main/docs/BUYER_GUIDE.md).
+
+**Subscription APIs:** pay once per time window on `POST /subscribe` (same exact steps 1–5 below), then use **`Authorization: Bearer`** on data routes — see [references/subscription-client.md](references/subscription-client.md). Prefer [x402-subscription-client](https://github.com/miraland-labs/x402-subscription-client).
 
 Reference repo: **[x402-buyer-starter](https://github.com/miraland-labs/x402-buyer-starter)** (Bash / TypeScript / Python — **separate repo**).
 
@@ -31,6 +34,7 @@ Facilitator source and live docs: **[miralandlabs/pr402](https://github.com/mira
 | Seller starter | [miraland-labs/x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter) |
 | Oracles workspace | [miraland-labs/oracles](https://github.com/miraland-labs/oracles) |
 | x402 hub (docs + x402-cli only) | [miraland-labs/x402](https://github.com/miraland-labs/x402) |
+| Subscription buyer SDK | [miraland-labs/x402-subscription-client](https://github.com/miraland-labs/x402-subscription-client) |
 
 ## Pick a stack
 
@@ -69,6 +73,8 @@ Execute in order:
 5. **Retry resource** — send **`PAYMENT-SIGNATURE`** header with the signed proof (raw JSON from `verifyBodyTemplate` preferred; base64 also accepted). **Do not** call facilitator `/verify` or `/settle` first in the starter/SDK path — the seller gate handles settlement.
 6. **Seller verify/settle** — seller SDK (or middleware) calls facilitator `/verify` + `/settle` when it receives `PAYMENT-SIGNATURE`.
 7. **Confirm** — HTTP 200 + optional **`PAYMENT-RESPONSE`** header with on-chain settlement metadata.
+
+For **subscription** purchase, run steps 1–5 against `POST /api/v1/subscribe?tier=…` instead of a data route; store the returned JWT and switch to Bearer auth — [references/subscription-client.md](references/subscription-client.md).
 
 Full step detail: [references/exact-payment-flow.md](references/exact-payment-flow.md). Direct buyer-side `/verify` + `/settle` (manual curl / debugging only) is documented there under **Advanced**.
 
@@ -113,6 +119,7 @@ Or **`X402Client.buy(url, body)`** for higher-level acquisition.
 4. **Treat JSON `error` fields as failure** even on HTTP 200 (bash starter convention).
 5. **Scheme normalization** — always send wire `exact` to build endpoint; cached proofs may use either alias on verify.
 6. **Forge vs HTTP 402** — Forge listings use `@http402/forge-client` / forge-mcp; generic APIs use pr402 buyer flow above.
+7. **Subscription APIs** — if the seller gates only `/subscribe` and returns a JWT, use [references/subscription-client.md](references/subscription-client.md) or `x402-subscription-client`; do not send `PAYMENT-SIGNATURE` on every data call.
 
 ## Live documentation
 

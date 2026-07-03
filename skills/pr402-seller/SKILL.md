@@ -5,16 +5,26 @@ description: >-
   SplitVault onboarding, PAYMENT-SIGNATURE verify/settle, and discovery enrollment.
   Use whenever the user monetizes an API, adds pay-per-call, implements HTTP 402,
   mentions x402 seller, pr402 seller, X402SellerSDK, merchant wallet, SplitVault,
-  x402-resources.json, x402-seller-starter, or exact-rail UniversalSettle. If seller vs buyer
+  x402-resources.json, x402-seller-starter, x402-subscription-starter, subscription,
+  hourly daily monthly JWT subscribe, or exact-rail UniversalSettle. If seller vs buyer
   is unclear, load **pr402** first.
 metadata:
   author: miraland-labs
-  version: "1.1.1"
+  version: "1.2.0"
 ---
 
 # x402 seller (pr402)
 
 Help the user **monetize an HTTP API** on the pr402 facilitator using the **`exact`** rail (SplitVault via pr402) unless they explicitly need **`sla-escrow`** (escrow + oracle — different skill path; see [oracles Seller Guide](https://github.com/miraland-labs/oracles/blob/main/docs/SELLER_GUIDE.md)).
+
+## Pay-per-call vs subscription
+
+| Model | Gate | Starter | Reference |
+| --- | --- | --- | --- |
+| **Pay-per-call** (default) | 402 on each paid route | [x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter) | [references/runtime-sdk.md](references/runtime-sdk.md) |
+| **Subscription** (hourly/daily/monthly window) | 402 **only** on `POST /subscribe`; Bearer JWT on data routes | [x402-subscription-starter](https://github.com/miraland-labs/x402-subscription-starter) | [references/subscription-exact-rail.md](references/subscription-exact-rail.md) |
+
+If the user wants time-window access, **do not** apply per-request 402 gates — follow the subscription reference instead.
 
 ## Two-part integration model
 
@@ -36,6 +46,9 @@ The [x402 hub](https://github.com/miraland-labs/x402) coordinates docs and ships
 | Buyer starter | [miraland-labs/x402-buyer-starter](https://github.com/miraland-labs/x402-buyer-starter) |
 | Oracles workspace | [miraland-labs/oracles](https://github.com/miraland-labs/oracles) |
 | x402-cli source | [miraland-labs/x402/tree/main/tools/x402-cli](https://github.com/miraland-labs/x402/tree/main/tools/x402-cli) |
+| Subscription seller starter | [miraland-labs/x402-subscription-starter](https://github.com/miraland-labs/x402-subscription-starter) |
+| Subscription seller SDK | [miraland-labs/x402-subscription-seller](https://github.com/miraland-labs/x402-subscription-seller) (`@pr402/subscription-seller`) |
+| Subscription auth (Tier B) | [miralandlabs/subscription-auth](https://github.com/miralandlabs/subscription-auth) |
 
 The on-chain **`exact`** rail uses SplitVault (UniversalSettle engine). Program source is **not public** yet — do not link integrators to a GitHub repo; use facilitator docs and the seller starter.
 
@@ -108,6 +121,7 @@ Required env (all languages): `FACILITATOR_BASE_URL` (e.g. `https://ipay.sh`), `
 3. **Call live OpenAPI** — `GET {facilitator}/openapi.json` on the target host before guessing field names.
 4. **Do not commit keypairs** — use env paths; warn if `.env` contains secrets.
 5. **Escrow sellers** — if the user needs conditional delivery / oracles, stop and route to `sla-escrow` + [oracles workspace](https://github.com/miraland-labs/oracles); the seller starter is **exact-only**.
+6. **Subscription sellers** — if the user needs hourly/daily/monthly access windows, use [x402-subscription-starter](https://github.com/miraland-labs/x402-subscription-starter) and [references/subscription-exact-rail.md](references/subscription-exact-rail.md); Tier B JWT auth is [miralandlabs/subscription-auth](https://github.com/miralandlabs/subscription-auth) (individual account — not `miraland-labs`), not a new payment rail.
 
 ## Live documentation
 
