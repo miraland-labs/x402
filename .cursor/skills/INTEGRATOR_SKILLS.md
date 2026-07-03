@@ -6,19 +6,13 @@ Procedural skills for AI coding agents integrating with **pr402** on Solana — 
 
 The x402 hub is **virtual** (coordination + x402-cli docs) — each codebase has its **own GitHub repository** (see table below).
 
-Install with the [skills CLI](https://github.com/vercel-labs/skills):
+Install with the [skills CLI](https://github.com/vercel-labs/skills) — all at once (`-y`), or one skill at a time (interactive):
 
 ```bash
-npx skills add miraland-labs/x402-agent-skills --skill pr402 -y
-npx skills add miraland-labs/x402-agent-skills --skill pr402-seller -y
-npx skills add miraland-labs/x402-agent-skills --skill pr402-buyer -y
-```
-
-Legacy (hub copy — prefer `x402-agent-skills` above):
-
-```bash
-npx skills add miraland-labs/x402 --skill pr402-seller -y
-npx skills add miraland-labs/x402 --skill pr402-buyer -y
+npx skills add miraland-labs/x402-agent-skills --skill pr402 --skill pr402-seller --skill pr402-buyer -y
+npx skills add miraland-labs/x402-agent-skills --skill pr402
+npx skills add miraland-labs/x402-agent-skills --skill pr402-seller
+npx skills add miraland-labs/x402-agent-skills --skill pr402-buyer
 ```
 
 List integrator skills:

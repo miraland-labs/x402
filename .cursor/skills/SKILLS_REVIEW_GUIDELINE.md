@@ -80,7 +80,7 @@ Secondary goals:
 
 - [ ] Seller and buyer skills agree on facilitator hosts and header names.
 - [ ] Reference files do not contradict `SKILL.md`.
-- [ ] Public integrator skills live under repo-root `skills/` (`pr402-seller`, `pr402-buyer` only); install docs require `--skill` when adding from the full hub.
+- [ ] Public integrator skills ship from [miraland-labs/x402-agent-skills](https://github.com/miraland-labs/x402-agent-skills) (`pr402`, `pr402-seller`, `pr402-buyer`); hub mirror under `skills/`.
 
 ---
 
@@ -132,11 +132,10 @@ npx skills find payment
 ### 6.1 Install
 
 ```bash
-npx skills add miraland-labs/x402 --skill pr402-seller -y
-npx skills add miraland-labs/x402 --skill pr402-buyer -y
+npx skills add miraland-labs/x402-agent-skills --skill pr402 --skill pr402-seller --skill pr402-buyer -y
 ```
 
-- [ ] CLI discovers both skills from the repo.
+- [ ] CLI discovers all integrator skills from the repo.
 - [ ] Installed files land in the agent’s skills directory with intact `references/`.
 
 ### 6.2 Agent prompts (run in Cursor or Claude Code with skills enabled)
@@ -196,7 +195,7 @@ Ask the reviewer to return:
 - [ ] All P0/P1 items resolved.
 - [ ] Hub README + `INTEGRATOR_SKILLS.md` match final skill content.
 - [ ] Root `skills.sh.json` groups integrator skills on skills.sh (verify after first install).
-- [ ] Run `npx skills add miraland-labs/x402 --skill pr402-seller -y` from a clean machine to seed skills.sh telemetry.
+- [ ] Run `npx skills add miraland-labs/x402-agent-skills --skill pr402 --skill pr402-seller --skill pr402-buyer -y` from a clean machine to seed skills.sh telemetry.
 - [ ] Link install commands from [miralandlabs/pr402](https://github.com/miralandlabs/pr402) docs and starter READMEs.
 
 ---

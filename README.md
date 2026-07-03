@@ -27,9 +27,10 @@ If you are new to the x402 ecosystem, select your path below to get started imme
 Install pr402 integrator skills into Cursor, Claude Code, Copilot, and other agents:
 
 ```bash
-npx skills add miraland-labs/x402-agent-skills --skill pr402 -y
-npx skills add miraland-labs/x402-agent-skills --skill pr402-seller -y
-npx skills add miraland-labs/x402-agent-skills --skill pr402-buyer -y
+npx skills add miraland-labs/x402-agent-skills --skill pr402 --skill pr402-seller --skill pr402-buyer -y
+npx skills add miraland-labs/x402-agent-skills --skill pr402
+npx skills add miraland-labs/x402-agent-skills --skill pr402-seller
+npx skills add miraland-labs/x402-agent-skills --skill pr402-buyer
 ```
 
 Skills source: [miraland-labs/x402-agent-skills](https://github.com/miraland-labs/x402-agent-skills) (public). Hub mirror: [`skills/pr402`](skills/pr402/), [`skills/pr402-seller`](skills/pr402-seller/), and [`skills/pr402-buyer`](skills/pr402-buyer/). See [`.cursor/skills/INTEGRATOR_SKILLS.md`](.cursor/skills/INTEGRATOR_SKILLS.md). Starter code remains in [x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter) and [x402-buyer-starter](https://github.com/miraland-labs/x402-buyer-starter).
