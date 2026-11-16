@@ -4,29 +4,16 @@ articles/
 http402-forge-api/
 http402-forge-cli/
 http402-forge-web/
-intelligence-gateway-oss/
-intelligence-gateway-private/
 mintforge/
 pr402/
-pr402-link/
-pr402-chat/
-pr402-registry/
-promptlean/
 universalsettle/
 sla-escrow/
-rwa-kyc-hook/
-rwa-issuer-portal/
-rwa-kyc-sync/
 spl-token-balance-serverless/
 solrisk/
-x402-buy-spl-token/
-x402-buy-rwa-token/
 x402-buyer-starter/
 x402-seller-starter/
 x402-seller-lab-express/
-langchain-pr402/
 oracles/
-aethervane/
 references/
 !skills/pr402/
 !skills/pr402/SKILL.md
@@ -38,10 +25,6 @@ docs/
 demo-wallets/
 integration-tests/
 integrations/
-x402-subscription-client/
-x402-subscription-starter/
-x402-subscription-seller/
-subscription-auth/
 # Dependencies
 node_modules/
 
