@@ -39,7 +39,7 @@ Adjust `asset` mint to match your rail (USDC mainnet mint shown; Devnet USDC dif
 
 Use the action-scoped REST loop in [onboarding-cli.md](onboarding-cli.md): request and sign a fresh `resource:register` challenge for each resource, then a fresh `resource:probe` challenge for each optional probe. Never reuse a challenge.
 
-Use `x402-cli enroll` or `tools/enroll.mjs` only after confirming that the checked-out version follows that rule.
+`x402-cli enroll` and `tools/enroll.mjs` follow that rule.
 
 ## Origin binding rules
 

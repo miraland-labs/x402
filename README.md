@@ -16,7 +16,7 @@ If you are new to the x402 ecosystem, select your path below to get started imme
 * **Pick a Rail:** Choose between **`exact`** (instant, low-latency payouts) or **`sla-escrow`** (escrow protection for conditional delivery).
 * **Get Started (`exact` rail, pay-per-call):** Walk through the hands-on [x402-seller-lab-express](https://github.com/miraland-labs/x402-seller-lab-express/) or fork [x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter/) (Rust, TypeScript, Python).
 * **Subscriptions, packs and plans:** Use [Members](https://api.members.miraland.io/llms.txt) (`npm i @miraland-labs/members`) — its seller gate settles through pr402 on the `exact` rail. Self-hosted alternative: [Subscription Pattern](SUBSCRIPTION_PATTERN.md).
-* **Get Started (`sla-escrow` rail):** Read the [Seller Oracle Integration Guide](https://github.com/miraland-labs/oracles/blob/main/docs/SELLER_GUIDE.md).
+* **Get Started (`sla-escrow` rail):** Read the [Seller Oracle Integration Guide](https://github.com/miraland-labs/oracles/blob/main/docs/SELLER_GUIDE.md), then fork the reference seller [x402-buy-spl-token](https://github.com/miralandlabs/x402-buy-spl-token).
 
 ### 2. I am a Buyer (Payer/Agent Developer)
 *You build autonomous agents, wallets, or clients that need to pay for premium resources.*
@@ -43,7 +43,7 @@ Skills source: [miraland-labs/x402-agent-skills](https://github.com/miraland-lab
 
 ### 4. I am a Protocol / On-chain Developer
 *You want to inspect, deploy, or extend the core settlement contracts.*
-* **Core Engines:** Read the specifications for [UniversalSettle (SplitVault)](https://github.com/miraland-labs/universalsettle/) and [SLA-Escrow](https://github.com/miraland-labs/sla-escrow/).
+* **Core Engines:** UniversalSettle (SplitVault) and SLA-Escrow — source planned open source; program IDs and config are served by `GET /api/v1/facilitator/supported`.
 * **Facilitator Gateway:** Inspect the [pr402 Facilitator](https://github.com/miralandlabs/pr402/) REST-to-Solana gateway.
 
 ---
@@ -53,8 +53,8 @@ Skills source: [miraland-labs/x402-agent-skills](https://github.com/miraland-lab
 | Pillar | Role | Type | Description |
 | :--- | :--- | :--- | :--- |
 | **[pr402 Facilitator](https://github.com/miralandlabs/pr402/)** | REST-to-Solana Gateway | Rust/Vercel | Handles vault discovery, transaction building, and settlement verification. |
-| **[UniversalSettle](https://github.com/miraland-labs/universalsettle/)** | Payout Engine (`exact` rail) | On-chain Program | Facilitates high-velocity payouts and automated revenue splitting. |
-| **[SLA-Escrow](https://github.com/miraland-labs/sla-escrow/)** | Escrow Enforcer (`sla-escrow` rail) | On-chain Program | Holds funds in escrow until delivery is verified by a trusted oracle. |
+| **UniversalSettle** | Payout Engine (`exact` rail) | On-chain Program | Facilitates high-velocity payouts and automated revenue splitting. |
+| **SLA-Escrow** | Escrow Enforcer (`sla-escrow` rail) | On-chain Program | Holds funds in escrow until delivery is verified by a trusted oracle. |
 | **[Oracles Workspace](https://github.com/miraland-labs/oracles/)** | Adjudication Engine | Rust Workspace | Houses reference oracles (API Quality, Transfer, File Delivery) and specs. |
 | **[Members](https://members.miraland.io)** | Subscriptions & Entitlements | Hosted service + SDK | Plans, packs and subscriptions paid through pr402; sign-in and entitlement tokens for apps. |
 | **[x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter/)** | Seller Starter | Rust / TS / Python | Minimal pay-per-call 402 gate on the `exact` rail. |

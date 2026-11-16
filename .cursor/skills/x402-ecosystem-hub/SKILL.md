@@ -51,5 +51,4 @@ Archived (read-only, do not extend): subscription-auth, x402-subscription-{clien
 ## Documentation entrypoints
 
 - Hub: [`README.md`](../../../README.md), [`ARCHITECTURE_OVERVIEW.md`](../../../ARCHITECTURE_OVERVIEW.md), [`SUBSCRIPTION_PATTERN.md`](../../../SUBSCRIPTION_PATTERN.md)
-- Cross-program Devnet work: [`DEVNET_INTENSIVE_TEST_PLAN.md`](../../../DEVNET_INTENSIVE_TEST_PLAN.md), [`integration-tests/`](../../../integration-tests/)
 - Follow project-local `README.md` for authoritative build and env instructions

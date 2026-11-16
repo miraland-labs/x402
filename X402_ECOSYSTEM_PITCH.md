@@ -34,7 +34,7 @@ The "interpreter" for the machine world. It exposes a standard REST API that AI 
 
 ### Agent discovery (Layer 3)
 
-Sellers publish payable APIs via **Seller Resource Manifest** (`/.well-known/x402-resources.json`) and/or wallet-signed registration at **`/resources`**. Buyer agents search **`GET /api/v1/facilitator/resources`** (not `GET /providers`). See [pr402 DISCOVERY.md](https://github.com/miralandlabs/pr402/blob/main/docs/DISCOVERY.md) and **`@pr402/discovery`**.
+Sellers publish payable APIs via **Seller Resource Manifest** (`/.well-known/x402-resources.json`) and/or wallet-signed registration at **`/resources`**. Buyer agents search **`GET /api/v1/facilitator/resources`** (not `GET /providers`). See [pr402 DISCOVERY.md](https://github.com/miralandlabs/pr402/blob/main/docs/DISCOVERY.md); MCP tools **`pr402_search_resources`** / **`pr402_probe_resource`** in **`@pr402/mcp-server`**.
 
 ### 2. ⚡ `UniversalSettle` (SplitVault)
 
@@ -54,7 +54,7 @@ The **conditional delivery engine** — operates via the **`sla-escrow`** scheme
 
 ### 4. 🔮 Oracle Workspace (multi-category reference oracles)
 
-The **oracle layer for sla-escrow** — open-source references in [`miraland-labs/oracles`](https://github.com/miralandlabs/oracles).
+The **oracle layer for sla-escrow** — open-source references in [`miraland-labs/oracles`](https://github.com/miraland-labs/oracles).
 
 - Three sibling binaries: **api-quality**, **onchain-transfer**, **file-delivery** on shared **oracle-common**.
 - **x402-buy-spl-token** integrates **onchain-transfer** for SPL delivery verification.
@@ -81,7 +81,7 @@ The x402 ecosystem is open-source and modular.
 
 | Goal | Start here |
 |------|------------|
-| **Sell with escrow** (tokens, deliverables) | Fork **[x402-buy-spl-token](https://github.com/miraland-labs/x402-buy-spl-token)** · live demo [preview.spl-token.hashspace.me](https://preview.spl-token.hashspace.me) |
+| **Sell with escrow** (tokens, deliverables) | Fork **[x402-buy-spl-token](https://github.com/miralandlabs/x402-buy-spl-token)** · live demo [preview.spl-token.hashspace.me](https://preview.spl-token.hashspace.me) |
 | **Sell instant JSON API** | Fork **[solrisk](https://github.com/miralandlabs/solrisk)** · live [solrisk.signer-payer.me](https://solrisk.signer-payer.me/) · or **[x402-seller-starter](https://github.com/miraland-labs/x402-seller-starter)** |
 | **Pay as a buyer agent** | `npm i -g @pr402/client` or **[x402-buyer-starter](https://github.com/miraland-labs/x402-buyer-starter)** |
 | **Run an oracle** | **[oracles/](https://github.com/miraland-labs/oracles)** — clone closest profile |

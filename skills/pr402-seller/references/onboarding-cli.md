@@ -60,7 +60,7 @@ Administrative challenges are one-time and action-scoped. For **each** resource:
 2. Sign the returned message and `POST /api/v1/facilitator/resources/register`.
 3. If probing, request a new challenge with `action=resource:probe`, sign it, then `POST /api/v1/facilitator/resources/probe`.
 
-Never reuse one challenge across resources or between register and probe. Older `x402-cli enroll` / `tools/enroll.mjs` implementations reuse a challenge and are incompatible with replay protection; use the REST loop above unless the checked-out tool requests a fresh action-bound challenge for every administrative call.
+Never reuse one challenge across resources or between register and probe. Current `x402-cli enroll` and `tools/enroll.mjs` request a fresh action-bound challenge for every call.
 
 See [x402-resources-manifest.md](x402-resources-manifest.md).
 
