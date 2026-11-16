@@ -223,7 +223,7 @@ async function main() {
         console.log(`Facilitator:           ${facilitator}\n`);
 
         // 1. Fetch challenge
-        const challenge = await fetchJson(`${facilitator}/sellers/${signer.publicKey}/challenge`);
+        const challenge = await fetchJson(`${facilitator}/sellers/${signer.publicKey}/challenge?action=seller:register`);
         const message = challenge.message;
         if (!message) {
           throw new Error("Failed to retrieve challenge message from facilitator");
@@ -329,13 +329,6 @@ async function main() {
         console.log(`Enrolling resources for wallet: ${signer.publicKey}`);
         console.log(`Manifest:                      ${manifestPath} (${resources.length} resources)\n`);
 
-        const challenge = await fetchJson(`${facilitator}/resources/register/challenge?wallet=${encodeURIComponent(signer.publicKey)}`);
-        const message = challenge.message;
-        if (!message) {
-          throw new Error("Failed to fetch register challenge");
-        }
-        const signature = edSign(null, Buffer.from(message, "utf8"), signer.privateKey).toString("base64");
-
         let failures = 0;
         for (const res of resources) {
           const label = res.id || res.resourceUrl;
@@ -355,12 +348,18 @@ async function main() {
           };
 
           try {
+            const registerChallenge = await fetchJson(`${facilitator}/resources/register/challenge?wallet=${encodeURIComponent(signer.publicKey)}&action=resource:register`);
+            const registerMessage = registerChallenge.message;
+            if (!registerMessage) {
+              throw new Error("Failed to fetch resource:register challenge");
+            }
+            const registerSignature = edSign(null, Buffer.from(registerMessage, "utf8"), signer.privateKey).toString("base64");
             const reg = await fetchJson(`${facilitator}/resources/register`, {
               method: "POST",
               body: JSON.stringify({
                 wallet: signer.publicKey,
-                message,
-                signature,
+                message: registerMessage,
+                signature: registerSignature,
                 source: "register_api",
                 resource: payload
               })
@@ -368,12 +367,18 @@ async function main() {
             console.log(`✓ register ${label}: id=${reg.id}`);
 
             if (!noProbe) {
+              const probeChallenge = await fetchJson(`${facilitator}/resources/register/challenge?wallet=${encodeURIComponent(signer.publicKey)}&action=resource:probe`);
+              const probeMessage = probeChallenge.message;
+              if (!probeMessage) {
+                throw new Error("Failed to fetch resource:probe challenge");
+              }
+              const probeSignature = edSign(null, Buffer.from(probeMessage, "utf8"), signer.privateKey).toString("base64");
               const probe = await fetchJson(`${facilitator}/resources/probe`, {
                 method: "POST",
                 body: JSON.stringify({
                   wallet: signer.publicKey,
-                  message,
-                  signature,
+                  message: probeMessage,
+                  signature: probeSignature,
                   resourceUrl: res.resourceUrl
                 })
               });

@@ -2,7 +2,7 @@
 // Enroll a service's payable resources into the pr402 Layer-3 discovery directory.
 //
 // Reads a Seller Resource Manifest (x402-resources.json) and, for each resource,
-// runs the wallet-signed flow: challenge -> sign -> register -> probe.
+// runs the wallet-signed flow with a fresh action-scoped challenge per register/probe.
 //
 // Zero dependencies: Node 18+ (global fetch) + built-in crypto (ed25519).
 //
@@ -65,8 +65,8 @@ function loadSigner(path) {
 const signer = loadSigner(keypairPath);
 const signB64 = (msg) => edSign(null, Buffer.from(msg, "utf8"), signer).toString("base64");
 
-async function getChallenge() {
-  const r = await fetch(`${facilitator}/resources/register/challenge?wallet=${encodeURIComponent(wallet)}`);
+async function getChallenge(action) {
+  const r = await fetch(`${facilitator}/resources/register/challenge?wallet=${encodeURIComponent(wallet)}&action=${encodeURIComponent(action)}`);
   const j = await r.json();
   if (!r.ok || !j.message) throw new Error(`challenge failed (${r.status}): ${JSON.stringify(j)}`);
   return j.message;
@@ -112,15 +112,17 @@ if (dryRun) {
   process.exit(0);
 }
 
-// One signed challenge authorizes every call below until it expires (no nonce burn).
-const message = await getChallenge();
-const signature = signB64(message);
-
 let failures = 0;
 for (const res of resources) {
   const label = res.id || res.resourceUrl;
+  const registerMessage = await getChallenge("resource:register");
+  const registerSignature = signB64(registerMessage);
   const reg = await postJson("/resources/register", {
-    wallet, message, signature, source: "register_api", resource: toRegisterPayload(res),
+    wallet,
+    message: registerMessage,
+    signature: registerSignature,
+    source: "register_api",
+    resource: toRegisterPayload(res),
   });
   if (!reg.ok) {
     failures++;
@@ -130,8 +132,13 @@ for (const res of resources) {
   console.log(`✓ register ${label}: id=${reg.body.id}`);
 
   if (doProbe) {
+    const probeMessage = await getChallenge("resource:probe");
+    const probeSignature = signB64(probeMessage);
     const probe = await postJson("/resources/probe", {
-      wallet, message, signature, resourceUrl: res.resourceUrl,
+      wallet,
+      message: probeMessage,
+      signature: probeSignature,
+      resourceUrl: res.resourceUrl,
     });
     if (probe.ok && probe.body.ok) {
       console.log(`  ✓ probe: httpStatus=${probe.body.httpStatus} (now eligible for public listing)`);
