@@ -70,7 +70,7 @@ Skills source: [miraland-labs/x402-agent-skills](https://github.com/miraland-lab
 
 ## 🗄️ Archived
 
-Read-only, kept for reference; do not build on them: `subscription-auth`, `x402-subscription-client`, `x402-subscription-seller`, `x402-subscription-starter` (superseded by Members), `langchain-pr402`, `x402-buy-spl-token`, `x402-buy-rwa-token`, `rwa-issuer-portal`, `rwa-kyc-hook`, `rwa-kyc-sync`, `pr402-chat`, `pr402-link`, `pr402-registry`, `aethervane`, `promptlean`, `intelligence-gateway-oss`, `intelligence-gateway-private`, `pack-auth`.
+Read-only, kept for reference; do not build on them: `subscription-auth`, `x402-subscription-client`, `x402-subscription-seller`, `x402-subscription-starter` (superseded by Members), `langchain-pr402`, `x402-buy-rwa-token`, `rwa-issuer-portal`, `rwa-kyc-hook`, `rwa-kyc-sync`, `pr402-chat`, `pr402-link`, `aethervane`, `promptlean`, `intelligence-gateway-oss`, `intelligence-gateway-private`, `pack-auth`.
 
 ---
 

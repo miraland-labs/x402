@@ -25,8 +25,10 @@ x402 (see `x402/` folder—the repository root holding this `.cursor/skills/` tr
 9. spl-token-balance-serverless project, operated paid service — SPL balance verification (closed source); members reads holdings from it
 10. mintforge, x402-paid NFT minting (active)
 11. http402-forge (api, cli, web), digital goods marketplace (paused: kept, not featured)
+12. x402-buy-spl-token, open source **sla-escrow** reference seller (SPL tokens for USDC; github.com/miralandlabs/x402-buy-spl-token)
+13. pr402-registry, public directory site for pr402 discovery ([registry.pr402.org](https://registry.pr402.org))
 
-Archived (read-only, do not extend): subscription-auth, x402-subscription-{client,seller,starter}, intelligence-gateway-{oss,private}, promptlean, aethervane, pack-auth, pr402-chat, pr402-link, pr402-registry, langchain-pr402, x402-buy-spl-token, x402-buy-rwa-token, rwa-issuer-portal, rwa-kyc-hook, rwa-kyc-sync.
+Archived (read-only, do not extend): subscription-auth, x402-subscription-{client,seller,starter}, intelligence-gateway-{oss,private}, promptlean, aethervane, pack-auth, pr402-chat, pr402-link, langchain-pr402, x402-buy-rwa-token, rwa-issuer-portal, rwa-kyc-hook, rwa-kyc-sync.
 
 ## Repo folder map
 
@@ -40,6 +42,8 @@ Archived (read-only, do not extend): subscription-auth, x402-subscription-{clien
 | `x402-seller-starter/` | Seller RP example (Rust + Axum) |
 | `x402-buyer-starter/` | Buyer demos (bash, TypeScript, Python) |
 | `solrisk/` | **exact** reference seller — wallet risk API (open source) |
+| `x402-buy-spl-token/` | **sla-escrow** reference seller — SPL token shop (open source) |
+| `pr402-registry/` | Public discovery directory (registry.pr402.org) |
 | `spl-token-balance-serverless/` | Operated SPL balance check (closed source) |
 | `mintforge/` | x402-paid NFT minting |
 | `http402-forge-{api,cli,web}/` | Digital goods marketplace (paused) |
