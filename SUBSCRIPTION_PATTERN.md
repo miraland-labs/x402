@@ -4,6 +4,9 @@ The x402 subscription pattern allows sellers to offer **time-window access** (ho
 
 **Concept:** Pay once on-chain via `exact` → Receive a time-window JWT signed by the seller → Send the JWT in the `Authorization: Bearer` header on data routes → Enforce rate limits.
 
+> [!NOTE]
+> **Prefer Members.** For plans, packs and subscriptions without running your own JWT and ledger, use [Members](https://api.members.miraland.io/llms.txt) (`npm i @miraland-labs/members`): its seller gate settles through pr402 on the same `exact` rail. This document is the **self-hosted** wire contract; [solrisk](https://github.com/miralandlabs/solrisk) is its reference implementation.
+
 ---
 
 ## 🔌 The Wire Contract
@@ -65,15 +68,9 @@ If JWT validation fails, return **HTTP 401 Unauthorized** with one of the standa
 
 ---
 
-## 🔒 Auth Infrastructure (Tier A vs Tier B)
+## 🔒 Auth Infrastructure
 
-Sellers can choose between two token validation architectures:
-
-| Feature | Tier A (Local) | Tier B (Hosted) |
-| :--- | :--- | :--- |
-| **Signing Key** | Local `JWT_SECRET` (HS256) | Centralized RS256 JWKS |
-| **Revocation** | Checked against a local DB | Pulled from a hosted revocation feed |
-| **Setup Cost** | Zero (fully self-contained) | Requires service registration |
+The seller signs JWTs with a local `JWT_SECRET` (HS256) and checks revocation against its own database. For hosted signing (RS256 JWKS), revocation and entitlements, use Members instead.
 
 ---
 

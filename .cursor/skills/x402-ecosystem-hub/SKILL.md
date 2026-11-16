@@ -20,15 +20,13 @@ x402 (see `x402/` folder—the repository root holding this `.cursor/skills/` tr
 4. oracles workspace (`oracles/`), which is paired with the sla-escrow program and ships three sibling reference oracles (oracle-api-quality, oracle-onchain-transfer, oracle-file-delivery) sharing one oracle-common library. Each registers exactly one profile and serves as both a default oracle implementation when no other oracle service is available **and** an implementation reference for oracle developers with their own domain expertise. Open Source.
 5. x402-seller-starter, an open source example project for any interested seller(Resource Provider)
 6. x402-buyer-starter, an open source example project for any interested buyer agent(or human)
-7. x402-buy-spl-token, open source **sla-escrow** reference seller (SPL token shop + human storefront; github.com/miralandlabs/x402-buy-spl-token)
+7. members (outside this hub, `~/miralandlabs/members`), the hosted subscription, plan and entitlement service that collects fees through pr402
 8. solrisk, open source **exact** reference seller (wallet risk scoring API; [solrisk.signer-payer.me](https://solrisk.signer-payer.me/); github.com/miralandlabs/solrisk)
-9. spl-token-balance-serverless project, operated paid service — SPL balance verification (closed source)
-10. aethervane project, operated paid service — fortune teller readings (closed source)
-11. rwa-issuer-portal — RWA KYC system of record (open source, Vercel)
-12. rwa-kyc-sync — RWA ops sync worker: portal feed → on-chain KycRecord (open source, VPS)
-13. rwa-kyc-hook — multi-issuer Token-2022 Transfer Hook (open source, on-chain)
-14. x402-buy-rwa-token — RWA primary issuance seller (open source, sla-escrow)
-15. oracle-rwa-transfer — RWA delivery oracle (in oracles workspace)
+9. spl-token-balance-serverless project, operated paid service — SPL balance verification (closed source); members reads holdings from it
+10. mintforge, x402-paid NFT minting (active)
+11. http402-forge (api, cli, web), digital goods marketplace (paused: kept, not featured)
+
+Archived (read-only, do not extend): subscription-auth, x402-subscription-{client,seller,starter}, intelligence-gateway-{oss,private}, promptlean, aethervane, pack-auth, pr402-chat, pr402-link, pr402-registry, langchain-pr402, x402-buy-spl-token, x402-buy-rwa-token, rwa-issuer-portal, rwa-kyc-hook, rwa-kyc-sync.
 
 ## Repo folder map
 
@@ -41,17 +39,13 @@ x402 (see `x402/` folder—the repository root holding this `.cursor/skills/` tr
 | `x402-seller-lab-express/` | **Hands-on lab** — TypeScript + Express weather API (exact pay-per-call) |
 | `x402-seller-starter/` | Seller RP example (Rust + Axum) |
 | `x402-buyer-starter/` | Buyer demos (bash, TypeScript, Python) |
-| `x402-buy-spl-token/` | **sla-escrow** reference seller — SPL shop (open source) |
 | `solrisk/` | **exact** reference seller — wallet risk API (open source) |
 | `spl-token-balance-serverless/` | Operated SPL balance check (closed source) |
-| `aethervane/` | Operated readings API (closed source) |
-| `rwa-issuer-portal/` | RWA KYC portal — records only (open source, Vercel) |
-| `rwa-kyc-sync/` | RWA ops sync worker — portal → hook CLI (open source, VPS) |
-| `rwa-kyc-hook/` | RWA Transfer Hook on-chain program (open source) |
-| `x402-buy-rwa-token/` | RWA primary issuance seller (open source) |
+| `mintforge/` | x402-paid NFT minting |
+| `http402-forge-{api,cli,web}/` | Digital goods marketplace (paused) |
 
 ## Documentation entrypoints
 
-- Hub: [`README.md`](../../../README.md), [`ARCHITECTURE_OVERVIEW.md`](../../../ARCHITECTURE_OVERVIEW.md), [`RWA_OPS_RUNBOOK.md`](../../../RWA_OPS_RUNBOOK.md)
+- Hub: [`README.md`](../../../README.md), [`ARCHITECTURE_OVERVIEW.md`](../../../ARCHITECTURE_OVERVIEW.md), [`SUBSCRIPTION_PATTERN.md`](../../../SUBSCRIPTION_PATTERN.md)
 - Cross-program Devnet work: [`DEVNET_INTENSIVE_TEST_PLAN.md`](../../../DEVNET_INTENSIVE_TEST_PLAN.md), [`integration-tests/`](../../../integration-tests/)
 - Follow project-local `README.md` for authoritative build and env instructions

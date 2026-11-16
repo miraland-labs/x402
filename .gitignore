@@ -9,6 +9,7 @@ intelligence-gateway-private/
 mintforge/
 pr402/
 pr402-link/
+pr402-chat/
 pr402-registry/
 promptlean/
 universalsettle/
@@ -27,6 +28,12 @@ langchain-pr402/
 oracles/
 aethervane/
 references/
+!skills/pr402/
+!skills/pr402/SKILL.md
+!skills/pr402-buyer/references/
+!skills/pr402-buyer/references/*.md
+!skills/pr402-seller/references/
+!skills/pr402-seller/references/*.md
 docs/
 demo-wallets/
 integration-tests/
@@ -60,3 +67,9 @@ build/
 .env.production.local
 
 .venv/
+
+# Local skill installs (npx skills add)
+.agents/
+.claude/
+.kiro/skills/
+skills-lock.json
